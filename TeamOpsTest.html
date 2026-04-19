@@ -9,7 +9,7 @@
   .card { background: #fff; border-radius: 12px; padding: 40px; max-width: 480px; width: 90%; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; }
   h1 { font-size: 22px; margin: 0 0 8px; }
   p { color: #5a5954; font-size: 14px; margin: 0 0 24px; }
-  .btn { display: inline-block; background: #1a56db; color: #fff; padding: 10px 24px; border-radius: 8px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; }
+  .btn { display: inline-block; background: #1a56db; color: #fff; padding: 10px 24px; border-radius: 8px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; }
   .result { margin-top: 24px; padding: 16px; border-radius: 8px; font-size: 13px; text-align: left; }
   .result.success { background: #f0fdf4; border: 1px solid #16a34a; color: #15803d; }
   .result.error { background: #fef2f2; border: 1px solid #dc2626; color: #dc2626; }
@@ -27,7 +27,7 @@
 
 <script>
 const TENANT_ID = '49793faf-eb3f-4d99-a0cf-aef7cce79dc1';
-const CLIENT_ID = '51f81489-12ee-4a9e-aaae-a2591f45987d'; // PowerApps public client
+const CLIENT_ID = 'a481b622-8ab2-4c0a-82fd-bf77defd1ff1';
 const INSTANCE = 'https://org1fbb3da1.crm.dynamics.com';
 const TABLE = 'cr5c1_efforttests';
 const REDIRECT = window.location.href.split('#')[0];
@@ -37,35 +37,36 @@ function showResult(type, html) {
 }
 
 function startAuth() {
-  // Check if we already have a token in the URL hash
-  if (window.location.hash.includes('access_token')) {
-    handleToken();
-    return;
-  }
-  showResult('loading', 'Opening Microsoft sign-in window...');
+  showResult('loading', 'Redirecting to Microsoft sign-in...');
   const authUrl = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/authorize?` +
     `client_id=${CLIENT_ID}` +
     `&response_type=token` +
     `&redirect_uri=${encodeURIComponent(REDIRECT)}` +
-    `&scope=${encodeURIComponent(INSTANCE + '/.default')}` +
+    `&scope=${encodeURIComponent('https://org1fbb3da1.crm.dynamics.com/user_impersonation')}` +
+    `&response_mode=fragment` +
     `&prompt=select_account`;
   window.location.href = authUrl;
 }
 
-function handleToken() {
+async function handleToken() {
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
   const token = params.get('access_token');
-  if (!token) {
-    showResult('error', 'No token found in URL. Please try signing in again.');
+  const error = params.get('error_description');
+
+  if (error) {
+    showResult('error', `Sign-in error: ${error}`);
     return;
   }
-  window.location.hash = '';
-  showResult('loading', 'Signed in successfully! Loading data from Dataverse...');
-  loadData(token);
-}
 
-async function loadData(token) {
+  if (!token) {
+    return;
+  }
+
+  // Clean up URL
+  history.replaceState(null, '', window.location.pathname);
+  showResult('loading', 'Signed in! Loading data from Dataverse...');
+
   try {
     const url = `${INSTANCE}/api/data/v9.2/${TABLE}?$select=cr5c1_name&$top=10`;
     const r = await fetch(url, {
@@ -84,10 +85,10 @@ async function loadData(token) {
     const data = await r.json();
     const rows = data.value;
     if (rows.length === 0) {
-      showResult('success', 'Connected successfully! No rows found in the table yet.');
+      showResult('success', '✓ Connected to Dataverse successfully! No rows in table yet.');
       return;
     }
-    let html = `<strong>Connection successful!</strong> Found ${rows.length} row(s) in efforttest:<br>`;
+    let html = `<strong>✓ Connection successful!</strong> Found ${rows.length} row(s):<br>`;
     rows.forEach(row => {
       html += `<div class="row">${row.cr5c1_name || '(no name)'}</div>`;
     });
@@ -97,8 +98,8 @@ async function loadData(token) {
   }
 }
 
-// Check if we're returning from auth redirect
-if (window.location.hash.includes('access_token')) {
+// Handle token on page load if returning from auth redirect
+if (window.location.hash.includes('access_token') || window.location.hash.includes('error')) {
   handleToken();
 }
 </script>
