@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_16.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Operations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f4f3f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: #e2e0d8;
+    --border2: #cccac0;
+    --text: #1a1a18;
+    --text2: #5a5954;
+    --text3: #9a9890;
+    --accent: #1a56db;
+    --accent-light: #e8f0fe;
+    --high: #dc2626;
+    --high-bg: #fef2f2;
+    --med: #d97706;
+    --med-bg: #fffbeb;
+    --low: #16a34a;
+    --low-bg: #f0fdf4;
+    --blocked: #dc2626;
+    --inprog: #2563eb;
+    --done: #16a34a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-right: 32px;
+    letter-spacing: -0.3px;
+  }
+  .nav-brand span { color: var(--accent); }
+  .nav-tabs { display: flex; gap: 2px; flex: 1; }
+  .nav-tab {
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text2);
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: all .15s;
+  }
+  .nav-tab:hover { background: var(--surface2); color: var(--text); }
+  .nav-tab.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-user {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; padding: 20px 24px; }
+  .screen.active { display: block; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .toolbar-title { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; flex: 1; }
+  .btn {
+    padding: 6px 14px; border-radius: var(--radius);
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; font-weight: 500; transition: all .15s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .btn:hover { background: var(--surface2); border-color: var(--border2); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.primary:hover { background: #1648c4; }
+  .filter-select {
+    padding: 6px 10px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; height: 32px;
+  }
+  .view-toggle {
+    display: flex; border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .view-btn {
+    padding: 5px 12px; font-size: 12px; font-weight: 500;
+    border: none; background: var(--surface); color: var(--text2);
+    cursor: pointer; transition: all .15s;
+  }
+  .view-btn.active { background: var(--accent); color: #fff; }
+
+  /* ── KANBAN ── */
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    align-items: start;
+  }
+  .kb-col-wrap {}
+  .kb-col-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; margin-bottom: 6px;
+  }
+  .kb-col-name {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--text2);
+  }
+  .kb-col-count {
+    background: var(--surface2); border-radius: 10px;
+    padding: 1px 7px; font-size: 11px; color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+  .kb-col {
+    background: var(--surface2);
+    border-radius: var(--radius-lg);
+    padding: 8px;
+    min-height: 200px;
+    border: 2px dashed transparent;
+    transition: border-color .15s, background .15s;
+  }
+  .kb-col.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  /* ── EFFORT CARD ── */
+  .effort-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 11px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    transition: box-shadow .15s, border-color .15s, transform .1s;
+    user-select: none;
+  }
+  .effort-card:hover { box-shadow: var(--shadow-md); border-color: var(--border2); }
+  .effort-card.dragging { opacity: .4; transform: rotate(1.5deg); }
+  .effort-card.blocked-card { border-left: 3px solid var(--blocked); border-radius: 0 var(--radius) var(--radius) 0; }
+  .card-title { font-size: 12px; font-weight: 500; margin-bottom: 7px; line-height: 1.35; }
+  .card-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 600; flex-shrink: 0;
+    background: var(--accent-light); color: var(--accent);
+  }
+  .pri-badge {
+    font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 500;
+  }
+  .pri-badge.high { background: var(--high-bg); color: var(--high); }
+  .pri-badge.medium { background: var(--med-bg); color: var(--med); }
+  .pri-badge.low { background: var(--low-bg); color: var(--low); }
+  .due-label { font-size: 10px; color: var(--text3); margin-left: auto; }
+  .due-label.overdue { color: var(--high); font-weight: 500; }
+  .card-progress { margin-top: 7px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .card-progress-fill { height: 100%; background: var(--low); border-radius: 2px; transition: width .3s; }
+  .subtask-summary {
+    margin-top: 6px; font-size: 10px; color: var(--text3);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* ── PERSON VIEW ── */
+  .person-section { margin-bottom: 20px; }
+  .person-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .person-avatar-lg {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600;
+    background: var(--accent-light); color: var(--accent);
+  }
+  .person-name { font-size: 14px; font-weight: 600; }
+  .person-stats { font-size: 11px; color: var(--text3); margin-left: auto; }
+  .person-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+
+  /* ── DETAIL OVERLAY ── */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 200;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .detail-panel {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    width: 100%; max-width: 1400px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .detail-header {
+    background: var(--accent);
+    padding: 16px 28px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .detail-header-text { flex: 1; }
+  .detail-title { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .detail-subtitle { font-size: 12px; color: rgba(255,255,255,.75); }
+  .detail-close {
+    background: rgba(255,255,255,.2); border: none; color: #fff;
+    width: 28px; height: 28px; border-radius: 50%;
+    cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .15s;
+  }
+  .detail-close:hover { background: rgba(255,255,255,.35); }
+  .detail-body { padding: 20px 28px; }
+  .detail-grid {
+    display: grid; grid-template-columns: repeat(8, 1fr);
+    gap: 12px; margin-bottom: 20px;
+  }
+  .detail-field label {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--text3); display: block; margin-bottom: 4px;
+  }
+  .detail-field span { font-size: 13px; font-weight: 500; color: var(--text); }
+  .detail-field .form-input, .detail-field .form-select {
+    width: 100%; padding: 6px 8px; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--surface);
+    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    transition: border-color .15s;
+  }
+  .detail-field .form-input:focus, .detail-field .form-select:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .detail-field .form-textarea {
+    width: 100%; padding: 6px 8px; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--surface);
+    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    min-height: 60px; resize: vertical; transition: border-color .15s;
+  }
+  .detail-field .form-textarea:focus { outline: none; border-color: var(--accent); }
+  .detail-field-wide { grid-column: span 2; }
+  .detail-field-full { grid-column: span 8; }
+  .detail-actions {
+    display: flex; align-items: center; gap: 8px;
+    padding-top: 16px; margin-top: 4px; border-top: 1px solid var(--border);
+  }
+  .detail-section-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--text2);
+    margin: 18px 0 10px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  /* Health indicator */
+  .health-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; display: inline-block;
+  }
+  .health-green { background: #16a34a; }
+  .health-yellow { background: #d97706; }
+  .health-red { background: #dc2626; }
+  .health-none { background: var(--border2); }
+
+  /* ── SUBTASK KANBAN inside detail ── */
+  .subtask-kanban {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .stk-col {
+    background: var(--surface2); border-radius: var(--radius);
+    padding: 6px; min-height: 80px;
+    border: 2px dashed transparent; transition: border-color .15s;
+  }
+  .stk-col.drag-over { border-color: var(--accent); }
+  .stk-col-head {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--text3);
+    padding: 3px 4px 6px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .st-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 8px 9px; margin-bottom: 5px;
+    cursor: pointer; transition: box-shadow .15s; font-size: 11px;
+    user-select: none;
+  }
+  .st-card:hover { box-shadow: var(--shadow); }
+  .st-card.dragging { opacity: .4; }
+  .st-card.blocked-card { border-left: 2px solid var(--blocked); border-radius: 0 var(--radius) var(--radius) 0; }
+  .st-title { font-weight: 500; margin-bottom: 4px; line-height: 1.3; }
+  .st-meta { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .st-avatar {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent-light); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 600; flex-shrink: 0;
+  }
+  .st-due { font-size: 10px; color: var(--text3); margin-left: auto; }
+  .st-progress { margin-top: 5px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+  .st-progress-fill { height: 100%; background: var(--low); border-radius: 1px; }
+
+  /* ── SUBTASK DETAIL (level 3) ── */
+  .st-detail-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 300;
+    overflow-y: auto; padding: 20px;
+  }
+  .st-detail-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .st-detail-panel {
+    background: var(--surface); border-radius: var(--radius-lg);
+    width: 100%; max-width: 1200px; box-shadow: var(--shadow-md);
+  }
+  .st-detail-header {
+    padding: 16px 28px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--surface2); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .st-detail-title { font-size: 15px; font-weight: 600; flex: 1; line-height: 1.3; }
+  .st-detail-parent { font-size: 11px; color: var(--text3); margin-top: 3px; }
+  .st-detail-body { padding: 20px 28px; }
+  .st-detail-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 16px; }
+  .st-detail-grid .detail-field-wide { grid-column: span 2; }
+  .st-detail-grid .detail-field-full { grid-column: span 6; }
+  .st-detail-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .update-row {
+    display: flex; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .update-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--low); margin-top: 4px; flex-shrink: 0;
+  }
+  .update-week { font-size: 12px; font-weight: 500; }
+  .update-note { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+  .update-blocker {
+    font-size: 11px; color: var(--high); margin-top: 4px;
+    background: var(--high-bg); padding: 4px 8px; border-radius: 4px;
+  }
+  .update-by { font-size: 10px; color: var(--text3); margin-top: 3px; }
+  .notif-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
+  }
+  .notif-label { font-size: 12px; color: var(--text2); flex: 1; }
+  .notif-sub { font-size: 10px; color: var(--text3); }
+  .toggle-wrap { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+  .toggle-wrap input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 1; }
+  .toggle-track {
+    position: absolute; inset: 0; background: var(--border2);
+    border-radius: 10px; transition: background .2s;
+  }
+  .toggle-wrap input:checked + .toggle-track { background: var(--low); }
+  .toggle-knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 50%; background: #fff;
+    transition: left .2s; pointer-events: none;
+  }
+  .toggle-wrap input:checked ~ .toggle-knob { left: 18px; }
+
+  /* ── GANTT ── */
+  .gantt-wrap { min-width: 100%; font-size: 12px; }
+  .gantt-header { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 0; position: sticky; top: 0; background: var(--surface); z-index: 10; }
+  .gantt-label-col { width: 260px; flex-shrink: 0; padding: 8px 12px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); border-right: 1px solid var(--border); }
+  .gantt-timeline-header { display: flex; flex: 1; }
+  .gantt-week-header { flex: 1; text-align: center; font-size: 10px; color: var(--text3); font-weight: 500; padding: 8px 2px; border-right: 1px solid var(--border2); white-space: nowrap; overflow: hidden; }
+  .gantt-week-header.current-week { background: var(--accent-light, #eff6ff); color: var(--accent); font-weight: 600; }
+  .gantt-person-group { margin-bottom: 4px; }
+  .gantt-person-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-weight: 600; font-size: 12px; }
+  .gantt-row { display: flex; align-items: center; border-bottom: 1px solid var(--border2); min-height: 36px; }
+  .gantt-row:hover { background: var(--surface2); }
+  .gantt-row-label { width: 260px; flex-shrink: 0; padding: 6px 12px; font-size: 11px; color: var(--text); border-right: 1px solid var(--border); overflow: hidden; }
+  .gantt-row-label .st-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gantt-row-label .st-effort { font-size: 10px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gantt-timeline { display: flex; flex: 1; position: relative; height: 36px; }
+  .gantt-cell { flex: 1; border-right: 1px solid var(--border2); height: 100%; }
+  .gantt-cell.current-week { background: rgba(26,86,219,.04); }
+  .gantt-bar-wrap { position: absolute; top: 6px; height: 24px; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; transition: opacity .15s; min-width: 4px; }
+  .gantt-bar-wrap:hover { opacity: .85; }
+  .gantt-bar-inprogress { background: #16a34a; }
+  .gantt-bar-blocked { background: #ea580c; }
+  .gantt-bar-onhold { background: #d97706; }
+  .gantt-bar-backlog { background: #6366f1; opacity: .7; }
+  .gantt-bar-review { background: #0891b2; opacity: .8; }
+  .gantt-bar-nodate { background: var(--border2); }
+  .gantt-today-line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); opacity: .5; pointer-events: none; z-index: 5; }
+  .intake-form {
+    max-width: 600px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 24px;
+  }
+  .form-row { margin-bottom: 16px; }
+  .form-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--text2); display: block; margin-bottom: 5px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--surface);
+    color: var(--text); font-size: 13px; font-family: 'DM Sans', sans-serif;
+    transition: border-color .15s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .form-textarea { min-height: 80px; resize: vertical; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .success-banner {
+    display: none; background: var(--low-bg); border: 1px solid var(--low);
+    border-radius: var(--radius); padding: 10px 14px; margin-bottom: 16px;
+    font-size: 13px; color: var(--low); font-weight: 500;
+  }
+
+  /* ── CHECK-IN SCREEN ── */
+  .checkin-form {
+    max-width: 600px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 24px;
+  }
+
+  /* ── REPORTING SCREEN ── */
+  .report-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .stat-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
+  .stat-value.blue { color: var(--accent); }
+  .stat-value.green { color: var(--low); }
+  .stat-value.red { color: var(--high); }
+  .stat-value.amber { color: var(--med); }
+  .report-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 16px;
+  }
+  .report-section-title {
+    font-size: 13px; font-weight: 600; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .report-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .report-table th {
+    text-align: left; font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .05em; color: var(--text3);
+    padding: 6px 10px; border-bottom: 1px solid var(--border);
+  }
+  .report-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .report-table tr:last-child td { border-bottom: none; }
+  .report-table tr:hover td { background: var(--surface2); }
+  .status-pill {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 500;
+  }
+  .sp-inprog { background: #eff6ff; color: #1d4ed8; }
+  .sp-backlog { background: var(--surface2); color: var(--text2); }
+  .sp-blocked { background: var(--high-bg); color: var(--high); }
+  .sp-done { background: var(--low-bg); color: var(--low); }
+  .sp-hold { background: var(--med-bg); color: var(--med); }
+  .sp-review { background: #f5f3ff; color: #7c3aed; }
+  .sp-idea { background: #fdf4ff; color: #a21caf; }
+  .person-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .person-bar-name { font-size: 12px; font-weight: 500; width: 100px; flex-shrink: 0; }
+  .person-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .person-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s; }
+  .person-bar-count { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; width: 30px; text-align: right; }
+  .blocker-row { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .blocker-row:last-child { border-bottom: none; }
+  .blocker-title { font-size: 12px; font-weight: 500; }
+  .blocker-effort { font-size: 11px; color: var(--text3); }
+  .blocker-text { font-size: 11px; color: var(--high); margin-top: 3px; }
+  .print-btn { margin-left: auto; }
+
+  /* ── EMPTY STATE ── */
+  .empty-col {
+    text-align: center; padding: 20px 8px;
+    font-size: 11px; color: var(--text3);
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 20px; right: 20px;
+    background: var(--text); color: #fff;
+    padding: 10px 16px; border-radius: var(--radius);
+    font-size: 13px; font-weight: 500;
+    box-shadow: var(--shadow-md); z-index: 999;
+    transform: translateY(80px); opacity: 0;
+    transition: all .3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media print {
+    .topnav, .toolbar .btn, .toolbar .view-toggle,
+    .toolbar .filter-select, .nav-tab:not(.active) { display: none !important; }
+    .screen { padding: 0; }
+    .report-section { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+
+    /* Force background colors to print */
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    /* Gantt specific */
+    .gantt-wrap { font-size: 10px; }
+    .gantt-label-col { width: 200px; }
+    .gantt-bar-wrap {
+      position: absolute !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .gantt-bar-inprogress { background: #16a34a !important; }
+    .gantt-bar-blocked { background: #ea580c !important; }
+    .gantt-bar-onhold { background: #d97706 !important; }
+    .gantt-bar-backlog { background: #6366f1 !important; }
+    .gantt-bar-review { background: #0891b2 !important; }
+    .gantt-timeline { overflow: visible !important; }
+    .gantt-row { break-inside: avoid; min-height: 28px; }
+    .gantt-person-group { break-inside: avoid; }
+    #gantt-content { overflow: visible !important; }
+
+    /* Hide today line on print - can be distracting */
+    .gantt-today-line { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-brand">Team<span>Ops</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showScreen(&#39;kanban&#39;)">Kanban</button>
+    <button class="nav-tab" onclick="showScreen(&#39;gantt&#39;)">Gantt</button>
+    <button class="nav-tab" onclick="showScreen(&#39;intake&#39;)">New Idea</button>
+    <button class="nav-tab" onclick="showScreen(&#39;checkin&#39;)">Weekly Check-in</button>
+    <button class="nav-tab" onclick="showScreen(&#39;review&#39;)">Weekly Review</button>
+    <button class="nav-tab" onclick="showScreen(&#39;report&#39;)">Reports</button>
+  </div>
+  <div class="nav-right">
+    <div class="nav-user" title="White, Michael">MW</div>
+  </div>
+</nav>
+
+<!-- KANBAN SCREEN -->
+<div id="screen-kanban" class="screen active">
+  <div class="toolbar">
+    <div class="toolbar-title">Team board</div>
+    <div class="view-toggle">
+      <button class="view-btn active" onclick="setKanbanView(&#39;subtask&#39;)">By sub-task</button>
+      <button class="view-btn" onclick="setKanbanView(&#39;person&#39;)">By person</button>
+      <button class="view-btn" onclick="setKanbanView(&#39;effort&#39;)">By effort</button>
+    </div>
+    <select class="filter-select" id="filter-person" onchange="renderKanban()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
+    <select class="filter-select" id="filter-pri" onchange="renderKanban()">
+      <option value="">All priorities</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+    <div style="position:relative">
+      <button class="btn" id="col-filter-btn" onclick="toggleColFilter(event)">Columns ▾</button>
+      <div id="col-filter-panel" style="display:none;position:absolute;top:36px;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;z-index:100;min-width:160px;box-shadow:var(--shadow-md)">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px">Show columns</div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" onchange="renderKanban()" data-col="New Idea"> Ideas</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" onchange="renderKanban()" data-col="In Review"> In Review</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderKanban()" data-col="Backlog"> Backlog</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderKanban()" data-col="In Progress"> In Progress</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderKanban()" data-col="Blocked"> Blocked</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" onchange="renderKanban()" data-col="On Hold"> On Hold</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" onchange="renderKanban()" data-col="Completed"> Completed</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" onchange="renderKanban()" data-col="Cancelled"> Cancelled</label>
+      </div>
+    </div>
+    <button class="btn primary" onclick="toggleNewEffortForm()">+ New effort</button>
+    <button class="btn" onclick="toggleNewSubtaskKanbanForm()">+ New sub-task</button>
+  </div>
+
+  <!-- NEW EFFORT INLINE FORM -->
+  <div id="new-effort-form" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px">
+    <div style="font-size:12px;font-weight:600;margin-bottom:12px;color:var(--text)">New effort</div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label class="form-label">Title *</label>
+        <input class="form-input" id="ne-title" placeholder="Effort title">
+      </div>
+      <div>
+        <label class="form-label">Status</label>
+        <select class="form-select" id="ne-status">
+          <option>Backlog</option><option>In Progress</option><option>In Review</option>
+          <option>Blocked</option><option>On Hold</option><option>Completed</option><option>Cancelled</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="ne-priority">
+          <option>Medium</option><option>High</option><option>Low</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Owner</label>
+        <select class="form-select" id="ne-owner"></select>
+      </div>
+      <div>
+        <label class="form-label">% Complete</label>
+        <input class="form-input" type="number" id="ne-pct" min="0" max="100" value="0">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label class="form-label">Description</label>
+        <input class="form-input" id="ne-desc" placeholder="Brief description">
+      </div>
+      <div>
+        <label class="form-label">Start date</label>
+        <input class="form-input" type="date" id="ne-start">
+      </div>
+      <div>
+        <label class="form-label">Target end</label>
+        <input class="form-input" type="date" id="ne-end">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn primary" onclick="saveNewEffort()">Save effort</button>
+      <button class="btn" onclick="toggleNewEffortForm()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- NEW SUBTASK INLINE FORM (kanban level) -->
+  <div id="new-subtask-kanban-form" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px">
+    <div style="font-size:12px;font-weight:600;margin-bottom:12px;color:var(--text)">New sub-task</div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label class="form-label">Title *</label>
+        <input class="form-input" id="nsk-title" placeholder="Sub-task title">
+      </div>
+      <div>
+        <label class="form-label">Parent effort *</label>
+        <select class="form-select" id="nsk-effort"></select>
+      </div>
+      <div>
+        <label class="form-label">Assigned to</label>
+        <select class="form-select" id="nsk-assignee"></select>
+      </div>
+      <div>
+        <label class="form-label">Status</label>
+        <select class="form-select" id="nsk-status">
+          <option>Backlog</option><option>In Progress</option><option>In Review</option>
+          <option>Blocked</option><option>On Hold</option><option>Completed</option><option>Cancelled</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="nsk-priority">
+          <option>Medium</option><option>High</option><option>Low</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Start date</label>
+        <input class="form-input" type="date" id="nsk-start">
+      </div>
+      <div>
+        <label class="form-label">Target end</label>
+        <input class="form-input" type="date" id="nsk-end">
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <label class="form-label">Goal / Deliverable</label>
+      <input class="form-input" id="nsk-goal" placeholder="Expected outcome">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn primary" onclick="saveNewSubtaskKanban()">Save sub-task</button>
+      <button class="btn" onclick="toggleNewSubtaskKanbanForm()">Cancel</button>
+    </div>
+  </div>
+
+  <div id="kanban-content"><div class="kanban-board" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kb-col-wrap">
+      <div class="kb-col-head">
+        <span class="kb-col-name">Backlog</span>
+        <span class="kb-col-count">3</span>
+      </div>
+      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="rec6UiNjSrhSMU4e9" ondragstart="onDragStart(event,&#39;rec6UiNjSrhSMU4e9&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec6UiNjSrhSMU4e9&#39;,event)">
+    <div class="card-title">Writeback - Set up dashboard POC</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Writeback POC</div>
+    <div class="card-meta">
+      <div class="avatar" title="Grant Polychronis">GP</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">No due date</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="recCg1idGFspG1bsF" ondragstart="onDragStart(event,&#39;recCg1idGFspG1bsF&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recCg1idGFspG1bsF&#39;,event)">
+    <div class="card-title">Create Monthly Adhoc Job Cards</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
+    <div class="card-meta">
+      <div class="avatar" title="Francisco Zuniga">FZ</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">May 30, 2026</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="recokwxJ92isnHJol" ondragstart="onDragStart(event,&#39;recokwxJ92isnHJol&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recokwxJ92isnHJol&#39;,event)">
+    <div class="card-title">RFID - Create History Table</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
+    <div class="card-meta">
+      <div class="avatar" title="Aish Gaikwad">AG</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">Apr 29, 2026</span>
+    </div>
+    
+  </div></div></div><div class="kb-col-wrap">
+      <div class="kb-col-head">
+        <span class="kb-col-name">In Progress</span>
+        <span class="kb-col-count">4</span>
+      </div>
+      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="rec2pA8yVXJ47kRFl" ondragstart="onDragStart(event,&#39;rec2pA8yVXJ47kRFl&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec2pA8yVXJ47kRFl&#39;,event)">
+    <div class="card-title">Writeback - Set up Teradata table</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Writeback POC</div>
+    <div class="card-meta">
+      <div class="avatar" title="Prem Madira">PM</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">Apr 29, 2026</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="recOEPkbonWickDhw" ondragstart="onDragStart(event,&#39;recOEPkbonWickDhw&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recOEPkbonWickDhw&#39;,event)">
+    <div class="card-title">RFID Dashboard Update - Fix landing page min/max size</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
+    <div class="card-meta">
+      <div class="avatar" title="Aish Gaikwad">AG</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">No due date</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="recZYxSNUADQPURpZ" ondragstart="onDragStart(event,&#39;recZYxSNUADQPURpZ&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recZYxSNUADQPURpZ&#39;,event)">
+    <div class="card-title">Cabin Survey - Add Grading metric</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Update Cabin Survey Site</div>
+    <div class="card-meta">
+      <div class="avatar" title="Grant Polychronis">GP</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-yellow" title="Health: yellow"></span>
+      <span class="due-label">No due date</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="recbZQIJ8Ja1kIq1m" ondragstart="onDragStart(event,&#39;recbZQIJ8Ja1kIq1m&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recbZQIJ8Ja1kIq1m&#39;,event)">
+    <div class="card-title">Runbook Update - Cabin Survey</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Update Runbook</div>
+    <div class="card-meta">
+      <div class="avatar" title="Grant Polychronis">GP</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-green" title="Health: green"></span>
+      <span class="due-label">Apr 29, 2026</span>
+    </div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:70%"></div></div>
+  </div></div></div><div class="kb-col-wrap">
+      <div class="kb-col-head">
+        <span class="kb-col-name">Blocked</span>
+        <span class="kb-col-count">0</span>
+      </div>
+      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="empty-col">No items</div></div></div></div></div>
+</div>
+
+<!-- GANTT SCREEN -->
+<div id="screen-gantt" class="screen">
+  <div class="toolbar">
+    <div class="toolbar-title">Gantt — work by person</div>
+    <label style="font-size:12px;color:var(--text2);font-weight:500">From</label>
+    <input class="filter-select" type="date" id="gantt-from" onchange="renderGantt()" style="width:140px">
+    <label style="font-size:12px;color:var(--text2);font-weight:500">To</label>
+    <input class="filter-select" type="date" id="gantt-to" onchange="renderGantt()" style="width:140px">
+    <select class="filter-select" id="gantt-person" onchange="renderGantt()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
+    <select class="filter-select" id="gantt-status" onchange="renderGantt()">
+      <option value="">All active statuses</option>
+      <option>In Progress</option>
+      <option>Backlog</option>
+      <option>Blocked</option>
+      <option>In Review</option>
+      <option>On Hold</option>
+    </select>
+    <button class="btn print-btn" onclick="window.print()">Print / PDF</button>
+  </div>
+  <div id="gantt-content" style="overflow-x:auto"></div>
+</div>
+
+<!-- INTAKE SCREEN -->
+<div id="screen-intake" class="screen">
+  <div class="toolbar">
+    <div class="toolbar-title">Submit new idea</div>
+  </div>
+  <div style="display:grid;grid-template-columns:520px 1fr;gap:24px;align-items:start">
+    <div class="intake-form" style="max-width:none">
+      <div id="intake-success" class="success-banner">Idea submitted successfully — it will appear in the Ideas column for review.</div>
+      <div class="form-row">
+        <label class="form-label">Idea title *</label>
+        <input class="form-input" id="intake-title" placeholder="What is this effort about?">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="intake-desc" placeholder="Describe the idea, its purpose, and expected outcome..."></textarea>
+      </div>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label class="form-label">Target start date</label>
+          <input class="form-input" type="date" id="intake-start">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Target end date</label>
+          <input class="form-input" type="date" id="intake-end">
+        </div>
+      </div>
+      <button class="btn primary" onclick="submitIntake()">Submit idea</button>
+    </div>
+    <div>
+      <div class="detail-section-title" style="margin-top:0">Submitted ideas</div>
+      <div id="ideas-list">
+    <div class="report-section" style="padding:14px 16px;margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">This is a great new idea  # 1</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.5">New idea # 1 description
+</div>
+          
+        </div>
+        <button class="btn primary" style="font-size:11px;flex-shrink:0" onclick="promoteIdea(&#39;recDZWYQD97VspXYe&#39;)">Promote to effort</button>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECK-IN SCREEN -->
+<div id="screen-checkin" class="screen">
+  <div class="toolbar">
+    <div class="toolbar-title">Weekly status check-in</div>
+    <select class="filter-select" id="checkin-person" onchange="populateCheckinSubtasks()"><option value="">All team members</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
+  </div>
+  <div style="display:grid;grid-template-columns:480px 1fr;gap:24px;align-items:start">
+    <!-- LEFT: Form -->
+    <div class="checkin-form" style="max-width:none">
+      <div id="checkin-success" class="success-banner">Status update submitted successfully.</div>
+      <div class="form-row">
+        <label class="form-label">Sub-task *</label>
+        <select class="form-select" id="checkin-subtask" onchange="onCheckinSubtaskChange()"><option value="">Select your name above first...</option></select>
+      </div>
+      <div class="form-row" id="checkin-effort-row" style="display:none">
+        <label class="form-label">Parent effort</label>
+        <div class="form-input" id="checkin-effort-display" style="background:var(--surface2);color:var(--text2);cursor:default"></div>
+        <input type="hidden" id="checkin-effort-id">
+      </div>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="checkin-status">
+            <option>In Progress</option><option>Backlog</option><option>Blocked</option>
+            <option>In Review</option><option>On Hold</option><option>Completed</option><option>Cancelled</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">% Complete</label>
+          <input class="form-input" type="number" id="checkin-pct" min="0" max="100" placeholder="0–100">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Week ending</label>
+        <input class="form-input" type="date" id="checkin-week">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Update notes</label>
+        <textarea class="form-textarea" id="checkin-notes" placeholder="What progress was made this week?" style="min-height:100px"></textarea>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Blockers</label>
+        <textarea class="form-textarea" id="checkin-blockers" placeholder="Any blockers or dependencies? Leave blank if none."></textarea>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <label class="form-label" style="margin:0">Suppress notification for this update</label>
+        <div class="toggle-wrap">
+          <input type="checkbox" id="checkin-suppress">
+          <div class="toggle-track"></div>
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <button class="btn primary" onclick="submitCheckin()">Submit update</button>
+    </div>
+    <!-- RIGHT: Prior history -->
+    <div>
+      <div id="checkin-history-panel" style="display:none">
+        <div class="detail-section-title" style="margin-top:0">Prior check-in history</div>
+        <div id="checkin-history"></div>
+      </div>
+      <div id="checkin-history-empty" style="font-size: 13px; color: var(--text3); padding-top: 8px; display: block;">
+        Select your name and a sub-task to see check-in history.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEKLY REVIEW SCREEN -->
+<div id="screen-review" class="screen">
+  <div class="toolbar">
+    <div class="toolbar-title">Weekly review</div>
+    <label style="font-size:12px;color:var(--text2);font-weight:500">From</label>
+    <input class="filter-select" type="date" id="review-from" onchange="renderReview()" style="width:140px">
+    <label style="font-size:12px;color:var(--text2);font-weight:500">To</label>
+    <input class="filter-select" type="date" id="review-to" onchange="renderReview()" style="width:140px">
+    <select class="filter-select" id="review-person-filter" onchange="renderReview()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
+    <div class="view-toggle">
+      <button class="view-btn active" id="review-sort-person" onclick="setReviewSort(&#39;person&#39;)">Person → Sub-task</button>
+      <button class="view-btn" id="review-sort-subtask" onclick="setReviewSort(&#39;subtask&#39;)">Sub-task → Person</button>
+    </div>
+    <button class="btn print-btn" onclick="window.print()">Print / PDF</button>
+  </div>
+  <!-- Missing comments indicator bar -->
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Missing updates — current period</div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="missing-7" onclick="setMissingPeriod(7)">Last 7 days</button>
+      <button class="view-btn" id="missing-14" onclick="setMissingPeriod(14)">Last 14 days</button>
+    </div>
+    <div id="missing-indicator" style="flex:1"></div>
+  </div>
+  <div id="review-content"></div>
+</div>
+
+<!-- REPORT SCREEN -->
+<div id="screen-report" class="screen">
+  <div class="toolbar">
+    <div class="toolbar-title">Reports &amp; dashboard</div>
+    <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="recCCyaBEPxZPok8a">Update Cabin Survey Site</option><option value="recOrw68bOqHgiaAe">RFID</option><option value="recccVfK5YT2AoLcZ">Writeback POC</option><option value="receNx0dZdZgJj5Y9">Test 2</option><option value="recijjz6O5yOf8Qy9">Update Runbook</option><option value="recxcMFemK8sLUxWF"></option></select>
+    <select class="filter-select" id="report-person-filter" onchange="renderReport()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
+    <select class="filter-select" id="report-status-filter" onchange="renderReport()">
+      <option value="">All statuses</option>
+      <option>In Progress</option>
+      <option>Backlog</option>
+      <option>Blocked</option>
+      <option>In Review</option>
+      <option>On Hold</option>
+      <option>Completed</option>
+      <option>Cancelled</option>
+    </select>
+    <label style="font-size:12px;color:var(--text2);font-weight:500">Updates from</label>
+    <input class="filter-select" type="date" id="report-date-from" onchange="renderReport()" style="width:130px">
+    <label style="font-size:12px;color:var(--text2);font-weight:500">to</label>
+    <input class="filter-select" type="date" id="report-date-to" onchange="renderReport()" style="width:130px">
+    <button class="btn print-btn" onclick="window.print()">Print / Export PDF</button>
+  </div>
+  <div id="report-content">
+  <div class="report-grid">
+    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">6</div></div>
+    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">7</div></div>
+    <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">0</div></div>
+    <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">0</div></div>
+  </div>
+
+  <div class="report-section">
+    <div class="report-section-title">Effort status overview</div>
+    <table class="report-table">
+      <thead><tr>
+        <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;effort&#39;,&#39;title&#39;)">Effort <span style="color:var(--border2)">↕</span></th>
+        <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;effort&#39;,&#39;owner&#39;)">Owner <span style="color:var(--border2)">↕</span></th>
+        <th>Status</th><th>Priority</th><th>Target end</th><th>% complete</th><th>Sub-tasks</th><th>Health</th>
+      </tr></thead>
+      <tbody><tr>
+      <td><strong>Update Cabin Survey Site</strong></td>
+      <td>Grant Polychronis</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>May 30, 2026</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>1 · 0 done</td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td><strong>RFID</strong></td>
+      <td>Francisco Zuniga</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>—</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>3 · 0 done</td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td><strong>Writeback POC</strong></td>
+      <td>Michael White</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>—</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>2 · 0 done</td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td><strong>Test 2</strong></td>
+      <td>—</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>—</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>0 · 0 done</td>
+      <td><span class="health-dot health-none" title="Health: none"></span></td>
+    </tr><tr>
+      <td><strong>Update Runbook</strong></td>
+      <td>Michael White</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>Jun 29, 2026</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>1 · 0 done</td>
+      <td><span class="health-dot health-green" title="Health: green"></span></td>
+    </tr><tr>
+      <td><strong></strong></td>
+      <td>—</td>
+      <td><span class="status-pill sp-review">In Review</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>—</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>0 · 0 done</td>
+      <td><span class="health-dot health-none" title="Health: none"></span></td>
+    </tr></tbody></table></div>
+
+  <div class="report-section">
+    <div class="report-section-title">Sub-task detail</div>
+    <table class="report-table">
+      <thead><tr>
+        <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;subtask&#39;,&#39;effort&#39;)">Effort <span style="color:var(--border2)">↕</span></th>
+        <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;subtask&#39;,&#39;subtask&#39;)">Sub-task <span style="color:var(--border2)">↕</span></th>
+        <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;subtask&#39;,&#39;assignee&#39;)">Assigned to <span style="color:var(--border2)">↕</span></th>
+        <th>Status</th><th>Priority</th><th>Target end</th><th>% complete</th><th>Health</th>
+      </tr></thead>
+      <tbody><tr>
+      <td style="color:var(--text3)">Writeback POC</td>
+      <td>Writeback - Set up Teradata table</td>
+      <td>Prem Madira</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">Apr 29, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">Writeback POC</td>
+      <td>Writeback - Set up dashboard POC</td>
+      <td>Grant Polychronis</td>
+      <td><span class="status-pill sp-backlog">Backlog</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">—</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">RFID</td>
+      <td>Create Monthly Adhoc Job Cards</td>
+      <td>Francisco Zuniga</td>
+      <td><span class="status-pill sp-backlog">Backlog</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">May 30, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">RFID</td>
+      <td>RFID Dashboard Update - Fix landing page min/max size</td>
+      <td>Aish Gaikwad</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">—</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">Update Cabin Survey Site</td>
+      <td>Cabin Survey - Add Grading metric</td>
+      <td>Grant Polychronis</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">—</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">Update Runbook</td>
+      <td>Runbook Update - Cabin Survey</td>
+      <td>Grant Polychronis</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">Apr 29, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">70%</span></td>
+      <td><span class="health-dot health-green" title="Health: green"></span></td>
+    </tr><tr>
+      <td style="color:var(--text3)">RFID</td>
+      <td>RFID - Create History Table</td>
+      <td>Aish Gaikwad</td>
+      <td><span class="status-pill sp-backlog">Backlog</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td class="">Apr 29, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr></tbody></table></div>
+
+  <div class="report-section">
+    <div class="report-section-title">Workload by person</div><div class="person-bar-row">
+      <div class="person-bar-name">Aish Gaikwad</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:29%"></div></div>
+      <div class="person-bar-count">2</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">1 active</div>
+    </div><div class="person-bar-row">
+      <div class="person-bar-name">Francisco Zuniga</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:14%"></div></div>
+      <div class="person-bar-count">1</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">0 active</div>
+    </div><div class="person-bar-row">
+      <div class="person-bar-name">Grant Polychronis</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:43%"></div></div>
+      <div class="person-bar-count">3</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">2 active</div>
+    </div><div class="person-bar-row">
+      <div class="person-bar-name">Prem Madira</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:14%"></div></div>
+      <div class="person-bar-count">1</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">1 active</div>
+    </div></div><div class="report-section">
+    <div class="report-section-title">Recent status updates <span style="font-size:11px;font-weight:400;color:var(--text3)">(top 5 per sub-task · filtered by date range)</span></div><div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px">
+        Runbook Update - Cabin Survey <span style="font-weight:400;color:var(--text3)">· Update Runbook</span>
+      </div>
+      <table class="report-table">
+        <thead><tr><th>By</th><th>Week ending</th><th>Status</th><th>%</th><th>Notes</th><th>Blockers</th></tr></thead>
+        <tbody><tr>
+        <td>Grant Polychronis</td>
+        <td>Apr 23, 2026</td>
+        <td><span class="status-pill sp-inprog">In Progress</span></td>
+        <td><span style="font-family:&#39;DM Mono&#39;,monospace">60%</span></td>
+        <td style="max-width:220px">Updated things and now at 60%. On track.
+</td>
+        <td style="max-width:160px;color:var(--high)">No blockers.
+</td>
+      </tr><tr>
+        <td>Grant Polychronis</td>
+        <td>Apr 23, 2026</td>
+        <td><span class="status-pill sp-inprog">In Progress</span></td>
+        <td><span style="font-family:&#39;DM Mono&#39;,monospace">70%</span></td>
+        <td style="max-width:220px">Another update.  now at 70%
+</td>
+        <td style="max-width:160px;color:var(--high)">still no blockers.
+</td>
+      </tr></tbody></table></div></div></div>
+</div>
+
+<!-- EFFORT DETAIL OVERLAY -->
+<div class="overlay" id="effort-overlay" onclick="closeEffortDetail(event)">
+  <div class="detail-panel" onclick="event.stopPropagation()">
+    <div class="detail-header">
+      <div class="detail-header-text">
+        <div class="detail-title" id="det-title"></div>
+        <div class="detail-subtitle" id="det-subtitle"></div>
+      </div>
+      <button class="detail-close" onclick="closeEffortDetail()">✕</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-grid" id="det-fields"></div>
+      <div class="detail-actions" id="det-actions"></div>
+      <div class="detail-section-title" style="margin-top:24px">
+        Sub-tasks
+        <button class="btn" style="font-size:11px;padding:4px 10px" onclick="toggleNewSubtaskForm()">+ Add sub-task</button>
+      </div>
+      <!-- New subtask inline form -->
+      <div id="new-subtask-form" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+          <div>
+            <label class="form-label">Sub-task title *</label>
+            <input class="form-input" id="new-st-title" placeholder="What needs to be done?">
+          </div>
+          <div>
+            <label class="form-label">Assigned to</label>
+            <select class="form-select" id="new-st-assignee"></select>
+          </div>
+          <div>
+            <label class="form-label">Priority</label>
+            <select class="form-select" id="new-st-priority">
+              <option>Medium</option><option>High</option><option>Low</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Start date</label>
+            <input class="form-input" type="date" id="new-st-start">
+          </div>
+          <div>
+            <label class="form-label">Target end</label>
+            <input class="form-input" type="date" id="new-st-end">
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <label class="form-label">Goal / Deliverable</label>
+          <input class="form-input" id="new-st-goal" placeholder="What is the expected outcome?">
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn primary" onclick="saveNewSubtask()">Save sub-task</button>
+          <button class="btn" onclick="toggleNewSubtaskForm()">Cancel</button>
+        </div>
+      </div>
+      <div class="subtask-kanban" id="det-subtask-kanban"></div>
+      <div class="notif-row">
+        <div>
+          <div class="notif-label">Notify team on changes to this effort</div>
+          <div class="notif-sub">Teams message sent when status, assignee, or dates change</div>
+        </div>
+        <div class="toggle-wrap">
+          <input type="checkbox" id="effort-notif" checked="">
+          <div class="toggle-track"></div>
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBTASK DETAIL OVERLAY -->
+<div class="st-detail-overlay" id="st-overlay" onclick="closeStDetail(event)">
+  <div class="st-detail-panel" onclick="event.stopPropagation()">
+    <div class="st-detail-header">
+      <div style="flex:1">
+        <div class="st-detail-title" id="st-det-title"></div>
+        <div class="st-detail-parent" id="st-det-parent"></div>
+      </div>
+      <button class="detail-close" style="background:var(--border2);color:var(--text)" onclick="closeStDetail()">✕</button>
+    </div>
+    <div class="st-detail-body">
+      <div class="st-detail-cols">
+        <div>
+          <div class="detail-section-title" style="margin-top:0">Sub-task details</div>
+          <div class="st-detail-grid" id="st-det-fields"></div>
+          <div class="detail-actions" id="st-det-actions"></div>
+          <div class="notif-row" style="margin-top:20px">
+            <div>
+              <div class="notif-label">Notify on changes to this sub-task</div>
+              <div class="notif-sub">Overrides effort-level setting</div>
+            </div>
+            <div class="toggle-wrap">
+              <input type="checkbox" id="st-notif" checked="">
+              <div class="toggle-track"></div>
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="detail-section-title" style="margin-top:0">Weekly status updates</div>
+          <div id="st-det-updates"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Loaded 7 efforts, 10 sub-tasks</div>
+
+<script>
+// ── CONFIG ──
+const AT_TOKEN = 'pat7pvwQe8SyNsNrS.c545996e97340ccb95eaf09e1ea635dc2fa2595f1e09b86acd5d88092bc20c2e';
+const AT_BASE  = 'appIHMJCRYVxl6E0l';
+const AT_API   = 'https://api.airtable.com/v0';
+
+// ── STATE ──
+let efforts = [];
+let subtasks = [];
+let updates = [];
+let currentEffort = null;
+let currentSubtask = null;
+let dragItem = null;
+let dragType = null;
+
+// ── AIRTABLE API ──
+function atHeaders() {
+  return { 'Authorization': `Bearer ${AT_TOKEN}`, 'Content-Type': 'application/json' };
+}
+
+async function atGet(table) {
+  let records = [], offset = null;
+  do {
+    let url = `${AT_API}/${AT_BASE}/${encodeURIComponent(table)}?pageSize=100`;
+    if (offset) url += `&offset=${offset}`;
+    const r = await fetch(url, { headers: atHeaders() });
+    if (!r.ok) throw new Error(`Airtable ${r.status}: ${await r.text()}`);
+    const d = await r.json();
+    records = records.concat(d.records);
+    offset = d.offset || null;
+  } while (offset);
+  return records;
+}
+
+async function atPost(table, fields) {
+  const r = await fetch(`${AT_API}/${AT_BASE}/${encodeURIComponent(table)}`, {
+    method: 'POST',
+    headers: atHeaders(),
+    body: JSON.stringify({ fields })
+  });
+  if (!r.ok) throw new Error(`Airtable POST ${r.status}: ${await r.text()}`);
+  return await r.json();
+}
+
+async function atUpdate(table, id, fields) {
+  const r = await fetch(`${AT_API}/${AT_BASE}/${encodeURIComponent(table)}/${id}`, {
+    method: 'PATCH',
+    headers: atHeaders(),
+    body: JSON.stringify({ fields })
+  });
+  if (!r.ok) throw new Error(`Airtable PATCH ${r.status}: ${await r.text()}`);
+  return await r.json();
+}
+
+// ── LOAD DATA ──
+async function loadData() {
+  try {
+    const [eRaw, sRaw, uRaw] = await Promise.all([
+      atGet('Efforts'),
+      atGet('Sub-tasks'),
+      atGet('Status Updates')
+    ]);
+
+    efforts = eRaw.map(x => ({
+      Id: x.id,
+      Title: x.fields['Effort'] || '',
+      Description: x.fields['Description'] || '',
+      Status: x.fields['Status'] || 'Backlog',
+      Priority: x.fields['Priority'] || 'Medium',
+      Owner: { Title: x.fields['Owner'] || '' },
+      StartDate: x.fields['StartDate'] || null,
+      TargetEndDate: x.fields['TargetEndDate'] || null,
+      IsIntakeIdea: !!x.fields['IsIntakeIdea'],
+      NotifyOnChanges: !!x.fields['NotifyOnChanges'],
+      PercentComplete: x.fields['PercentComplete'] || 0
+    }));
+
+    subtasks = sRaw.map(x => ({
+      Id: x.id,
+      Title: x.fields['Name'] || '',
+      EffortId: (x.fields['Effort'] || [])[0] || null,
+      AssignedTo: { Title: x.fields['AssignedTo'] || '' },
+      Status: x.fields['Status'] || 'Backlog',
+      Priority: x.fields['Priority'] || 'Medium',
+      StartDate: x.fields['StartDate'] || null,
+      TargetEndDate: x.fields['TargetEndDate'] || null,
+      ActualEndDate: x.fields['ActualEndDate'] || null,
+      PercentComplete: x.fields['PercentComplete'] || 0,
+      GoalDeliverable: x.fields['GoalDeliverable'] || '',
+      NotifyOnChanges: !!x.fields['NotifyOnChanges'],
+      SuppressNotification: !!x.fields['SuppressNotification']
+    }));
+
+    updates = uRaw.map(x => ({
+      Id: x.id,
+      Title: x.fields['Name'] || '',
+      EffortId: (x.fields['Effort'] || [])[0] || null,
+      SubtaskId: (x.fields['SubTask'] || [])[0] || null,
+      UpdateBy: { Title: x.fields['UpdateBy'] || '' },
+      UpdateDate: x.fields['UpdateDate'] || null,
+      WeekEnding: x.fields['WeekEnding'] || null,
+      StatusAtTime: x.fields['StatusAtTime'] || '',
+      PercentCompleteAtTime: x.fields['PercentCompleteAtTime'] || 0,
+      UpdateNotes: x.fields['UpdateNotes'] || '',
+      Blockers: x.fields['Blockers'] || '',
+      SuppressNotification: !!x.fields['SuppressNotification']
+    }));
+
+    if (efforts.length === 0 && subtasks.length === 0) {
+      useSampleData();
+      showToast('Connected to Airtable — no data yet. Showing sample data.');
+    } else {
+      showToast(`Loaded ${efforts.length} efforts, ${subtasks.length} sub-tasks`);
+    }
+  } catch(err) {
+    console.error('Airtable load failed:', err);
+    useSampleData();
+    showToast('Could not connect to Airtable — showing sample data');
+  }
+  populateFilters();
+  renderKanban();
+  renderReport();
+  renderIdeasList();
+  populateCheckinSubtasks();
+}
+
+function useSampleData() {
+  efforts = [
+    { Id:1, Title:'Runbook Updates', Description:'Review and update all team runbooks to reflect current processes', Status:'In Progress', Priority:'High', Owner:{Title:'Michael White'}, StartDate:'2026-04-18', TargetEndDate:'2026-05-16', IsIntakeIdea:false, NotifyOnChanges:true, PercentComplete:25 },
+    { Id:2, Title:'Q2 Operations Dashboard', Description:'Build executive-facing dashboard covering key operational metrics across all stations', Status:'In Progress', Priority:'High', Owner:{Title:'Michael White'}, StartDate:'2026-04-18', TargetEndDate:'2026-05-30', IsIntakeIdea:false, NotifyOnChanges:true, PercentComplete:40 },
+    { Id:3, Title:'Copilot Studio Agent for Logpage Queries', Description:'Explore building a Copilot Studio agent that allows conversational querying of logpage data', Status:'New Idea', Priority:'Medium', Owner:{Title:'Michael White'}, StartDate:null, TargetEndDate:null, IsIntakeIdea:true, NotifyOnChanges:false, PercentComplete:0 }
+  ];
+  subtasks = [
+    { Id:1, Title:'Review and update Databricks pipeline runbook', EffortId:1, AssignedTo:{Title:'Michael White'}, Status:'In Progress', Priority:'High', StartDate:'2026-04-18', TargetEndDate:'2026-05-02', ActualEndDate:null, PercentComplete:50, GoalDeliverable:'Updated runbook reflecting current Databricks pipeline steps', NotifyOnChanges:true, SuppressNotification:false },
+    { Id:2, Title:'Review and update Teradata query runbook', EffortId:1, AssignedTo:{Title:'Andrew Britt'}, Status:'Backlog', Priority:'Medium', StartDate:null, TargetEndDate:'2026-05-09', ActualEndDate:null, PercentComplete:0, GoalDeliverable:'Updated runbook covering standard Teradata query patterns', NotifyOnChanges:true, SuppressNotification:false },
+    { Id:3, Title:'Review and update ADLS access runbook', EffortId:1, AssignedTo:{Title:'Aish Gaikwad'}, Status:'Blocked', Priority:'High', StartDate:'2026-04-18', TargetEndDate:'2026-05-02', ActualEndDate:null, PercentComplete:10, GoalDeliverable:'Updated runbook covering ADLS access procedures', NotifyOnChanges:true, SuppressNotification:false },
+    { Id:4, Title:'Build station delay metrics calculated fields', EffortId:2, AssignedTo:{Title:'Michael White'}, Status:'In Progress', Priority:'High', StartDate:'2026-04-18', TargetEndDate:'2026-05-02', ActualEndDate:null, PercentComplete:60, GoalDeliverable:'All delay metrics calculated correctly in Tableau', NotifyOnChanges:true, SuppressNotification:false },
+    { Id:5, Title:'Build red-gold-green heatmap for all 15 stations', EffortId:2, AssignedTo:{Title:'Grant Polychronis'}, Status:'Backlog', Priority:'High', StartDate:null, TargetEndDate:'2026-05-09', ActualEndDate:null, PercentComplete:0, GoalDeliverable:'Executive-facing heatmap showing delay performance', NotifyOnChanges:true, SuppressNotification:false }
+  ];
+  updates = [
+    { Id:1, Title:'Week ending Apr 18 — Databricks runbook', EffortId:1, SubtaskId:1, UpdateBy:{Title:'Michael White'}, UpdateDate:'2026-04-17', WeekEnding:'2026-04-18', StatusAtTime:'In Progress', PercentCompleteAtTime:50, UpdateNotes:'Completed review of current pipeline steps. Updating error handling section this week. On track for target date.', Blockers:'', SuppressNotification:false },
+    { Id:2, Title:'Week ending Apr 18 — ADLS access runbook', EffortId:1, SubtaskId:3, UpdateBy:{Title:'Aish Gaikwad'}, UpdateDate:'2026-04-17', WeekEnding:'2026-04-18', StatusAtTime:'Blocked', PercentCompleteAtTime:10, UpdateNotes:'Started initial review but unable to proceed without updated access documentation from IT.', Blockers:'Waiting on IT to provide updated access permission documentation', SuppressNotification:false }
+  ];
+}
+
+// ── HELPERS ──
+function initials(name) {
+  if (!name) return '?';
+  const p = name.split(/[,\s]+/).filter(Boolean);
+  if (p.length >= 2) return (p[0][0] + p[1][0]).toUpperCase();
+  return name.substring(0,2).toUpperCase();
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}); }
+  catch { return d; }
+}
+
+function isOverdue(d) {
+  if (!d) return false;
+  return new Date(d) < new Date();
+}
+
+function priClass(p) {
+  if (!p) return '';
+  return p.toLowerCase();
+}
+
+function statusPillClass(s) {
+  const m = {'In Progress':'sp-inprog','Backlog':'sp-backlog','Blocked':'sp-blocked','Completed':'sp-done','On Hold':'sp-hold','In Review':'sp-review','New Idea':'sp-idea','Cancelled':'sp-hold'};
+  return m[s] || 'sp-backlog';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── FILTERS ──
+function populateFilters() {
+  const teamMembers = ['Andrew Britt','Aish Gaikwad','Francisco Zuniga','Grant Polychronis','Michael White','Prem Madira'];
+  const people = [...new Set([
+    ...teamMembers,
+    ...efforts.map(e => e.Owner?.Title).filter(Boolean),
+    ...subtasks.map(s => s.AssignedTo?.Title).filter(Boolean)
+  ])].sort();
+  const sel = document.getElementById('filter-person');
+  sel.innerHTML = '<option value="">All people</option>';
+  people.forEach(p => sel.innerHTML += `<option>${p}</option>`);
+
+  const rSel = document.getElementById('report-effort-filter');
+  rSel.innerHTML = '<option value="">All efforts</option>';
+  efforts.filter(e=>!e.IsIntakeIdea).forEach(e => rSel.innerHTML += `<option value="${e.Id}">${e.Title}</option>`);
+
+  const rPerson = document.getElementById('report-person-filter');
+  rPerson.innerHTML = '<option value="">All people</option>';
+  people.forEach(p => rPerson.innerHTML += `<option>${p}</option>`);
+
+  const revPerson = document.getElementById('review-person-filter');
+  revPerson.innerHTML = '<option value="">All people</option>';
+  people.forEach(p => revPerson.innerHTML += `<option>${p}</option>`);
+
+  const ciPerson = document.getElementById('checkin-person');
+  ciPerson.innerHTML = '<option value="">All team members</option>';
+  people.forEach(p => ciPerson.innerHTML += `<option>${p}</option>`);
+
+  const ganttPerson = document.getElementById('gantt-person');
+  ganttPerson.innerHTML = '<option value="">All people</option>';
+  people.forEach(p => ganttPerson.innerHTML += `<option>${p}</option>`);
+
+  populateCheckinSubtasks();
+}
+
+function populateCheckinSubtasks() {
+  const person = document.getElementById('checkin-person')?.value || '';
+  const sel = document.getElementById('checkin-subtask');
+  sel.innerHTML = '<option value="">Select a sub-task...</option>';
+
+  if (!person) {
+    sel.innerHTML = '<option value="">Select your name above first...</option>';
+    document.getElementById('checkin-effort-row').style.display = 'none';
+    document.getElementById('checkin-history-panel').style.display = 'none';
+    document.getElementById('checkin-history-empty').style.display = 'block';
+    return;
+  }
+
+  const activeEfforts = efforts.filter(e => !e.IsIntakeIdea);
+  let subs = subtasks.filter(s =>
+    s.AssignedTo?.Title === person &&
+    activeEfforts.some(e => e.Id === s.EffortId) &&
+    s.Status !== 'Completed'
+  );
+
+  if (subs.length === 0) {
+    sel.innerHTML = '<option value="">No active sub-tasks assigned</option>';
+    return;
+  }
+
+  subs.forEach(s => {
+    const effort = activeEfforts.find(e => e.Id === s.EffortId);
+    sel.innerHTML += `<option value="${s.Id}">${s.Title} — ${effort?.Title||'?'}</option>`;
+  });
+
+  document.getElementById('checkin-effort-row').style.display = 'none';
+  document.getElementById('checkin-history-panel').style.display = 'none';
+  document.getElementById('checkin-history-empty').style.display = 'block';
+}
+
+function onCheckinSubtaskChange() {
+  const subtaskId = document.getElementById('checkin-subtask').value;
+  if (!subtaskId) {
+    document.getElementById('checkin-effort-row').style.display = 'none';
+    document.getElementById('checkin-history-panel').style.display = 'none';
+    document.getElementById('checkin-history-empty').style.display = 'block';
+    return;
+  }
+  const st = subtasks.find(s => s.Id === subtaskId);
+  const effort = efforts.find(e => e.Id === st?.EffortId);
+
+  // Auto-populate parent effort display
+  document.getElementById('checkin-effort-display').textContent = effort?.Title || '—';
+  document.getElementById('checkin-effort-id').value = effort?.Id || '';
+  document.getElementById('checkin-effort-row').style.display = 'block';
+
+  // Pre-fill status and % complete from last update
+  const stUpdates = updates
+    .filter(u => u.SubtaskId === subtaskId)
+    .sort((a,b) => new Date(b.WeekEnding) - new Date(a.WeekEnding) || new Date(b.UpdateDate) - new Date(a.UpdateDate));
+  if (stUpdates.length > 0) {
+    const last = stUpdates[0];
+    const statusSel = document.getElementById('checkin-status');
+    for (let i = 0; i < statusSel.options.length; i++) {
+      if (statusSel.options[i].text === last.StatusAtTime) { statusSel.selectedIndex = i; break; }
+    }
+    document.getElementById('checkin-pct').value = last.PercentCompleteAtTime || 0;
+  } else if (st) {
+    const statusSel = document.getElementById('checkin-status');
+    for (let i = 0; i < statusSel.options.length; i++) {
+      if (statusSel.options[i].text === st.Status) { statusSel.selectedIndex = i; break; }
+    }
+    document.getElementById('checkin-pct').value = st.PercentComplete || 0;
+  }
+
+  // Render history — most recent first
+  let html = '';
+  if (stUpdates.length === 0) {
+    html = '<div style="font-size:12px;color:var(--text3);padding:8px 0">No prior check-ins for this sub-task.</div>';
+  } else {
+    stUpdates.forEach(u => {
+      html += `<div class="update-row">
+        <div class="update-dot" style="background:${u.StatusAtTime==='Blocked'?'var(--high)':u.StatusAtTime==='Completed'?'var(--low)':'var(--accent)'}"></div>
+        <div style="flex:1">
+          <div class="update-week">Week ending ${fmtDate(u.WeekEnding)} · <span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime}</span> · ${u.PercentCompleteAtTime||0}%</div>
+          <div class="update-note">${u.UpdateNotes||''}</div>
+          ${u.Blockers ? `<div class="update-blocker">Blocker: ${u.Blockers}</div>` : ''}
+          <div class="update-by">${u.UpdateBy?.Title||'—'} · ${fmtDate(u.UpdateDate)}</div>
+        </div>
+      </div>`;
+    });
+  }
+  document.getElementById('checkin-history').innerHTML = html;
+  document.getElementById('checkin-history-panel').style.display = 'block';
+  document.getElementById('checkin-history-empty').style.display = 'none';
+}
+
+// ── KANBAN ──
+const STATUSES = ['New Idea','In Review','Backlog','In Progress','Blocked','On Hold','Completed','Cancelled'];
+let kanbanView = 'subtask';
+
+function setKanbanView(v) {
+  kanbanView = v;
+  document.querySelectorAll('.view-btn').forEach((b,i) => {
+    b.classList.toggle('active', (v==='subtask'&&i===0)||(v==='person'&&i===1)||(v==='effort'&&i===2));
+  });
+  renderKanban();
+}
+
+function getFilteredEfforts() {
+  let list = efforts.filter(e => !e.IsIntakeIdea && e.Status !== 'New Idea');
+  const person = document.getElementById('filter-person')?.value;
+  const pri = document.getElementById('filter-pri')?.value;
+  if (person) list = list.filter(e => e.Owner?.Title === person || subtasks.some(s => s.EffortId === e.Id && s.AssignedTo?.Title === person));
+  if (pri) list = list.filter(e => e.Priority === pri);
+  return list;
+}
+
+function getFilteredSubtasks() {
+  const filteredEfforts = getFilteredEfforts();
+  let list = subtasks.filter(s => filteredEfforts.some(e => e.Id === s.EffortId));
+  const person = document.getElementById('filter-person')?.value;
+  const pri = document.getElementById('filter-pri')?.value;
+  if (person) list = list.filter(s => s.AssignedTo?.Title === person);
+  if (pri) list = list.filter(s => s.Priority === pri);
+  return list;
+}
+
+function renderKanban() {
+  const container = document.getElementById('kanban-content');
+  if (kanbanView === 'subtask') renderSubtaskStatusView(container);
+  else if (kanbanView === 'person') renderSubtaskPersonView(container);
+  else renderEffortView(container);
+}
+
+function toggleColFilter(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('col-filter-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', () => {
+  const panel = document.getElementById('col-filter-panel');
+  if (panel) panel.style.display = 'none';
+});
+
+function getHiddenStatuses() {
+  const boxes = document.querySelectorAll('#col-filter-panel input[type=checkbox]');
+  const hidden = [];
+  boxes.forEach(cb => { if (!cb.checked) hidden.push(cb.dataset.col); });
+  return hidden;
+}
+
+// ── SUBTASK KANBAN VIEW (default) ──
+function renderSubtaskStatusView(container) {
+  const filtered = getFilteredSubtasks();
+  const hidden = getHiddenStatuses();
+  const visibleStatuses = STATUSES.filter(s => !hidden.includes(s));
+  const cols = visibleStatuses.length;
+  let html = `<div class="kanban-board" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">`;
+  visibleStatuses.forEach(status => {
+    const cards = filtered.filter(s => s.Status === status);
+    html += `<div class="kb-col-wrap">
+      <div class="kb-col-head">
+        <span class="kb-col-name">${status}</span>
+        <span class="kb-col-count">${cards.length}</span>
+      </div>
+      <div class="kb-col" data-status="${status}" ondragover="onDragOver(event)" ondrop="onDrop(event,'subtask')">`;
+    if (cards.length === 0) html += `<div class="empty-col">No items</div>`;
+    cards.forEach(s => { html += renderSubtaskKanbanCard(s); });
+    html += `</div></div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ── SUBTASK BY PERSON VIEW ──
+function renderSubtaskPersonView(container) {
+  const filtered = getFilteredSubtasks();
+  const people = [...new Set(filtered.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
+  let html = '';
+  people.forEach(person => {
+    const pSubs = filtered.filter(s => s.AssignedTo?.Title === person);
+    const active = pSubs.filter(s => s.Status === 'In Progress').length;
+    const blocked = pSubs.filter(s => s.Status === 'Blocked').length;
+    html += `<div class="person-section">
+      <div class="person-header">
+        <div class="person-avatar-lg">${initials(person)}</div>
+        <div><div class="person-name">${person}</div></div>
+        <div class="person-stats">${pSubs.length} sub-tasks · ${active} active${blocked ? ` · <span style="color:var(--high)">${blocked} blocked</span>` : ''}</div>
+      </div>
+      <div class="person-cards">`;
+    pSubs.forEach(s => { html += renderSubtaskKanbanCard(s); });
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ── EFFORT VIEW (big picture) ──
+function renderEffortView(container) {
+  const filtered = getFilteredEfforts();
+  const ideas = efforts.filter(e => e.IsIntakeIdea);
+  const hidden = getHiddenStatuses();
+  const visibleStatuses = STATUSES.filter(s => !hidden.includes(s));
+  const showIdeas = !hidden.includes('New Idea');
+  const cols = visibleStatuses.length + (showIdeas ? 1 : 0);
+  let html = `<div class="kanban-board" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">`;
+  visibleStatuses.forEach(status => {
+    const cards = filtered.filter(e => e.Status === status);
+    html += `<div class="kb-col-wrap">
+      <div class="kb-col-head">
+        <span class="kb-col-name">${status}</span>
+        <span class="kb-col-count">${cards.length}</span>
+      </div>
+      <div class="kb-col" data-status="${status}" ondragover="onDragOver(event)" ondrop="onDrop(event,'effort')">`;
+    if (cards.length === 0) html += `<div class="empty-col">No items</div>`;
+    cards.forEach(e => { html += renderEffortCard(e); });
+    html += `</div></div>`;
+  });
+  if (showIdeas) {
+    html += `<div class="kb-col-wrap">
+      <div class="kb-col-head" style="background:var(--surface2)">
+        <span class="kb-col-name">💡 Ideas</span>
+        <span class="kb-col-count">${ideas.length}</span>
+      </div>
+      <div class="kb-col">`;
+    if (ideas.length === 0) html += `<div class="empty-col">No ideas yet</div>`;
+    ideas.forEach(e => { html += renderIdeaCard(e); });
+    html += `</div></div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ── SUBTASK KANBAN CARD ──
+function renderSubtaskKanbanCard(s) {
+  const effort = efforts.find(e => e.Id === s.EffortId);
+  const blocked = s.Status === 'Blocked';
+  const over = isOverdue(s.TargetEndDate);
+  const pct = s.PercentComplete || 0;
+  const h = subtaskHealth(s);
+  return `<div class="effort-card${blocked?' blocked-card':''}"
+    draggable="true"
+    data-id="${s.Id}"
+    ondragstart="onDragStart(event,'${s.Id}','subtask')"
+    ondragend="onDragEnd(event)"
+    onclick="openStDetail('${s.Id}',event)">
+    <div class="card-title">${s.Title}</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">${effort?.Title||'—'}</div>
+    <div class="card-meta">
+      <div class="avatar" title="${s.AssignedTo?.Title||''}">${initials(s.AssignedTo?.Title||'')}</div>
+      <span class="pri-badge ${priClass(s.Priority)}">${s.Priority||'—'}</span>
+      ${healthDot(h)}
+      <span class="due-label${over?' overdue':''}">${s.TargetEndDate ? fmtDate(s.TargetEndDate) : 'No due date'}</span>
+    </div>
+    ${pct > 0 ? `<div class="card-progress"><div class="card-progress-fill" style="width:${pct}%"></div></div>` : ''}
+  </div>`;
+}
+
+// ── HEALTH ──
+function subtaskHealth(s) {
+  const twoWeeksAgo = new Date(); twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+  const oneWeekAgo = new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  if (s.Status === 'Completed') return 'green';
+  if (s.Status === 'Blocked') return 'red';
+  if (isOverdue(s.TargetEndDate)) return 'red';
+  const lastUpdate = updates.filter(u => u.SubtaskId === s.Id).sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate))[0];
+  if (!lastUpdate) return 'yellow'; // no updates ever
+  const lastDate = new Date(lastUpdate.WeekEnding);
+  if (lastDate < twoWeeksAgo) return 'red';
+  if (lastDate < oneWeekAgo) return 'yellow';
+  return 'green';
+}
+
+function effortHealth(e) {
+  const sts = subtasks.filter(s => s.EffortId === e.Id);
+  if (sts.length === 0) return 'none';
+  const healths = sts.map(subtaskHealth);
+  if (healths.includes('red')) return 'red';
+  if (healths.includes('yellow')) return 'yellow';
+  return 'green';
+}
+
+function healthDot(h) {
+  return `<span class="health-dot health-${h}" title="Health: ${h}"></span>`;
+}
+
+function renderEffortCard(e, compact = false) {
+  const sts = subtasks.filter(s => s.EffortId === e.Id);
+  const blocked = e.Status === 'Blocked';
+  const over = isOverdue(e.TargetEndDate);
+  const pct = e.PercentComplete || 0;
+  const h = effortHealth(e);
+  return `<div class="effort-card${blocked?' blocked-card':''}"
+    draggable="true"
+    data-id="${e.Id}"
+    ondragstart="onDragStart(event,'${e.Id}','effort')"
+    ondragend="onDragEnd(event)"
+    onclick="openEffortDetail('${e.Id}')">
+    <div class="card-title">${e.Title}</div>
+    <div class="card-meta">
+      <div class="avatar" title="${e.Owner?.Title||''}">${initials(e.Owner?.Title||'')}</div>
+      <span class="pri-badge ${priClass(e.Priority)}">${e.Priority||'—'}</span>
+      ${healthDot(h)}
+      <span class="due-label${over?' overdue':''}">${e.TargetEndDate ? fmtDate(e.TargetEndDate) : 'No due date'}</span>
+    </div>
+    ${pct > 0 ? `<div class="card-progress"><div class="card-progress-fill" style="width:${pct}%"></div></div>` : ''}
+    ${sts.length > 0 ? `<div class="subtask-summary">${sts.length} sub-task${sts.length>1?'s':''} · ${sts.filter(s=>s.Status==='Completed').length} done${sts.filter(s=>s.Status==='Blocked').length > 0 ? ` · <span style="color:var(--high)">${sts.filter(s=>s.Status==='Blocked').length} blocked</span>` : ''}</div>` : ''}
+  </div>`;
+}
+
+// ── NEW EFFORT (kanban inline) ──
+function toggleNewEffortForm() {
+  const form = document.getElementById('new-effort-form');
+  const visible = form.style.display !== 'none';
+  form.style.display = visible ? 'none' : 'block';
+  document.getElementById('new-subtask-kanban-form').style.display = 'none';
+  if (!visible) {
+    const teamMembers = ['Andrew Britt','Aish Gaikwad','Francisco Zuniga','Grant Polychronis','Michael White','Prem Madira'];
+    const sel = document.getElementById('ne-owner');
+    sel.innerHTML = '<option value="">Unassigned</option>' + teamMembers.map(p => `<option value="${p}">${p}</option>`).join('');
+    document.getElementById('ne-title').value = '';
+    document.getElementById('ne-desc').value = '';
+    document.getElementById('ne-pct').value = '0';
+    document.getElementById('ne-start').value = '';
+    document.getElementById('ne-end').value = '';
+  }
+}
+
+async function saveNewEffort() {
+  const title = document.getElementById('ne-title').value.trim();
+  if (!title) { showToast('Please enter an effort title'); return; }
+  const owner = document.getElementById('ne-owner').value || null;
+  const fields = {
+    Effort: title,
+    Description: document.getElementById('ne-desc').value || '',
+    Status: document.getElementById('ne-status').value,
+    Priority: document.getElementById('ne-priority').value,
+    PercentComplete: parseInt(document.getElementById('ne-pct').value) || 0,
+    IsIntakeIdea: false,
+    NotifyOnChanges: true
+  };
+  if (owner) fields.Owner = owner;
+  const startVal = document.getElementById('ne-start').value;
+  const endVal = document.getElementById('ne-end').value;
+  if (startVal) fields.StartDate = startVal;
+  if (endVal) fields.TargetEndDate = endVal;
+  try {
+    const rec = await atPost('Efforts', fields);
+    efforts.push({
+      Id: rec.id, Title: fields.Effort, Description: fields.Description,
+      Status: fields.Status, Priority: fields.Priority,
+      Owner: { Title: owner || '' },
+      StartDate: fields.StartDate || null, TargetEndDate: fields.TargetEndDate || null,
+      IsIntakeIdea: false, NotifyOnChanges: true,
+      PercentComplete: fields.PercentComplete
+    });
+    showToast('Effort created');
+    document.getElementById('new-effort-form').style.display = 'none';
+    populateFilters();
+    renderKanban();
+  } catch(e) {
+    showToast('Error saving effort — check console');
+    console.error(e);
+  }
+}
+
+// ── NEW SUBTASK (kanban inline) ──
+function toggleNewSubtaskKanbanForm() {
+  const form = document.getElementById('new-subtask-kanban-form');
+  const visible = form.style.display !== 'none';
+  form.style.display = visible ? 'none' : 'block';
+  document.getElementById('new-effort-form').style.display = 'none';
+  if (!visible) {
+    const teamMembers = ['Andrew Britt','Aish Gaikwad','Francisco Zuniga','Grant Polychronis','Michael White','Prem Madira'];
+    const assigneeSel = document.getElementById('nsk-assignee');
+    assigneeSel.innerHTML = '<option value="">Unassigned</option>' + teamMembers.map(p => `<option value="${p}">${p}</option>`).join('');
+    const effortSel = document.getElementById('nsk-effort');
+    const activeEfforts = efforts.filter(e => !e.IsIntakeIdea && e.Status !== 'New Idea');
+    effortSel.innerHTML = '<option value="">Select effort...</option>' + activeEfforts.map(e => `<option value="${e.Id}">${e.Title}</option>`).join('');
+    document.getElementById('nsk-title').value = '';
+    document.getElementById('nsk-goal').value = '';
+    document.getElementById('nsk-start').value = '';
+    document.getElementById('nsk-end').value = '';
+  }
+}
+
+async function saveNewSubtaskKanban() {
+  const title = document.getElementById('nsk-title').value.trim();
+  const effortId = document.getElementById('nsk-effort').value;
+  if (!title) { showToast('Please enter a sub-task title'); return; }
+  if (!effortId) { showToast('Please select a parent effort'); return; }
+  const assignee = document.getElementById('nsk-assignee').value || null;
+  const fields = {
+    Name: title,
+    Effort: [effortId],
+    Status: document.getElementById('nsk-status').value,
+    Priority: document.getElementById('nsk-priority').value,
+    PercentComplete: 0,
+    NotifyOnChanges: true,
+    SuppressNotification: false
+  };
+  if (assignee) fields.AssignedTo = assignee;
+  const startVal = document.getElementById('nsk-start').value;
+  const endVal = document.getElementById('nsk-end').value;
+  const goalVal = document.getElementById('nsk-goal').value;
+  if (startVal) fields.StartDate = startVal;
+  if (endVal) fields.TargetEndDate = endVal;
+  if (goalVal) fields.GoalDeliverable = goalVal;
+  try {
+    const rec = await atPost('Sub-tasks', fields);
+    subtasks.push({
+      Id: rec.id, Title: fields.Name, EffortId: effortId,
+      AssignedTo: { Title: assignee || '' },
+      Status: fields.Status, Priority: fields.Priority,
+      StartDate: fields.StartDate || null, TargetEndDate: fields.TargetEndDate || null,
+      ActualEndDate: null, PercentComplete: 0,
+      GoalDeliverable: fields.GoalDeliverable || '',
+      NotifyOnChanges: true, SuppressNotification: false
+    });
+    showToast('Sub-task created');
+    document.getElementById('new-subtask-kanban-form').style.display = 'none';
+    renderKanban();
+  } catch(e) {
+    showToast('Error saving sub-task — check console');
+    console.error(e);
+  }
+}
+
+// ── ADD NEW SUBTASK ──
+function toggleNewSubtaskForm() {
+  const form = document.getElementById('new-subtask-form');
+  const visible = form.style.display !== 'none';
+  form.style.display = visible ? 'none' : 'block';
+  if (!visible) {
+    const teamMembers = ['Andrew Britt','Aish Gaikwad','Francisco Zuniga','Grant Polychronis','Michael White','Prem Madira'];
+    const sel = document.getElementById('new-st-assignee');
+    sel.innerHTML = '<option value="">Unassigned</option>' + teamMembers.map(p => `<option value="${p}">${p}</option>`).join('');
+    document.getElementById('new-st-title').value = '';
+    document.getElementById('new-st-goal').value = '';
+    document.getElementById('new-st-start').value = '';
+    document.getElementById('new-st-end').value = '';
+  }
+}
+
+async function saveNewSubtask() {
+  const title = document.getElementById('new-st-title').value.trim();
+  if (!title) { showToast('Please enter a sub-task title'); return; }
+  if (!currentEffort) return;
+  const assignee = document.getElementById('new-st-assignee').value || null;
+  const fields = {
+    Name: title,
+    Effort: [currentEffort.Id],
+    Status: 'Backlog',
+    Priority: document.getElementById('new-st-priority').value,
+    PercentComplete: 0,
+    NotifyOnChanges: true,
+    SuppressNotification: false
+  };
+  if (assignee) fields.AssignedTo = assignee;
+  const startVal = document.getElementById('new-st-start').value;
+  const endVal = document.getElementById('new-st-end').value;
+  const goalVal = document.getElementById('new-st-goal').value;
+  if (startVal) fields.StartDate = startVal;
+  if (endVal) fields.TargetEndDate = endVal;
+  if (goalVal) fields.GoalDeliverable = goalVal;
+
+  try {
+    const rec = await atPost('Sub-tasks', fields);
+    const newSt = {
+      Id: rec.id,
+      Title: fields.Name,
+      EffortId: currentEffort.Id,
+      AssignedTo: { Title: assignee || '' },
+      Status: 'Backlog',
+      Priority: fields.Priority,
+      StartDate: fields.StartDate || null,
+      TargetEndDate: fields.TargetEndDate || null,
+      ActualEndDate: null,
+      PercentComplete: 0,
+      GoalDeliverable: fields.GoalDeliverable || '',
+      NotifyOnChanges: true,
+      SuppressNotification: false
+    };
+    subtasks.push(newSt);
+    showToast('Sub-task added');
+    document.getElementById('new-subtask-form').style.display = 'none';
+    openEffortDetail(currentEffort.Id);
+    renderKanban();
+  } catch(e) {
+    showToast('Error saving sub-task — check console');
+    console.error(e);
+  }
+}
+
+// ── IDEA CARD (Kanban) ──
+function renderIdeaCard(e) {
+  return `<div class="effort-card" style="border-left:3px solid var(--accent);opacity:.85" onclick="openEffortDetail('${e.Id}')">
+    <div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px">💡 Idea</div>
+    <div class="card-title">${e.Title}</div>
+    ${e.Description ? `<div style="font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4">${e.Description.substring(0,80)}${e.Description.length>80?'…':''}</div>` : ''}
+    <div style="margin-top:8px">
+      <button class="btn primary" style="font-size:10px;padding:3px 10px" onclick="event.stopPropagation();promoteIdea('${e.Id}')">Promote to effort</button>
+    </div>
+  </div>`;
+}
+
+// ── IDEAS LIST (intake tab) ──
+function renderIdeasList() {
+  const ideas = efforts.filter(e => e.IsIntakeIdea);
+  const container = document.getElementById('ideas-list');
+  if (!container) return;
+  if (ideas.length === 0) {
+    container.innerHTML = '<div style="font-size:13px;color:var(--text3)">No ideas submitted yet.</div>';
+    return;
+  }
+  container.innerHTML = ideas.map(e => `
+    <div class="report-section" style="padding:14px 16px;margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">${e.Title}</div>
+          ${e.Description ? `<div style="font-size:12px;color:var(--text2);line-height:1.5">${e.Description}</div>` : ''}
+          ${e.StartDate||e.TargetEndDate ? `<div style="font-size:11px;color:var(--text3);margin-top:6px">${e.StartDate?'Start: '+fmtDate(e.StartDate):''}${e.StartDate&&e.TargetEndDate?' · ':''}${e.TargetEndDate?'End: '+fmtDate(e.TargetEndDate):''}</div>` : ''}
+        </div>
+        <button class="btn primary" style="font-size:11px;flex-shrink:0" onclick="promoteIdea('${e.Id}')">Promote to effort</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function promoteIdea(id) {
+  const idea = efforts.find(e => e.Id === id);
+  if (!idea) return;
+  idea.IsIntakeIdea = false;
+  idea.Status = 'Backlog';
+  try { await atUpdate('Efforts', id, { IsIntakeIdea: false, Status: 'Backlog' }); } catch(e) { console.error(e); }
+  showToast(`"${idea.Title}" promoted to active effort`);
+  renderIdeasList();
+  renderKanban();
+}
+
+function onDragStart(e, id, type) {
+  dragItem = id; dragType = type;
+  setTimeout(() => e.target.classList.add('dragging'), 0);
+}
+function onDragEnd(e) {
+  e.target.classList.remove('dragging');
+  document.querySelectorAll('.kb-col,.stk-col').forEach(c => c.classList.remove('drag-over'));
+}
+function onDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function onDrop(e, type) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const newStatus = e.currentTarget.dataset.status;
+  if (type === 'effort' && dragItem) {
+    const ef = efforts.find(x => x.Id === dragItem);
+    if (ef && ef.Status !== newStatus) {
+      ef.Status = newStatus;
+      atUpdate('Efforts', ef.Id, { Status: newStatus }).catch(()=>{});
+      showToast(`"${ef.Title}" moved to ${newStatus}`);
+      renderKanban();
+    }
+  } else if (type === 'subtask' && dragItem) {
+    const st = subtasks.find(x => x.Id === dragItem);
+    if (st && st.Status !== newStatus) {
+      st.Status = newStatus;
+      atUpdate('Sub-tasks', st.Id, { Status: newStatus }).catch(()=>{});
+      showToast(`Sub-task moved to ${newStatus}`);
+      if (currentEffort) openEffortDetail(currentEffort.Id);
+      else renderKanban();
+    }
+  }
+}
+
+// ── EFFORT DETAIL ──
+function openEffortDetail(id) {
+  currentEffort = efforts.find(e => e.Id === id);
+  if (!currentEffort) return;
+  const sts = subtasks.filter(s => s.EffortId === id);
+  const teamMembers = ["Andrew Britt","Aish Gaikwad","Francisco Zuniga","Grant Polychronis","Michael White","Prem Madira"];
+  const people = [...new Set([...teamMembers,...efforts.map(e=>e.Owner?.Title),...subtasks.map(s=>s.AssignedTo?.Title)].filter(Boolean))].sort();
+  const peopleOptions = people.map(p=>`<option${p===currentEffort.Owner?.Title?' selected':''}>${p}</option>`).join('');
+
+  document.getElementById('det-title').textContent = currentEffort.Title;
+  document.getElementById('det-subtitle').textContent = currentEffort.Description || '';
+
+  document.getElementById('det-fields').innerHTML = `
+    <div class="detail-field">
+      <label>Title</label>
+      <input class="form-input" id="edit-title" value="${currentEffort.Title||''}">
+    </div>
+    <div class="detail-field">
+      <label>Status</label>
+      <select class="form-select" id="edit-status">
+        ${STATUSES.map(s=>`<option${s===currentEffort.Status?' selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="detail-field">
+      <label>Priority</label>
+      <select class="form-select" id="edit-priority">
+        ${['High','Medium','Low'].map(p=>`<option${p===currentEffort.Priority?' selected':''}>${p}</option>`).join('')}
+      </select>
+    </div>
+    <div class="detail-field">
+      <label>Owner</label>
+      <select class="form-select" id="edit-owner">${peopleOptions}</select>
+    </div>
+    <div class="detail-field">
+      <label>% Complete</label>
+      <input class="form-input" type="number" id="edit-pct" min="0" max="100" value="${currentEffort.PercentComplete||0}">
+    </div>
+    <div class="detail-field">
+      <label>Start date</label>
+      <input class="form-input" type="date" id="edit-start" value="${currentEffort.StartDate||''}">
+    </div>
+    <div class="detail-field">
+      <label>Target end</label>
+      <input class="form-input" type="date" id="edit-end" value="${currentEffort.TargetEndDate||''}">
+    </div>
+    <div class="detail-field">
+      <label>Sub-tasks</label>
+      <span style="line-height:30px">${sts.length} total · ${sts.filter(s=>s.Status==='Completed').length} done</span>
+    </div>
+    <div class="detail-field detail-field-full">
+      <label>Description</label>
+      <textarea class="form-textarea" id="edit-desc">${currentEffort.Description||''}</textarea>
+    </div>
+  `;
+
+  document.getElementById('det-actions').innerHTML = `
+    <button class="btn primary" onclick="saveEffortDetail()">Save changes</button>
+    <button class="btn" onclick="closeEffortDetail()">Cancel</button>
+  `;
+
+  document.getElementById('effort-notif').checked = !!currentEffort.NotifyOnChanges;
+
+  let kanbanHtml = '';
+  STATUSES.forEach(status => {
+    const cards = sts.filter(s => s.Status === status);
+    kanbanHtml += `<div>
+      <div class="stk-col-head">${status} <span style="color:var(--text3);font-family:'DM Mono',monospace">${cards.length}</span></div>
+      <div class="stk-col" data-status="${status}" ondragover="onDragOver(event)" ondrop="onDrop(event,'subtask')">`;
+    if (cards.length === 0) kanbanHtml += `<div style="font-size:10px;color:var(--text3);text-align:center;padding:8px">—</div>`;
+    cards.forEach(s => { kanbanHtml += renderSubtaskCard(s); });
+    kanbanHtml += `</div></div>`;
+  });
+  document.getElementById('det-subtask-kanban').innerHTML = kanbanHtml;
+  document.getElementById('effort-overlay').classList.add('open');
+}
+
+async function saveEffortDetail() {
+  if (!currentEffort) return;
+  const newOwnerTitle = document.getElementById('edit-owner').value;
+  currentEffort.Title = document.getElementById('edit-title').value;
+  currentEffort.Status = document.getElementById('edit-status').value;
+  currentEffort.Priority = document.getElementById('edit-priority').value;
+  currentEffort.Owner = { Title: newOwnerTitle };
+  currentEffort.PercentComplete = parseInt(document.getElementById('edit-pct').value) || 0;
+  currentEffort.StartDate = document.getElementById('edit-start').value;
+  currentEffort.TargetEndDate = document.getElementById('edit-end').value;
+  currentEffort.Description = document.getElementById('edit-desc').value;
+  currentEffort.NotifyOnChanges = document.getElementById('effort-notif').checked;
+  try {
+    const eFields = {
+      Effort: currentEffort.Title,
+      Status: currentEffort.Status,
+      Priority: currentEffort.Priority,
+      PercentComplete: currentEffort.PercentComplete,
+      StartDate: currentEffort.StartDate || null,
+      TargetEndDate: currentEffort.TargetEndDate || null,
+      Description: currentEffort.Description,
+      NotifyOnChanges: currentEffort.NotifyOnChanges
+    };
+    if (currentEffort.Owner?.Title) eFields.Owner = currentEffort.Owner.Title;
+    await atUpdate('Efforts', currentEffort.Id, eFields);
+  } catch(e) { console.error(e); }
+  showToast('Effort saved');
+  document.getElementById('det-title').textContent = currentEffort.Title;
+  renderKanban();
+  renderReport();
+}
+
+function closeEffortDetail(e) {
+  if (!e || e.target === document.getElementById('effort-overlay')) {
+    document.getElementById('effort-overlay').classList.remove('open');
+  }
+}
+
+function renderSubtaskCard(s) {
+  const blocked = s.Status === 'Blocked';
+  const over = isOverdue(s.TargetEndDate);
+  const pct = s.PercentComplete || 0;
+  const h = subtaskHealth(s);
+  return `<div class="st-card${blocked?' blocked-card':''}"
+    draggable="true"
+    data-id="${s.Id}"
+    ondragstart="onDragStart(event,'${s.Id}','subtask')"
+    ondragend="onDragEnd(event)"
+    onclick="openStDetail('${s.Id}',event)">
+    <div class="st-title">${s.Title}</div>
+    <div class="st-meta">
+      <div class="st-avatar" title="${s.AssignedTo?.Title||''}">${initials(s.AssignedTo?.Title||'')}</div>
+      <span class="pri-badge ${priClass(s.Priority)}" style="font-size:9px;padding:1px 5px">${s.Priority||'—'}</span>
+      ${healthDot(h)}
+      <span class="st-due${over?' overdue':''}">${s.TargetEndDate ? fmtDate(s.TargetEndDate) : '—'}</span>
+    </div>
+    ${pct > 0 ? `<div class="st-progress"><div class="st-progress-fill" style="width:${pct}%"></div></div>` : ''}
+  </div>`;
+}
+
+// ── SUBTASK DETAIL ──
+function openStDetail(id, e) {
+  if (e) e.stopPropagation();
+  currentSubtask = subtasks.find(s => s.Id === id);
+  if (!currentSubtask) return;
+  const effort = efforts.find(ef => ef.Id === currentSubtask.EffortId);
+  const stUpdates = updates.filter(u => u.SubtaskId === id).sort((a,b) => new Date(b.WeekEnding) - new Date(a.WeekEnding) || new Date(b.UpdateDate) - new Date(a.UpdateDate));
+  const teamMembers = ["Andrew Britt","Aish Gaikwad","Francisco Zuniga","Grant Polychronis","Michael White","Prem Madira"];
+  const people = [...new Set([...teamMembers,...efforts.map(e=>e.Owner?.Title),...subtasks.map(s=>s.AssignedTo?.Title)].filter(Boolean))].sort();
+  const peopleOptions = people.map(p=>`<option${p===currentSubtask.AssignedTo?.Title?' selected':''}>${p}</option>`).join('');
+
+  document.getElementById('st-det-title').textContent = currentSubtask.Title;
+  document.getElementById('st-det-parent').textContent = `Parent effort: ${effort?.Title || '—'}`;
+
+  document.getElementById('st-det-fields').innerHTML = `
+    <div class="detail-field detail-field-full">
+      <label>Title</label>
+      <input class="form-input" id="st-edit-title" value="${currentSubtask.Title||''}">
+    </div>
+    <div class="detail-field">
+      <label>Assigned to</label>
+      <select class="form-select" id="st-edit-assignee">${peopleOptions}</select>
+    </div>
+    <div class="detail-field">
+      <label>Status</label>
+      <select class="form-select" id="st-edit-status">
+        ${STATUSES.map(s=>`<option${s===currentSubtask.Status?' selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="detail-field">
+      <label>Priority</label>
+      <select class="form-select" id="st-edit-priority">
+        ${['High','Medium','Low'].map(p=>`<option${p===currentSubtask.Priority?' selected':''}>${p}</option>`).join('')}
+      </select>
+    </div>
+    <div class="detail-field">
+      <label>% Complete</label>
+      <input class="form-input" type="number" id="st-edit-pct" min="0" max="100" value="${currentSubtask.PercentComplete||0}">
+    </div>
+    <div class="detail-field">
+      <label>Start date</label>
+      <input class="form-input" type="date" id="st-edit-start" value="${currentSubtask.StartDate||''}">
+    </div>
+    <div class="detail-field">
+      <label>Target end</label>
+      <input class="form-input" type="date" id="st-edit-end" value="${currentSubtask.TargetEndDate||''}">
+    </div>
+    <div class="detail-field">
+      <label>Actual end</label>
+      <input class="form-input" type="date" id="st-edit-actual" value="${currentSubtask.ActualEndDate||''}">
+    </div>
+    <div class="detail-field detail-field-full">
+      <label>Goal / Deliverable</label>
+      <textarea class="form-textarea" id="st-edit-goal">${currentSubtask.GoalDeliverable||''}</textarea>
+    </div>
+  `;
+
+  document.getElementById('st-det-actions').innerHTML = `
+    <button class="btn primary" onclick="saveStDetail()">Save changes</button>
+    <button class="btn" onclick="closeStDetail()">Cancel</button>
+  `;
+
+  let updatesHtml = '';
+  if (stUpdates.length === 0) {
+    updatesHtml = '<div style="font-size:12px;color:var(--text3);padding:10px 0">No updates yet.</div>';
+  } else {
+    stUpdates.forEach(u => {
+      updatesHtml += `<div class="update-row">
+        <div class="update-dot" style="background:${u.StatusAtTime==='Blocked'?'var(--high)':u.StatusAtTime==='Completed'?'var(--low)':'var(--accent)'}"></div>
+        <div>
+          <div class="update-week">Week ending ${fmtDate(u.WeekEnding)} · <span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime}</span> · ${u.PercentCompleteAtTime||0}%</div>
+          <div class="update-note">${u.UpdateNotes||''}</div>
+          ${u.Blockers ? `<div class="update-blocker">Blocker: ${u.Blockers}</div>` : ''}
+          <div class="update-by">${u.UpdateBy?.Title||'—'} · ${fmtDate(u.UpdateDate)}</div>
+        </div>
+      </div>`;
+    });
+  }
+  document.getElementById('st-det-updates').innerHTML = updatesHtml;
+  document.getElementById('st-notif').checked = !!currentSubtask.NotifyOnChanges;
+  document.getElementById('st-overlay').classList.add('open');
+}
+
+async function saveStDetail() {
+  if (!currentSubtask) return;
+  currentSubtask.Title = document.getElementById('st-edit-title').value;
+  currentSubtask.AssignedTo = { Title: document.getElementById('st-edit-assignee').value };
+  currentSubtask.Status = document.getElementById('st-edit-status').value;
+  currentSubtask.Priority = document.getElementById('st-edit-priority').value;
+  currentSubtask.PercentComplete = parseInt(document.getElementById('st-edit-pct').value) || 0;
+  currentSubtask.StartDate = document.getElementById('st-edit-start').value;
+  currentSubtask.TargetEndDate = document.getElementById('st-edit-end').value;
+  currentSubtask.ActualEndDate = document.getElementById('st-edit-actual').value;
+  currentSubtask.GoalDeliverable = document.getElementById('st-edit-goal').value;
+  currentSubtask.NotifyOnChanges = document.getElementById('st-notif').checked;
+  try {
+    const stFields = {
+      Name: currentSubtask.Title,
+      Status: currentSubtask.Status,
+      Priority: currentSubtask.Priority,
+      PercentComplete: currentSubtask.PercentComplete,
+      StartDate: currentSubtask.StartDate || null,
+      TargetEndDate: currentSubtask.TargetEndDate || null,
+      ActualEndDate: currentSubtask.ActualEndDate || null,
+      GoalDeliverable: currentSubtask.GoalDeliverable,
+      NotifyOnChanges: currentSubtask.NotifyOnChanges
+    };
+    if (currentSubtask.AssignedTo?.Title) stFields.AssignedTo = currentSubtask.AssignedTo.Title;
+    await atUpdate('Sub-tasks', currentSubtask.Id, stFields);
+  } catch(err) { console.error(err); }
+  showToast('Sub-task saved');
+  document.getElementById('st-det-title').textContent = currentSubtask.Title;
+  if (currentEffort) openEffortDetail(currentEffort.Id);
+  renderKanban();
+}
+
+function closeStDetail(e) {
+  if (!e || e.target === document.getElementById('st-overlay')) {
+    document.getElementById('st-overlay').classList.remove('open');
+  }
+}
+
+// ── INTAKE ──
+async function submitIntake() {
+  const title = document.getElementById('intake-title').value.trim();
+  if (!title) { showToast('Please enter an idea title'); return; }
+  const data = {
+    Effort: title,
+    Description: document.getElementById('intake-desc').value,
+    Status: 'New Idea',
+    IsIntakeIdea: true,
+    NotifyOnChanges: false,
+    PercentComplete: 0,
+    StartDate: document.getElementById('intake-start').value || null,
+    TargetEndDate: document.getElementById('intake-end').value || null
+  };
+  try {
+    const rec = await atPost('Efforts', data);
+    efforts.push({ ...data, Id: rec.id, Owner: { Title: '' }, IsIntakeIdea: true });
+  } catch(e) {
+    efforts.push({ ...data, Id: Date.now(), Owner: { Title: '' }, IsIntakeIdea: true });
+  }
+  document.getElementById('intake-success').style.display = 'block';
+  document.getElementById('intake-title').value = '';
+  document.getElementById('intake-desc').value = '';
+  document.getElementById('intake-start').value = '';
+  document.getElementById('intake-end').value = '';
+  showToast('New idea submitted');
+  setTimeout(() => document.getElementById('intake-success').style.display = 'none', 4000);
+  renderIdeasList();
+  renderKanban();
+}
+
+// ── CHECK-IN ──
+async function submitCheckin() {
+  const subtaskId = document.getElementById('checkin-subtask').value;
+  const effortId = document.getElementById('checkin-effort-id').value;
+  if (!subtaskId) { showToast('Please select a sub-task'); return; }
+  const notes = document.getElementById('checkin-notes').value.trim();
+  if (!notes) { showToast('Please add update notes'); return; }
+  const data = {
+    Name: `Week ending ${document.getElementById('checkin-week').value} update`,
+    Effort: effortId ? [effortId] : [],
+    SubTask: [subtaskId],
+    UpdateBy: document.getElementById('checkin-person')?.value || 'Michael White',
+    StatusAtTime: document.getElementById('checkin-status').value,
+    PercentCompleteAtTime: parseInt(document.getElementById('checkin-pct').value) || 0,
+    WeekEnding: document.getElementById('checkin-week').value,
+    UpdateNotes: notes,
+    Blockers: document.getElementById('checkin-blockers').value,
+    SuppressNotification: document.getElementById('checkin-suppress').checked,
+    UpdateDate: new Date().toISOString().split('T')[0]
+  };
+  try { await atPost('Status Updates', data); } catch(e) { console.error(e); }
+  updates.push({ ...data, Id: Date.now(), EffortId: effortId, SubtaskId: subtaskId, UpdateBy: { Title: data.UpdateBy } });
+  const st = subtasks.find(s => s.Id === subtaskId);
+  if (st) {
+    st.Status = data.StatusAtTime;
+    st.PercentComplete = data.PercentCompleteAtTime;
+    try { await atUpdate('Sub-tasks', subtaskId, { Status: st.Status, PercentComplete: st.PercentComplete }); } catch(e) {}
+  }
+  document.getElementById('checkin-success').style.display = 'block';
+  document.getElementById('checkin-notes').value = '';
+  document.getElementById('checkin-blockers').value = '';
+  showToast('Status update submitted');
+  setTimeout(() => document.getElementById('checkin-success').style.display = 'none', 4000);
+  onCheckinSubtaskChange();
+  renderKanban();
+  renderReport();
+}
+
+// ── REPORT ──
+let reportEffortSort = { col: null, dir: 1 };
+let reportSubtaskSort = { col: null, dir: 1 };
+
+function toggleReportSort(table, col) {
+  if (table === 'effort') {
+    if (reportEffortSort.col === col) reportEffortSort.dir *= -1;
+    else { reportEffortSort.col = col; reportEffortSort.dir = 1; }
+  } else {
+    if (reportSubtaskSort.col === col) reportSubtaskSort.dir *= -1;
+    else { reportSubtaskSort.col = col; reportSubtaskSort.dir = 1; }
+  }
+  renderReport();
+}
+
+function sortIndicator(table, col) {
+  const s = table === 'effort' ? reportEffortSort : reportSubtaskSort;
+  if (s.col !== col) return ' <span style="color:var(--border2)">↕</span>';
+  return s.dir === 1 ? ' ↑' : ' ↓';
+}
+
+function renderReport() {
+  const filterEffortId = document.getElementById('report-effort-filter')?.value || '';
+  const filterPerson = document.getElementById('report-person-filter')?.value || '';
+  const filterStatus = document.getElementById('report-status-filter')?.value || '';
+  const filterDateFrom = document.getElementById('report-date-from')?.value || '';
+  const filterDateTo = document.getElementById('report-date-to')?.value || '';
+
+  let filteredEfforts = efforts.filter(e => !e.IsIntakeIdea);
+  if (filterEffortId) filteredEfforts = filteredEfforts.filter(e => e.Id === filterEffortId);
+  if (filterStatus) filteredEfforts = filteredEfforts.filter(e => e.Status === filterStatus);
+
+  let allSubtasks = subtasks.filter(s => filteredEfforts.some(e => e.Id === s.EffortId));
+  if (filterPerson) allSubtasks = allSubtasks.filter(s => s.AssignedTo?.Title === filterPerson);
+  if (filterStatus) allSubtasks = allSubtasks.filter(s => s.Status === filterStatus || filteredEfforts.some(e => e.Id === s.EffortId));
+
+  const activeEfforts = filterPerson
+    ? filteredEfforts.filter(e => allSubtasks.some(s => s.EffortId === e.Id))
+    : filteredEfforts;
+
+  // Sort efforts
+  let sortedEfforts = [...activeEfforts];
+  if (reportEffortSort.col === 'title') sortedEfforts.sort((a,b) => reportEffortSort.dir * a.Title.localeCompare(b.Title));
+  else if (reportEffortSort.col === 'owner') sortedEfforts.sort((a,b) => reportEffortSort.dir * (a.Owner?.Title||'').localeCompare(b.Owner?.Title||''));
+
+  // Sort subtasks
+  let sortedSubtasks = [...allSubtasks];
+  if (reportSubtaskSort.col === 'effort') sortedSubtasks.sort((a,b) => {
+    const ea = activeEfforts.find(e=>e.Id===a.EffortId)?.Title||'';
+    const eb = activeEfforts.find(e=>e.Id===b.EffortId)?.Title||'';
+    return reportSubtaskSort.dir * ea.localeCompare(eb);
+  });
+  else if (reportSubtaskSort.col === 'subtask') sortedSubtasks.sort((a,b) => reportSubtaskSort.dir * a.Title.localeCompare(b.Title));
+  else if (reportSubtaskSort.col === 'assignee') sortedSubtasks.sort((a,b) => reportSubtaskSort.dir * (a.AssignedTo?.Title||'').localeCompare(b.AssignedTo?.Title||''));
+
+  const blockedSt = allSubtasks.filter(s => s.Status === 'Blocked');
+  const completedSt = allSubtasks.filter(s => s.Status === 'Completed');
+  const people = [...new Set(allSubtasks.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
+
+  const thSort = (table, col, label) =>
+    `<th style="cursor:pointer;user-select:none" onclick="toggleReportSort('${table}','${col}')">${label}${sortIndicator(table,col)}</th>`;
+
+  let html = `
+  <div class="report-grid">
+    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">${activeEfforts.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">${allSubtasks.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">${completedSt.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">${blockedSt.length}</div></div>
+  </div>
+
+  <div class="report-section">
+    <div class="report-section-title">Effort status overview</div>
+    <table class="report-table">
+      <thead><tr>
+        ${thSort('effort','title','Effort')}
+        ${thSort('effort','owner','Owner')}
+        <th>Status</th><th>Priority</th><th>Target end</th><th>% complete</th><th>Sub-tasks</th><th>Health</th>
+      </tr></thead>
+      <tbody>`;
+  sortedEfforts.forEach(e => {
+    const sts = subtasks.filter(s => s.EffortId === e.Id);
+    const h = effortHealth(e);
+    html += `<tr>
+      <td><strong>${e.Title}</strong></td>
+      <td>${e.Owner?.Title||'—'}</td>
+      <td><span class="status-pill ${statusPillClass(e.Status)}">${e.Status}</span></td>
+      <td><span class="pri-badge ${priClass(e.Priority)}">${e.Priority||'—'}</span></td>
+      <td>${fmtDate(e.TargetEndDate)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:${e.PercentComplete||0}%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:'DM Mono',monospace">${e.PercentComplete||0}%</span>
+        </div>
+      </td>
+      <td>${sts.length} · ${sts.filter(s=>s.Status==='Completed').length} done</td>
+      <td>${healthDot(h)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>
+
+  <div class="report-section">
+    <div class="report-section-title">Sub-task detail</div>
+    <table class="report-table">
+      <thead><tr>
+        ${thSort('subtask','effort','Effort')}
+        ${thSort('subtask','subtask','Sub-task')}
+        ${thSort('subtask','assignee','Assigned to')}
+        <th>Status</th><th>Priority</th><th>Target end</th><th>% complete</th><th>Health</th>
+      </tr></thead>
+      <tbody>`;
+  sortedSubtasks.forEach(s => {
+    const effort = activeEfforts.find(e => e.Id === s.EffortId);
+    const h = subtaskHealth(s);
+    html += `<tr>
+      <td style="color:var(--text3)">${effort?.Title||'—'}</td>
+      <td>${s.Title}</td>
+      <td>${s.AssignedTo?.Title||'—'}</td>
+      <td><span class="status-pill ${statusPillClass(s.Status)}">${s.Status}</span></td>
+      <td><span class="pri-badge ${priClass(s.Priority)}">${s.Priority||'—'}</span></td>
+      <td class="${isOverdue(s.TargetEndDate)?'overdue':''}">${fmtDate(s.TargetEndDate)}</td>
+      <td><span style="font-family:'DM Mono',monospace">${s.PercentComplete||0}%</span></td>
+      <td>${healthDot(h)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>
+
+  <div class="report-section">
+    <div class="report-section-title">Workload by person</div>`;
+  people.forEach(person => {
+    const pSt = allSubtasks.filter(s => s.AssignedTo?.Title === person);
+    const pActive = pSt.filter(s => s.Status === 'In Progress').length;
+    const pBlocked = pSt.filter(s => s.Status === 'Blocked').length;
+    html += `<div class="person-bar-row">
+      <div class="person-bar-name">${person.split(',')[0]}</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:${allSubtasks.length ? Math.round(pSt.length/allSubtasks.length*100) : 0}%"></div></div>
+      <div class="person-bar-count">${pSt.length}</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">${pActive} active${pBlocked ? ` · <span style="color:var(--high)">${pBlocked} blocked</span>` : ''}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  if (blockedSt.length > 0) {
+    html += `<div class="report-section">
+      <div class="report-section-title" style="color:var(--high)">Blockers requiring attention</div>`;
+    blockedSt.forEach(s => {
+      const effort = activeEfforts.find(e => e.Id === s.EffortId);
+      const lastUpdate = updates.filter(u => u.SubtaskId === s.Id).sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate))[0];
+      html += `<div class="blocker-row">
+        <div class="blocker-title">${s.Title}</div>
+        <div class="blocker-effort">${effort?.Title||'—'} · Assigned to ${s.AssignedTo?.Title||'—'}</div>
+        ${lastUpdate?.Blockers ? `<div class="blocker-text">${lastUpdate.Blockers}</div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Most recent 5 updates per subtask, filtered by date range
+  html += `<div class="report-section">
+    <div class="report-section-title">Recent status updates <span style="font-size:11px;font-weight:400;color:var(--text3)">(top 5 per sub-task${filterDateFrom||filterDateTo?' · filtered by date range':''})</span></div>`;
+
+  const stIds = [...new Set(allSubtasks.map(s => s.Id))];
+  stIds.forEach(stId => {
+    const st = subtasks.find(s => s.Id === stId);
+    let stUpdates = updates.filter(u => u.SubtaskId === stId);
+    if (filterDateFrom) stUpdates = stUpdates.filter(u => u.WeekEnding >= filterDateFrom);
+    if (filterDateTo) stUpdates = stUpdates.filter(u => u.WeekEnding <= filterDateTo);
+    if (filterPerson) stUpdates = stUpdates.filter(u => u.UpdateBy?.Title === filterPerson);
+    stUpdates = stUpdates.sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate)).slice(0,5);
+    if (stUpdates.length === 0) return;
+    const effort = activeEfforts.find(e => e.Id === st?.EffortId);
+    html += `<div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px">
+        ${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span>
+      </div>
+      <table class="report-table">
+        <thead><tr><th>By</th><th>Week ending</th><th>Status</th><th>%</th><th>Notes</th><th>Blockers</th></tr></thead>
+        <tbody>`;
+    stUpdates.forEach(u => {
+      html += `<tr>
+        <td>${u.UpdateBy?.Title||'—'}</td>
+        <td>${fmtDate(u.WeekEnding)}</td>
+        <td><span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime}</span></td>
+        <td><span style="font-family:'DM Mono',monospace">${u.PercentCompleteAtTime||0}%</span></td>
+        <td style="max-width:220px">${u.UpdateNotes||'—'}</td>
+        <td style="max-width:160px;color:var(--high)">${u.Blockers||''}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  });
+  html += `</div>`;
+
+  document.getElementById('report-content').innerHTML = html;
+}
+
+// ── WEEKLY REVIEW ──
+let reviewSort = 'person';
+let missingPeriodDays = 7;
+
+function setMissingPeriod(days) {
+  missingPeriodDays = days;
+  document.getElementById('missing-7').classList.toggle('active', days === 7);
+  document.getElementById('missing-14').classList.toggle('active', days === 14);
+  renderMissingIndicator();
+}
+
+function renderMissingIndicator() {
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - missingPeriodDays);
+  const cutoffStr = cutoff.toISOString().split('T')[0];
+
+  const activeEfforts = efforts.filter(e => !e.IsIntakeIdea);
+  const activeSubs = subtasks.filter(s =>
+    activeEfforts.some(e => e.Id === s.EffortId) &&
+    !['Completed','Cancelled'].includes(s.Status)
+  );
+
+  // Sub-tasks with zero updates in the period
+  const missing = activeSubs.filter(s =>
+    !updates.some(u => u.SubtaskId === s.Id && u.WeekEnding >= cutoffStr)
+  );
+
+  const byPerson = {};
+  missing.forEach(s => {
+    const p = s.AssignedTo?.Title || 'Unassigned';
+    if (!byPerson[p]) byPerson[p] = 0;
+    byPerson[p]++;
+  });
+
+  const personSummary = Object.entries(byPerson).sort((a,b) => b[1]-a[1])
+    .map(([p,n]) => `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px">
+      <span class="avatar" style="width:18px;height:18px;font-size:8px">${initials(p)}</span>
+      <span style="font-size:12px;font-weight:500">${p.split(' ')[0]}</span>
+      <span style="font-size:12px;color:var(--high);font-weight:600">${n}</span>
+    </span>`).join('');
+
+  const indicator = document.getElementById('missing-indicator');
+  if (!indicator) return;
+  if (missing.length === 0) {
+    indicator.innerHTML = `<span style="color:var(--low);font-size:12px;font-weight:600">✓ All sub-tasks have updates in the last ${missingPeriodDays} days</span>`;
+  } else {
+    indicator.innerHTML = `<span style="color:var(--high);font-size:12px;font-weight:600;margin-right:12px">⚠ ${missing.length} sub-task${missing.length!==1?'s':''} missing updates</span>${personSummary}`;
+  }
+}
+
+function setReviewSort(sort) {
+  reviewSort = sort;
+  document.getElementById('review-sort-person').classList.toggle('active', sort === 'person');
+  document.getElementById('review-sort-subtask').classList.toggle('active', sort === 'subtask');
+  renderReview();
+}
+
+function renderReview() {
+  const fromVal = document.getElementById('review-from').value;
+  const toVal = document.getElementById('review-to').value;
+  const personFilter = document.getElementById('review-person-filter').value;
+  const activeEfforts = efforts.filter(e => !e.IsIntakeIdea);
+
+  // Filter updates by date range and person
+  let filteredUpdates = updates.filter(u => {
+    if (fromVal && u.WeekEnding < fromVal) return false;
+    if (toVal && u.WeekEnding > toVal) return false;
+    if (personFilter && u.UpdateBy?.Title !== personFilter) return false;
+    return true;
+  });
+
+  // Sort most recent first, tiebreak by UpdateDate
+  filteredUpdates = filteredUpdates.sort((a,b) =>
+    new Date(b.WeekEnding) - new Date(a.WeekEnding) ||
+    new Date(b.UpdateDate) - new Date(a.UpdateDate)
+  );
+
+  // Summary stats
+  const uniquePeople = [...new Set(filteredUpdates.map(u => u.UpdateBy?.Title).filter(Boolean))];
+  const uniqueSubtasks = [...new Set(filteredUpdates.map(u => u.SubtaskId).filter(Boolean))];
+  const blockerCount = filteredUpdates.filter(u => u.Blockers).length;
+
+  let html = `<div class="report-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+    <div class="stat-card"><div class="stat-label">Total updates</div><div class="stat-value blue">${filteredUpdates.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Team members</div><div class="stat-value">${uniquePeople.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Sub-tasks updated</div><div class="stat-value green">${uniqueSubtasks.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Updates with blockers</div><div class="stat-value red">${blockerCount}</div></div>
+  </div>`;
+
+  if (filteredUpdates.length === 0) {
+    html += '<div style="font-size:13px;color:var(--text3);padding:20px 0">No updates found for the selected date range.</div>';
+    document.getElementById('review-content').innerHTML = html;
+    return;
+  }
+
+  if (reviewSort === 'person') {
+    // Group by person → sub-task
+    uniquePeople.forEach(person => {
+      const personUpdates = filteredUpdates.filter(u => u.UpdateBy?.Title === person);
+      const personSubtasks = [...new Set(personUpdates.map(u => u.SubtaskId).filter(Boolean))];
+      html += `<div class="report-section" style="margin-bottom:16px">
+        <div class="report-section-title">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span class="avatar" style="width:24px;height:24px;font-size:10px">${initials(person)}</span>
+            ${person}
+          </span>
+          <span style="font-size:11px;color:var(--text3);font-weight:400">${personUpdates.length} update${personUpdates.length!==1?'s':''} · ${personSubtasks.length} sub-task${personSubtasks.length!==1?'s':''}</span>
+        </div>`;
+      personSubtasks.forEach(stId => {
+        const st = subtasks.find(s => s.Id === stId);
+        const effort = activeEfforts.find(e => e.Id === st?.EffortId);
+        const stUpdates = personUpdates.filter(u => u.SubtaskId === stId);
+        html += `<div style="margin-bottom:12px">
+          <div style="font-size:12px;font-weight:600;color:var(--text);padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:6px">
+            ${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span>
+          </div>`;
+        stUpdates.forEach(u => { html += renderReviewEntry(u); });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    });
+  } else {
+    // Group by sub-task → person
+    uniqueSubtasks.forEach(stId => {
+      const st = subtasks.find(s => s.Id === stId);
+      const effort = activeEfforts.find(e => e.Id === st?.EffortId);
+      const stUpdates = filteredUpdates.filter(u => u.SubtaskId === stId);
+      const stPeople = [...new Set(stUpdates.map(u => u.UpdateBy?.Title).filter(Boolean))];
+      html += `<div class="report-section" style="margin-bottom:16px">
+        <div class="report-section-title">
+          <span>${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span></span>
+          <span style="font-size:11px;color:var(--text3);font-weight:400">${stUpdates.length} update${stUpdates.length!==1?'s':''}</span>
+        </div>`;
+      stPeople.forEach(person => {
+        const pUpdates = stUpdates.filter(u => u.UpdateBy?.Title === person);
+        html += `<div style="margin-bottom:12px">
+          <div style="font-size:12px;font-weight:600;color:var(--text);padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:6px;display:flex;align-items:center;gap:6px">
+            <span class="avatar" style="width:20px;height:20px;font-size:9px">${initials(person)}</span>${person}
+          </div>`;
+        pUpdates.forEach(u => { html += renderReviewEntry(u); });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    });
+  }
+
+  document.getElementById('review-content').innerHTML = html;
+  renderMissingIndicator();
+}
+
+function renderReviewEntry(u) {
+  return `<div style="display:grid;grid-template-columns:120px 90px 80px 1fr;gap:10px;align-items:start;padding:8px 0;border-bottom:1px solid var(--border2)">
+    <div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Week ending</div>
+      <div style="font-size:12px;font-weight:500">${fmtDate(u.WeekEnding)}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">Submitted ${fmtDate(u.UpdateDate)}</div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Status</div>
+      <span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime||'—'}</span>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">% Complete</div>
+      <div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace">${u.PercentCompleteAtTime||0}%</div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Notes</div>
+      <div style="font-size:12px;line-height:1.5;color:var(--text)">${u.UpdateNotes||'—'}</div>
+      ${u.Blockers ? `<div style="font-size:11px;color:var(--high);margin-top:4px;font-weight:500">⚠ ${u.Blockers}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+// ── NAV ──
+// ── GANTT ──
+function renderGantt() {
+  const fromVal = document.getElementById('gantt-from').value;
+  const toVal = document.getElementById('gantt-to').value;
+  const personFilter = document.getElementById('gantt-person').value;
+  const statusFilter = document.getElementById('gantt-status').value;
+
+  if (!fromVal || !toVal) return;
+
+  const fromDate = new Date(fromVal);
+  const toDate = new Date(toVal);
+
+  // Build week array (Monday-based)
+  const weeks = [];
+  const cursor = new Date(fromDate);
+  // Align to start of week (Monday)
+  const startDay = cursor.getDay();
+  cursor.setDate(cursor.getDate() - (startDay === 0 ? 6 : startDay - 1));
+  while (cursor <= toDate) {
+    weeks.push(new Date(cursor));
+    cursor.setDate(cursor.getDate() + 7);
+  }
+
+  const totalWeeks = weeks.length;
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  // Filter subtasks
+  const activeEfforts = efforts.filter(e => !e.IsIntakeIdea);
+  const excludedStatuses = ['Completed', 'Cancelled'];
+  let filteredSubs = subtasks.filter(s => {
+    if (excludedStatuses.includes(s.Status)) return false;
+    if (statusFilter && s.Status !== statusFilter) return false;
+    if (personFilter && s.AssignedTo?.Title !== personFilter) return false;
+    if (!activeEfforts.some(e => e.Id === s.EffortId)) return false;
+    return true;
+  });
+
+  const people = [...new Set(filteredSubs.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
+
+  // Build header
+  let html = `<div class="gantt-wrap">
+    <div class="gantt-header">
+      <div class="gantt-label-col">Person / Sub-task</div>
+      <div class="gantt-timeline-header">`;
+  weeks.forEach(w => {
+    const wStr = w.toISOString().split('T')[0];
+    const isCurrent = todayStr >= wStr && todayStr < new Date(w.getTime() + 7*86400000).toISOString().split('T')[0];
+    html += `<div class="gantt-week-header${isCurrent?' current-week':''}">${w.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>`;
+  });
+  html += `</div></div>`;
+
+  // Today line position
+  const todayDate = new Date(todayStr);
+  const totalMs = toDate - fromDate;
+  const todayOffset = Math.max(0, Math.min(1, (todayDate - fromDate) / totalMs));
+
+  if (people.length === 0) {
+    html += '<div style="padding:20px;font-size:13px;color:var(--text3)">No active sub-tasks found for the selected filters.</div>';
+  } else {
+    people.forEach(person => {
+      const pSubs = filteredSubs.filter(s => s.AssignedTo?.Title === person);
+      html += `<div class="gantt-person-group">
+        <div class="gantt-person-header">
+          <span class="avatar" style="width:22px;height:22px;font-size:9px">${initials(person)}</span>
+          ${person} <span style="font-size:11px;font-weight:400;color:var(--text3);margin-left:4px">${pSubs.length} sub-task${pSubs.length!==1?'s':''}</span>
+        </div>`;
+      pSubs.forEach(s => {
+        const effort = activeEfforts.find(e => e.Id === s.EffortId);
+        const barClass = s.Status === 'In Progress' ? 'gantt-bar-inprogress'
+          : s.Status === 'Blocked' ? 'gantt-bar-blocked'
+          : s.Status === 'On Hold' ? 'gantt-bar-onhold'
+          : s.Status === 'In Review' ? 'gantt-bar-review'
+          : s.Status === 'Backlog' ? 'gantt-bar-backlog'
+          : 'gantt-bar-nodate';
+
+        // Calculate bar position
+        let barLeft = null, barWidth = null;
+        if (s.StartDate && s.TargetEndDate) {
+          const sDate = new Date(s.StartDate);
+          const eDate = new Date(s.TargetEndDate);
+          const rangeMs = toDate - fromDate || 1;
+          barLeft = Math.max(0, (sDate - fromDate) / rangeMs) * 100;
+          barWidth = Math.min(100 - barLeft, Math.max(0.5, (eDate - sDate) / rangeMs * 100));
+        } else if (s.StartDate) {
+          const sDate = new Date(s.StartDate);
+          const rangeMs = toDate - fromDate || 1;
+          barLeft = Math.max(0, (sDate - fromDate) / rangeMs) * 100;
+          barWidth = 3;
+        }
+
+        html += `<div class="gantt-row">
+          <div class="gantt-row-label">
+            <div class="st-name" title="${s.Title}">${s.Title}</div>
+            <div class="st-effort" title="${effort?.Title||''}">${effort?.Title||'—'}</div>
+          </div>
+          <div class="gantt-timeline" style="position:relative">`;
+
+        // Week cells
+        weeks.forEach(w => {
+          const wStr = w.toISOString().split('T')[0];
+          const isCurrent = todayStr >= wStr && todayStr < new Date(w.getTime() + 7*86400000).toISOString().split('T')[0];
+          html += `<div class="gantt-cell${isCurrent?' current-week':''}"></div>`;
+        });
+
+        // Today line
+        html += `<div class="gantt-today-line" style="left:${todayOffset*100}%"></div>`;
+
+        // Bar
+        if (barLeft !== null) {
+          const label = barWidth > 8 ? s.Title : '';
+          html += `<div class="gantt-bar-wrap ${barClass}" 
+            style="left:${barLeft}%;width:${barWidth}%"
+            title="${s.Title} · ${effort?.Title||''} · ${s.Status} · ${fmtDate(s.StartDate)} → ${fmtDate(s.TargetEndDate)}"
+            onclick="openStDetail('${s.Id}',event)">
+            ${label}
+          </div>`;
+        } else {
+          html += `<div style="font-size:10px;color:var(--text3);padding:0 8px;line-height:36px">No dates set</div>`;
+        }
+
+        html += `</div></div>`;
+      });
+      html += `</div>`;
+    });
+  }
+
+  html += `</div>`;
+  document.getElementById('gantt-content').innerHTML = html;
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`screen-${name}`).classList.add('active');
+  const tabs = ['kanban','gantt','intake','checkin','review','report'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(name)]?.classList.add('active');
+  if (name === 'report') renderReport();
+  if (name === 'review') { renderReview(); renderMissingIndicator(); }
+  if (name === 'intake') renderIdeasList();
+  if (name === 'gantt') renderGantt();
+}
+
+// ── INIT ──
+// Set default week ending to next Friday
+const today = new Date();
+const day = today.getDay();
+const daysToFriday = day <= 5 ? 5 - day : 6;
+const nextFriday = new Date(today);
+nextFriday.setDate(today.getDate() + daysToFriday);
+const fridayStr = nextFriday.toISOString().split('T')[0];
+document.getElementById('checkin-week').value = fridayStr;
+
+// Default review range: last 30 days
+const thirtyDaysAgo = new Date(today);
+thirtyDaysAgo.setDate(today.getDate() - 30);
+document.getElementById('review-from').value = thirtyDaysAgo.toISOString().split('T')[0];
+document.getElementById('review-to').value = today.toISOString().split('T')[0];
+
+// Default gantt range: today + 3 months
+document.getElementById('gantt-from').value = today.toISOString().split('T')[0];
+const threeMonths = new Date(today);
+threeMonths.setMonth(threeMonths.getMonth() + 3);
+document.getElementById('gantt-to').value = threeMonths.toISOString().split('T')[0];
+
+// Default report updates date range: last 30 days
+document.getElementById('report-date-from').value = thirtyDaysAgo.toISOString().split('T')[0];
+document.getElementById('report-date-to').value = today.toISOString().split('T')[0];
+
+loadData();
+</script>
+
+
+</body></html>
