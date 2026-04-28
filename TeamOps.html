@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_17.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_19.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -554,6 +554,25 @@
 <body>
 
 <!-- TOP NAV -->
+<!-- TOKEN PROMPT OVERLAY -->
+<div id="token-overlay" style="position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: none; align-items: center; justify-content: center;">
+  <div style="background:var(--surface);border-radius:var(--radius-lg);padding:32px;max-width:480px;width:90%;box-shadow:var(--shadow-md)">
+    <div style="font-size:18px;font-weight:600;margin-bottom:8px">Connect to Airtable</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5">Enter your Airtable personal access token to connect TeamOps to your data. This is saved in your browser only and never shared.</div>
+    <div style="margin-bottom:16px">
+      <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);display:block;margin-bottom:6px">Airtable token</label>
+      <input id="token-input" type="password" placeholder="pat..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:&#39;DM Sans&#39;,sans-serif;background:var(--surface);color:var(--text);box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn primary" onclick="connectWithToken()">Connect</button>
+      <div id="token-error" style="font-size:12px;color:var(--high);display:none">Invalid token — please check and try again</div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)">
+      To get your token: go to airtable.com/create/tokens → Create token → add data.records:read and data.records:write scopes → select TeamOps base
+    </div>
+  </div>
+</div>
+
 <nav class="topnav">
   <div class="nav-brand">Team<span>Ops</span></div>
   <div class="nav-tabs">
@@ -566,6 +585,7 @@
   </div>
   <div class="nav-right">
     <div class="nav-user" title="White, Michael">MW</div>
+    <button class="btn" style="font-size:11px;padding:4px 10px;margin-left:8px" onclick="showTokenPrompt()" title="Update Airtable token">⚙ Token</button>
   </div>
 </nav>
 
@@ -1452,9 +1472,20 @@
 
 <script>
 // ── CONFIG ──
-const AT_TOKEN = 'pat7pvwQe8SyNsNrS.c545996e97340ccb95eaf09e1ea635dc2fa2595f1e09b86acd5d88092bc20c2e';
 const AT_BASE  = 'appIHMJCRYVxl6E0l';
 const AT_API   = 'https://api.airtable.com/v0';
+
+function getToken() {
+  return localStorage.getItem('teamops_at_token') || '';
+}
+
+function saveToken(token) {
+  localStorage.setItem('teamops_at_token', token.trim());
+}
+
+function atHeaders() {
+  return { 'Authorization': `Bearer ${getToken()}`, 'Content-Type': 'application/json' };
+}
 
 // ── STATE ──
 let efforts = [];
@@ -1466,10 +1497,6 @@ let dragItem = null;
 let dragType = null;
 
 // ── AIRTABLE API ──
-function atHeaders() {
-  return { 'Authorization': `Bearer ${AT_TOKEN}`, 'Content-Type': 'application/json' };
-}
-
 async function atGet(table) {
   let records = [], offset = null;
   do {
@@ -3090,6 +3117,39 @@ function showScreen(name) {
   if (name === 'gantt') renderGantt();
 }
 
+// ── TOKEN MANAGEMENT ──
+function showTokenPrompt() {
+  const overlay = document.getElementById('token-overlay');
+  overlay.style.display = 'flex';
+  const existing = getToken();
+  if (existing) document.getElementById('token-input').value = existing;
+  document.getElementById('token-error').style.display = 'none';
+  setTimeout(() => document.getElementById('token-input').focus(), 100);
+}
+
+async function connectWithToken() {
+  const token = document.getElementById('token-input').value.trim();
+  if (!token) return;
+  // Test the token with a quick API call
+  try {
+    const r = await fetch(`${AT_API}/${AT_BASE}/Efforts?pageSize=1`, {
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+    });
+    if (!r.ok) throw new Error('Invalid');
+    saveToken(token);
+    document.getElementById('token-overlay').style.display = 'none';
+    showToast('Connected to Airtable');
+    loadData();
+  } catch(e) {
+    document.getElementById('token-error').style.display = 'block';
+  }
+}
+
+// Allow Enter key to submit token
+document.getElementById('token-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') connectWithToken();
+});
+
 // ── INIT ──
 // Set default week ending to next Friday
 const today = new Date();
@@ -3116,7 +3176,12 @@ document.getElementById('gantt-to').value = threeMonths.toISOString().split('T')
 document.getElementById('report-date-from').value = thirtyDaysAgo.toISOString().split('T')[0];
 document.getElementById('report-date-to').value = today.toISOString().split('T')[0];
 
-loadData();
+// Check for token — prompt if not saved
+if (!getToken()) {
+  showTokenPrompt();
+} else {
+  loadData();
+}
 </script>
 
 
