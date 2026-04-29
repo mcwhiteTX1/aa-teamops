@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_21.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_22.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -555,7 +555,7 @@
 
 <!-- TOP NAV -->
 <!-- TOKEN PROMPT OVERLAY -->
-<div id="token-overlay" style="position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: none; align-items: center; justify-content: center;">
+<div id="token-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
   <div style="background:var(--surface);border-radius:var(--radius-lg);padding:32px;max-width:480px;width:90%;box-shadow:var(--shadow-md)">
     <div style="font-size:18px;font-weight:600;margin-bottom:8px">Connect to Airtable</div>
     <div style="font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5">Enter your Airtable personal access token to connect TeamOps to your data. This is saved in your browser only and never shared.</div>
@@ -576,12 +576,12 @@
 <nav class="topnav">
   <div class="nav-brand">Team<span>Ops</span></div>
   <div class="nav-tabs">
-    <button class="nav-tab" onclick="showScreen(&#39;kanban&#39;)">Kanban</button>
+    <button class="nav-tab active" onclick="showScreen(&#39;kanban&#39;)">Kanban</button>
     <button class="nav-tab" onclick="showScreen(&#39;gantt&#39;)">Gantt</button>
     <button class="nav-tab" onclick="showScreen(&#39;intake&#39;)">New Idea</button>
     <button class="nav-tab" onclick="showScreen(&#39;checkin&#39;)">Weekly Check-in</button>
     <button class="nav-tab" onclick="showScreen(&#39;review&#39;)">Weekly Review</button>
-    <button class="nav-tab active" onclick="showScreen(&#39;report&#39;)">Reports</button>
+    <button class="nav-tab" onclick="showScreen(&#39;report&#39;)">Reports</button>
   </div>
   <div class="nav-right">
     <div class="nav-user" title="White, Michael">MW</div>
@@ -590,7 +590,7 @@
 </nav>
 
 <!-- KANBAN SCREEN -->
-<div id="screen-kanban" class="screen">
+<div id="screen-kanban" class="screen active">
   <div class="toolbar">
     <div class="toolbar-title">Team board</div>
     <div class="view-toggle">
@@ -1123,10 +1123,10 @@
 </div>
 
 <!-- REPORT SCREEN -->
-<div id="screen-report" class="screen active">
+<div id="screen-report" class="screen">
   <div class="toolbar">
     <div class="toolbar-title">Reports &amp; dashboard</div>
-    <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="rec3ddeOyYxounpmL">CDA Updates</option><option value="rec8U9SYiIwTnYe6Q">Unity Catalog Migration for Cabin Data Team data</option><option value="recCCyaBEPxZPok8a">Cabin Survey Site</option><option value="recCtbs1fe0veFlDR">Connectivity Dashboards</option><option value="recOrw68bOqHgiaAe">RFID</option><option value="recccVfK5YT2AoLcZ">Writeback POC</option><option value="recdAe6hNj91tGFe9">Kiosk &amp; Laptop</option><option value="receNx0dZdZgJj5Y9">Test 2</option><option value="recijjz6O5yOf8Qy9">Runbook Updates</option><option value="recxcMFemK8sLUxWF"></option></select>
+    <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="rec3ddeOyYxounpmL">CDA Updates</option><option value="rec8U9SYiIwTnYe6Q">Unity Catalog Migration for Cabin Data Team data</option><option value="recCCyaBEPxZPok8a">Cabin Survey Site</option><option value="recCtbs1fe0veFlDR">Connectivity Dashboards</option><option value="recOrw68bOqHgiaAe">RFID</option><option value="recVKgpInKdgY8SIt">BSI Dashboard/Reporting</option><option value="recccVfK5YT2AoLcZ">Writeback POC</option><option value="recdAe6hNj91tGFe9">Kiosk &amp; Laptop</option><option value="receNx0dZdZgJj5Y9">Test 2</option><option value="recijjz6O5yOf8Qy9">Runbook Updates</option><option value="recxcMFemK8sLUxWF"></option></select>
     <select class="filter-select" id="report-person-filter" onchange="renderReport()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
     <select class="filter-select" id="report-status-filter" onchange="renderReport()">
       <option value="">All statuses</option>
@@ -1146,7 +1146,7 @@
   </div>
   <div id="report-content">
   <div class="report-grid">
-    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">10</div></div>
+    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">11</div></div>
     <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">22</div></div>
     <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">0</div></div>
     <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">1</div></div>
@@ -1240,6 +1240,22 @@
       </td>
       <td>3 · 0 done</td>
       <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+    </tr><tr>
+      <td><strong>BSI Dashboard/Reporting</strong></td>
+      <td>Michael White</td>
+      <td><span class="status-pill sp-inprog">In Progress</span></td>
+      <td><span class="pri-badge medium">Medium</span></td>
+      <td>—</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
+            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+          </div>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+        </div>
+      </td>
+      <td>0 · 0 done</td>
+      <td><span class="health-dot health-none" title="Health: none"></span></td>
     </tr><tr>
       <td><strong>Writeback POC</strong></td>
       <td>Michael White</td>
@@ -1486,7 +1502,7 @@
       <td><span style="font-family:&#39;DM Mono&#39;,monospace">70%</span></td>
       <td><span class="health-dot health-green" title="Health: green"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-recbZQIJ8Ja1kIq1m">►</span> 2</td>
-    </tr><tr id="stc-recbZQIJ8Ja1kIq1m" style="display: none;">
+    </tr><tr id="stc-recbZQIJ8Ja1kIq1m" style="display:none">
         <td colspan="10" style="padding:0 0 0 32px;background:var(--surface2)">
           <table style="width:100%;font-size:11px;border-collapse:collapse">
             <thead><tr>
@@ -1778,7 +1794,7 @@
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">Loaded 11 efforts, 25 sub-tasks</div>
+<div class="toast" id="toast">Loaded 12 efforts, 25 sub-tasks</div>
 
 <script>
 // ── CONFIG ──
@@ -3665,6 +3681,7 @@ function showScreen(name) {
 function showTokenPrompt() {
   const overlay = document.getElementById('token-overlay');
   overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
   const existing = getToken();
   if (existing) document.getElementById('token-input').value = existing;
   document.getElementById('token-error').style.display = 'none';
@@ -3674,7 +3691,6 @@ function showTokenPrompt() {
 async function connectWithToken() {
   const token = document.getElementById('token-input').value.trim();
   if (!token) return;
-  // Test the token with a quick API call
   try {
     const r = await fetch(`${AT_API}/${AT_BASE}/Efforts?pageSize=1`, {
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
@@ -3682,6 +3698,7 @@ async function connectWithToken() {
     if (!r.ok) throw new Error('Invalid');
     saveToken(token);
     document.getElementById('token-overlay').style.display = 'none';
+    document.body.style.overflow = '';
     showToast('Connected to Airtable');
     loadData();
   } catch(e) {
@@ -3722,6 +3739,7 @@ document.getElementById('report-date-to').value = today.toISOString().split('T')
 
 // Check for token — prompt if not saved
 if (!getToken()) {
+  document.body.style.overflow = 'hidden';
   showTokenPrompt();
 } else {
   loadData();
