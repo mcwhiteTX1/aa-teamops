@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_2.html -->
+<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -359,9 +359,10 @@
   .st-detail-title { font-size: 15px; font-weight: 600; flex: 1; line-height: 1.3; }
   .st-detail-parent { font-size: 11px; color: var(--text3); margin-top: 3px; }
   .st-detail-body { padding: 20px 28px; }
-  .st-detail-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 16px; }
+  .st-detail-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 14px; margin-bottom: 16px; }
   .st-detail-grid .detail-field-wide { grid-column: span 2; }
   .st-detail-grid .detail-field-full { grid-column: span 6; }
+  .st-detail-grid .detail-field-3 { grid-column: span 3; }
   .st-detail-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
   .update-row {
     display: flex; gap: 10px; padding: 10px 0;
@@ -2370,12 +2371,20 @@ function openStDetail(id, e) {
   document.getElementById('st-det-title').textContent = currentSubtask.Title;
   document.getElementById('st-det-parent').textContent = `Parent effort: ${effort?.Title || '—'}`;
 
+  const healthOptions = ['gray','green','yellow','red'];
+  const healthLabels = { gray:'Not set', green:'On track', yellow:'At risk', red:'In trouble' };
+  const healthColors = { gray:'#9ca3af', green:'#16a34a', yellow:'#d97706', red:'#dc2626' };
+  const currentHealth = currentSubtask.Health || 'gray';
+
   document.getElementById('st-det-fields').innerHTML = `
+    <!-- Row 1: Title full width -->
     <div class="detail-field detail-field-full">
       <label>Title</label>
-      <input class="form-input" id="st-edit-title" value="${currentSubtask.Title||''}">
+      <input class="form-input" id="st-edit-title" value="${currentSubtask.Title||''}" style="font-size:14px;font-weight:500">
     </div>
-    <div class="detail-field">
+
+    <!-- Row 2: Assigned to (2), Status (1), Priority (1), % Complete (1), empty (1) -->
+    <div class="detail-field detail-field-wide">
       <label>Assigned to</label>
       <select class="form-select" id="st-edit-assignee">${peopleOptions}</select>
     </div>
@@ -2393,25 +2402,58 @@ function openStDetail(id, e) {
     </div>
     <div class="detail-field">
       <label>% Complete</label>
-      <input class="form-input" type="number" id="st-edit-pct" min="0" max="100" value="${currentSubtask.PercentComplete||0}">
+      <div style="display:flex;align-items:center;gap:6px">
+        <input class="form-input" type="number" id="st-edit-pct" min="0" max="100" value="${currentSubtask.PercentComplete||0}" style="width:65px">
+        <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:30px">
+          <div id="pct-bar" style="width:${currentSubtask.PercentComplete||0}%;height:100%;background:var(--low);border-radius:3px;transition:width .2s"></div>
+        </div>
+      </div>
     </div>
-    <div class="detail-field">
+    <div class="detail-field"></div>
+
+    <!-- Row 3: Health selector full width -->
+    <div class="detail-field detail-field-full">
+      <label>Health</label>
+      <div style="display:flex;gap:8px;align-items:center;padding-top:4px;flex-wrap:wrap">
+        ${healthOptions.map(h => `
+          <button type="button" onclick="setSubtaskHealthInPanel('${h}')" id="health-btn-${h}"
+            style="display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;
+            border:2px solid ${h===currentHealth?healthColors[h]:'var(--border)'};
+            background:${h===currentHealth?healthColors[h]+'22':'transparent'};
+            cursor:pointer;font-size:12px;font-weight:${h===currentHealth?'600':'400'};
+            color:${h===currentHealth?healthColors[h]:'var(--text2)'};
+            transition:all .15s;font-family:'DM Sans',sans-serif">
+            <span style="width:10px;height:10px;border-radius:50%;background:${healthColors[h]};flex-shrink:0;display:inline-block"></span>
+            ${healthLabels[h]}
+          </button>`).join('')}
+      </div>
+    </div>
+
+    <!-- Row 4: Dates -->
+    <div class="detail-field detail-field-wide">
       <label>Start date</label>
       <input class="form-input" type="date" id="st-edit-start" value="${currentSubtask.StartDate||''}">
     </div>
-    <div class="detail-field">
+    <div class="detail-field detail-field-wide">
       <label>Target end</label>
       <input class="form-input" type="date" id="st-edit-end" value="${currentSubtask.TargetEndDate||''}">
     </div>
-    <div class="detail-field">
+    <div class="detail-field detail-field-wide">
       <label>Actual end</label>
       <input class="form-input" type="date" id="st-edit-actual" value="${currentSubtask.ActualEndDate||''}">
     </div>
+
+    <!-- Row 5: Goal full width -->
     <div class="detail-field detail-field-full">
       <label>Goal / Deliverable</label>
-      <textarea class="form-textarea" id="st-edit-goal">${currentSubtask.GoalDeliverable||''}</textarea>
+      <textarea class="form-textarea" id="st-edit-goal" style="min-height:80px">${currentSubtask.GoalDeliverable||''}</textarea>
     </div>
   `;
+
+  // Live % bar update
+  document.getElementById('st-edit-pct').addEventListener('input', function() {
+    document.getElementById('pct-bar').style.width = Math.min(100, Math.max(0, this.value)) + '%';
+  });
 
   document.getElementById('st-det-actions').innerHTML = `
     <button class="btn primary" onclick="saveAndCloseStDetail()">Save &amp; Close</button>
@@ -2440,6 +2482,23 @@ function openStDetail(id, e) {
   document.getElementById('st-overlay').classList.add('open');
 }
 
+function setSubtaskHealthInPanel(h) {
+  if (!currentSubtask) return;
+  const healthColors = { gray:'#9ca3af', green:'#16a34a', yellow:'#d97706', red:'#dc2626' };
+  const healthLabels = { gray:'Not set', green:'On track', yellow:'At risk', red:'In trouble' };
+  currentSubtask.Health = h;
+  // Update button styles
+  ['gray','green','yellow','red'].forEach(opt => {
+    const btn = document.getElementById(`health-btn-${opt}`);
+    if (!btn) return;
+    const isSelected = opt === h;
+    btn.style.border = `2px solid ${isSelected ? healthColors[opt] : 'var(--border)'}`;
+    btn.style.background = isSelected ? healthColors[opt] + '18' : 'transparent';
+    btn.style.fontWeight = isSelected ? '600' : '400';
+    btn.style.color = isSelected ? healthColors[opt] : 'var(--text3)';
+  });
+}
+
 async function saveStDetail() {
   if (!currentSubtask) return;
   currentSubtask.Title = document.getElementById('st-edit-title').value;
@@ -2465,6 +2524,7 @@ async function saveStDetail() {
       NotifyOnChanges: currentSubtask.NotifyOnChanges
     };
     if (currentSubtask.AssignedTo?.Title) stFields.AssignedTo = currentSubtask.AssignedTo.Title;
+    if (currentSubtask.Health) stFields.SubtaskHealth = currentSubtask.Health;
     await atUpdate('Sub-tasks', currentSubtask.Id, stFields);
   } catch(err) { console.error(err); }
   showToast('Sub-task saved');
