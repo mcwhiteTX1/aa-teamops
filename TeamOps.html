@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_22.html -->
+<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_2.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -212,6 +212,15 @@
   .person-stats { font-size: 11px; color: var(--text3); margin-left: auto; }
   .person-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
 
+  .effort-card.drag-insert-above, .st-card.drag-insert-above {
+    border-top: 2px solid var(--accent) !important;
+    margin-top: -1px;
+  }
+  .effort-card.drag-insert-below, .st-card.drag-insert-below {
+    border-bottom: 2px solid var(--accent) !important;
+    margin-bottom: -1px;
+  }
+
   /* ── DETAIL OVERLAY ── */
   .overlay {
     display: none;
@@ -289,6 +298,7 @@
   .health-green { background: #16a34a; }
   .health-yellow { background: #d97706; }
   .health-red { background: #dc2626; }
+  .health-gray { background: #9ca3af; }
   .health-none { background: var(--border2); }
 
   /* ── SUBTASK KANBAN inside detail ── */
@@ -724,238 +734,68 @@
   <div id="kanban-content"><div class="kanban-board" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Backlog</span>
-        <span class="kb-col-count">13</span>
+        <span class="kb-col-count">2</span>
       </div>
-      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="rec1JHRI6WYbjvVlq" ondragstart="onDragStart(event,&#39;rec1JHRI6WYbjvVlq&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec1JHRI6WYbjvVlq&#39;,event)">
-    <div class="card-title">Cabin Survey - Create Sharepoint Cleanup job</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
+      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="2" ondragstart="onDragStart(event,&#39;2&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;2&#39;,event)">
+    <div class="card-title">Review and update Teradata query runbook</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
+    <div class="card-meta">
+      <div class="avatar" title="Andrew Britt">AB</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-gray" title="Health: gray (click to change)" onclick="cycleHealth(&#39;2&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label">May 8, 2026</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="5" ondragstart="onDragStart(event,&#39;5&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;5&#39;,event)">
+    <div class="card-title">Build red-gold-green heatmap for all 15 stations</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
     <div class="card-meta">
       <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="rec5e0cbkDLxIdkd2" ondragstart="onDragStart(event,&#39;rec5e0cbkDLxIdkd2&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec5e0cbkDLxIdkd2&#39;,event)">
-    <div class="card-title">Cabin Survey - Main page stats addition</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="rec9LxDoJFy99SNfw" ondragstart="onDragStart(event,&#39;rec9LxDoJFy99SNfw&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec9LxDoJFy99SNfw&#39;,event)">
-    <div class="card-title">Cabin Survey - add survey suggestion metrics</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recCg1idGFspG1bsF" ondragstart="onDragStart(event,&#39;recCg1idGFspG1bsF&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recCg1idGFspG1bsF&#39;,event)">
-    <div class="card-title">Create Monthly Adhoc Job Cards</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
-    <div class="card-meta">
-      <div class="avatar" title="Francisco Zuniga">FZ</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">May 30, 2026</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recHcIklOmc1BFbXT" ondragstart="onDragStart(event,&#39;recHcIklOmc1BFbXT&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recHcIklOmc1BFbXT&#39;,event)">
-    <div class="card-title">Cabin Survey - Remove and add data elements to details</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recS70plYREh7qdP9" ondragstart="onDragStart(event,&#39;recS70plYREh7qdP9&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recS70plYREh7qdP9&#39;,event)">
-    <div class="card-title">Cabin Survey - Check vs. location calculations</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recWl2toPwq7AUXXJ" ondragstart="onDragStart(event,&#39;recWl2toPwq7AUXXJ&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recWl2toPwq7AUXXJ&#39;,event)">
-    <div class="card-title">Cabin Survey - Time passed since check metric</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="rece5XRNFd2qqVBRC" ondragstart="onDragStart(event,&#39;rece5XRNFd2qqVBRC&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rece5XRNFd2qqVBRC&#39;,event)">
-    <div class="card-title">Cabin Survey - Move prior images to long term location</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recfEiFcwE1A4QRSY" ondragstart="onDragStart(event,&#39;recfEiFcwE1A4QRSY&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recfEiFcwE1A4QRSY&#39;,event)">
-    <div class="card-title">Cabin Survey - Update pipeline</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recogPVaudlj1WP4g" ondragstart="onDragStart(event,&#39;recogPVaudlj1WP4g&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recogPVaudlj1WP4g&#39;,event)">
-    <div class="card-title">Cabin Survey - Add scoring by question</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recsWHKDQZ6Y6h4QY" ondragstart="onDragStart(event,&#39;recsWHKDQZ6Y6h4QY&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recsWHKDQZ6Y6h4QY&#39;,event)">
-    <div class="card-title">Cabin Survey - Update process to place images on Blob/ADLS</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Michael White">MW</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recwu2SwwiY8f6eYF" ondragstart="onDragStart(event,&#39;recwu2SwwiY8f6eYF&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recwu2SwwiY8f6eYF&#39;,event)">
-    <div class="card-title">Cabin Survey - Trend line Updates</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recxW7BGbAxu929Wi" ondragstart="onDragStart(event,&#39;recxW7BGbAxu929Wi&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recxW7BGbAxu929Wi&#39;,event)">
-    <div class="card-title">Cabin Survey - Reformat site for a landing KPI page &amp; Details Page</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-gray" title="Health: gray (click to change)" onclick="cycleHealth(&#39;5&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label">May 8, 2026</span>
     </div>
     
   </div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">In Progress</span>
-        <span class="kb-col-count">8</span>
+        <span class="kb-col-count">2</span>
       </div>
-      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="rec2pA8yVXJ47kRFl" ondragstart="onDragStart(event,&#39;rec2pA8yVXJ47kRFl&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec2pA8yVXJ47kRFl&#39;,event)">
-    <div class="card-title">Writeback - Set up Teradata table</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Writeback POC</div>
-    <div class="card-meta">
-      <div class="avatar" title="Prem Madira">PM</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">Apr 29, 2026</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recKxS3cm4zuxha4C" ondragstart="onDragStart(event,&#39;recKxS3cm4zuxha4C&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recKxS3cm4zuxha4C&#39;,event)">
-    <div class="card-title">Phase 1 - Create combined Viasat/SES Connectivity Dashboard</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Connectivity Dashboards</div>
-    <div class="card-meta">
-      <div class="avatar" title="Andrew Britt">AB</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">Jun 29, 2026</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recOEPkbonWickDhw" ondragstart="onDragStart(event,&#39;recOEPkbonWickDhw&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recOEPkbonWickDhw&#39;,event)">
-    <div class="card-title">RFID Dashboard Update - Fix landing page min/max size</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
-    <div class="card-meta">
-      <div class="avatar" title="Aish Gaikwad">AG</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recR3faQdV9WVVjwH" ondragstart="onDragStart(event,&#39;recR3faQdV9WVVjwH&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recR3faQdV9WVVjwH&#39;,event)">
-    <div class="card-title">Unity - Coordinate with IT on schedule and tasks</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Unity Catalog Migration for Cabin Data Team data</div>
-    <div class="card-meta">
-      <div class="avatar" title="Andrew Britt">AB</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">May 14, 2026</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recZYxSNUADQPURpZ" ondragstart="onDragStart(event,&#39;recZYxSNUADQPURpZ&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recZYxSNUADQPURpZ&#39;,event)">
-    <div class="card-title">Cabin Survey - Add Grading metric</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Cabin Survey Site</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">No due date</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recbZQIJ8Ja1kIq1m" ondragstart="onDragStart(event,&#39;recbZQIJ8Ja1kIq1m&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recbZQIJ8Ja1kIq1m&#39;,event)">
-    <div class="card-title">Runbook Update - Cabin Survey</div>
+      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="1" ondragstart="onDragStart(event,&#39;1&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;1&#39;,event)">
+    <div class="card-title">Review and update Databricks pipeline runbook</div>
     <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
     <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-green" title="Health: green"></span>
-      <span class="due-label">Apr 29, 2026</span>
+      <div class="avatar" title="Michael White">MW</div>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;1&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
     </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:70%"></div></div>
-  </div><div class="effort-card" draggable="true" data-id="recokwxJ92isnHJol" ondragstart="onDragStart(event,&#39;recokwxJ92isnHJol&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recokwxJ92isnHJol&#39;,event)">
-    <div class="card-title">RFID - Create History Table</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">RFID</div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:50%"></div></div>
+  </div><div class="effort-card" draggable="true" data-id="4" ondragstart="onDragStart(event,&#39;4&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;4&#39;,event)">
+    <div class="card-title">Build station delay metrics calculated fields</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
     <div class="card-meta">
-      <div class="avatar" title="Aish Gaikwad">AG</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">Apr 29, 2026</span>
+      <div class="avatar" title="Michael White">MW</div>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;4&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
     </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="recvkpOlvFKbJqIsf" ondragstart="onDragStart(event,&#39;recvkpOlvFKbJqIsf&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;recvkpOlvFKbJqIsf&#39;,event)">
-    <div class="card-title">CDA - Add new links to left nav</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">CDA Updates</div>
-    <div class="card-meta">
-      <div class="avatar" title="Francisco Zuniga">FZ</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-yellow" title="Health: yellow"></span>
-      <span class="due-label">Jun 29, 2026</span>
-    </div>
-    
+    <div class="card-progress"><div class="card-progress-fill" style="width:60%"></div></div>
   </div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Blocked</span>
         <span class="kb-col-count">1</span>
       </div>
-      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card blocked-card" draggable="true" data-id="rec6UiNjSrhSMU4e9" ondragstart="onDragStart(event,&#39;rec6UiNjSrhSMU4e9&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;rec6UiNjSrhSMU4e9&#39;,event)">
-    <div class="card-title">Writeback - Set up dashboard POC</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Writeback POC</div>
+      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card blocked-card" draggable="true" data-id="3" ondragstart="onDragStart(event,&#39;3&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;3&#39;,event)">
+    <div class="card-title">Review and update ADLS access runbook</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
     <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-red" title="Health: red"></span>
-      <span class="due-label">No due date</span>
+      <div class="avatar" title="Aish Gaikwad">AG</div>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;3&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
     </div>
-    
+    <div class="card-progress"><div class="card-progress-fill" style="width:10%"></div></div>
   </div></div></div></div></div>
 </div>
 
@@ -1015,12 +855,11 @@
     <div class="report-section" style="padding:14px 16px;margin-bottom:10px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
         <div style="flex:1">
-          <div style="font-size:13px;font-weight:600;margin-bottom:4px">This is a great new idea  # 1</div>
-          <div style="font-size:12px;color:var(--text2);line-height:1.5">New idea # 1 description
-</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">Copilot Studio Agent for Logpage Queries</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.5">Explore building a Copilot Studio agent that allows conversational querying of logpage data</div>
           
         </div>
-        <button class="btn primary" style="font-size:11px;flex-shrink:0" onclick="promoteIdea(&#39;recDZWYQD97VspXYe&#39;)">Promote to effort</button>
+        <button class="btn primary" style="font-size:11px;flex-shrink:0" onclick="promoteIdea(&#39;3&#39;)">Promote to effort</button>
       </div>
     </div>
   </div>
@@ -1126,9 +965,9 @@
 <div id="screen-report" class="screen">
   <div class="toolbar">
     <div class="toolbar-title">Reports &amp; dashboard</div>
-    <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="rec3ddeOyYxounpmL">CDA Updates</option><option value="rec8U9SYiIwTnYe6Q">Unity Catalog Migration for Cabin Data Team data</option><option value="recCCyaBEPxZPok8a">Cabin Survey Site</option><option value="recCtbs1fe0veFlDR">Connectivity Dashboards</option><option value="recOrw68bOqHgiaAe">RFID</option><option value="recVKgpInKdgY8SIt">BSI Dashboard/Reporting</option><option value="recccVfK5YT2AoLcZ">Writeback POC</option><option value="recdAe6hNj91tGFe9">Kiosk &amp; Laptop</option><option value="receNx0dZdZgJj5Y9">Test 2</option><option value="recijjz6O5yOf8Qy9">Runbook Updates</option><option value="recxcMFemK8sLUxWF"></option></select>
+    <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="1">Runbook Updates</option><option value="2">Q2 Operations Dashboard</option></select>
     <select class="filter-select" id="report-person-filter" onchange="renderReport()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
-    <select class="filter-select" id="report-status-filter" onchange="renderReport()">
+    <select class="filter-select" id="report-status-filter" onchange="renderReport()" multiple="" style="height:32px;min-width:140px" title="Hold Ctrl/Cmd to select multiple">
       <option value="">All statuses</option>
       <option>In Progress</option>
       <option>Backlog</option>
@@ -1146,8 +985,8 @@
   </div>
   <div id="report-content">
   <div class="report-grid">
-    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">11</div></div>
-    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">22</div></div>
+    <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">2</div></div>
+    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">5</div></div>
     <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">0</div></div>
     <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">1</div></div>
   </div>
@@ -1161,181 +1000,37 @@
         <th>Status</th><th>Priority</th><th>Target end</th><th>% complete</th><th>Sub-tasks</th><th>Health</th>
       </tr></thead>
       <tbody><tr>
-      <td><strong>CDA Updates</strong></td>
-      <td>Francisco Zuniga</td>
+      <td><strong>Runbook Updates</strong></td>
+      <td>Michael White</td>
       <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
+      <td><span class="pri-badge high">High</span></td>
+      <td>May 15, 2026</td>
       <td>
         <div style="display:flex;align-items:center;gap:6px">
           <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+            <div style="width:25%;height:100%;background:var(--low);border-radius:3px"></div>
           </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>1 · 0 done</td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-    </tr><tr>
-      <td><strong>Unity Catalog Migration for Cabin Data Team data</strong></td>
-      <td>Andrew Britt</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Jul 30, 2026</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>1 · 0 done</td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-    </tr><tr>
-      <td><strong>Cabin Survey Site</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>May 30, 2026</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>13 · 0 done</td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-    </tr><tr>
-      <td><strong>Connectivity Dashboards</strong></td>
-      <td>—</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>1 · 0 done</td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-    </tr><tr>
-      <td><strong>RFID</strong></td>
-      <td>Francisco Zuniga</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">25%</span>
         </div>
       </td>
       <td>3 · 0 done</td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
     </tr><tr>
-      <td><strong>BSI Dashboard/Reporting</strong></td>
+      <td><strong>Q2 Operations Dashboard</strong></td>
       <td>Michael White</td>
       <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
+      <td><span class="pri-badge high">High</span></td>
+      <td>May 29, 2026</td>
       <td>
         <div style="display:flex;align-items:center;gap:6px">
           <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
+            <div style="width:40%;height:100%;background:var(--low);border-radius:3px"></div>
           </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>0 · 0 done</td>
-      <td><span class="health-dot health-none" title="Health: none"></span></td>
-    </tr><tr>
-      <td><strong>Writeback POC</strong></td>
-      <td>Michael White</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
+          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">40%</span>
         </div>
       </td>
       <td>2 · 0 done</td>
       <td><span class="health-dot health-red" title="Health: red"></span></td>
-    </tr><tr>
-      <td><strong>Kiosk &amp; Laptop</strong></td>
-      <td>—</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>0 · 0 done</td>
-      <td><span class="health-dot health-none" title="Health: none"></span></td>
-    </tr><tr>
-      <td><strong>Test 2</strong></td>
-      <td>—</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>0 · 0 done</td>
-      <td><span class="health-dot health-none" title="Health: none"></span></td>
-    </tr><tr>
-      <td><strong>Runbook Updates</strong></td>
-      <td>Michael White</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Jun 29, 2026</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>1 · 0 done</td>
-      <td><span class="health-dot health-green" title="Health: green"></span></td>
-    </tr><tr>
-      <td><strong></strong></td>
-      <td>—</td>
-      <td><span class="status-pill sp-review">In Review</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
-            <div style="width:0%;height:100%;background:var(--low);border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">0%</span>
-        </div>
-      </td>
-      <td>0 · 0 done</td>
-      <td><span class="health-dot health-none" title="Health: none"></span></td>
     </tr></tbody></table></div><div class="report-section">
     <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between">
       <span>Sub-task detail</span>
@@ -1348,161 +1043,18 @@
         <th style="cursor:pointer;user-select:none" onclick="toggleReportSort(&#39;subtask&#39;,&#39;assignee&#39;)">Assigned to <span style="color:var(--border2)">↕</span></th>
         <th>Status</th><th>Priority</th><th>Start date</th><th>Target end</th><th>% complete</th><th>Health</th><th style="width:40px"></th>
       </tr></thead>
-      <tbody><tr style="cursor:default" id="str-rec1JHRI6WYbjvVlq">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Create Sharepoint Cleanup job</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 26, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-rec2pA8yVXJ47kRFl">
-      <td style="color:var(--text3)">Writeback POC</td>
-      <td><strong>Writeback - Set up Teradata table</strong></td>
-      <td>Prem Madira</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 12, 2026</td>
-      <td class="">Apr 29, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-rec5e0cbkDLxIdkd2">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Main page stats addition</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-rec6UiNjSrhSMU4e9">
-      <td style="color:var(--text3)">Writeback POC</td>
-      <td><strong>Writeback - Set up dashboard POC</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-blocked">Blocked</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-red" title="Health: red"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-rec9LxDoJFy99SNfw">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - add survey suggestion metrics</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recCg1idGFspG1bsF">
-      <td style="color:var(--text3)">RFID</td>
-      <td><strong>Create Monthly Adhoc Job Cards</strong></td>
-      <td>Francisco Zuniga</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Mar 31, 2026</td>
-      <td class="">May 30, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recHcIklOmc1BFbXT">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Remove and add data elements to details</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 26, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recKxS3cm4zuxha4C">
-      <td style="color:var(--text3)">Connectivity Dashboards</td>
-      <td><strong>Phase 1 - Create combined Viasat/SES Connectivity Dashboard</strong></td>
-      <td>Andrew Britt</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Dec 31, 2025</td>
-      <td class="">Jun 29, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recOEPkbonWickDhw">
-      <td style="color:var(--text3)">RFID</td>
-      <td><strong>RFID Dashboard Update - Fix landing page min/max size</strong></td>
-      <td>Aish Gaikwad</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 22, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recR3faQdV9WVVjwH">
-      <td style="color:var(--text3)">Unity Catalog Migration for Cabin Data Team data</td>
-      <td><strong>Unity - Coordinate with IT on schedule and tasks</strong></td>
-      <td>Andrew Britt</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 19, 2026</td>
-      <td class="">May 14, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recS70plYREh7qdP9">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Check vs. location calculations</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recWl2toPwq7AUXXJ">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Time passed since check metric</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recZYxSNUADQPURpZ">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Add Grading metric</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:pointer" onclick="toggleSubtaskComments(&#39;recbZQIJ8Ja1kIq1m&#39;)" id="str-recbZQIJ8Ja1kIq1m">
+      <tbody><tr style="cursor:pointer" onclick="toggleSubtaskComments(&#39;1&#39;)" id="str-1">
       <td style="color:var(--text3)">Runbook Updates</td>
-      <td><strong>Runbook Update - Cabin Survey</strong></td>
-      <td>Grant Polychronis</td>
+      <td><strong>Review and update Databricks pipeline runbook</strong></td>
+      <td>Michael White</td>
       <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 14, 2026</td>
-      <td class="">Apr 29, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">70%</span></td>
-      <td><span class="health-dot health-green" title="Health: green"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-recbZQIJ8Ja1kIq1m">►</span> 2</td>
-    </tr><tr id="stc-recbZQIJ8Ja1kIq1m" style="display:none">
+      <td><span class="pri-badge high">High</span></td>
+      <td>Apr 17, 2026</td>
+      <td class="overdue">May 1, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">50%</span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
+      <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-1">►</span> 1</td>
+    </tr><tr id="stc-1" style="display:none">
         <td colspan="10" style="padding:0 0 0 32px;background:var(--surface2)">
           <table style="width:100%;font-size:11px;border-collapse:collapse">
             <thead><tr>
@@ -1515,176 +1067,132 @@
               <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600">Blockers</th>
             </tr></thead>
             <tbody><tr style="border-top:1px solid var(--border2)">
-          <td style="padding:6px 8px">Apr 23, 2026</td>
-          <td style="padding:6px 8px;color:var(--text3)">Apr 23, 2026</td>
-          <td style="padding:6px 8px">Grant Polychronis</td>
+          <td style="padding:6px 8px">Apr 17, 2026</td>
+          <td style="padding:6px 8px;color:var(--text3)">Apr 16, 2026</td>
+          <td style="padding:6px 8px">Michael White</td>
           <td style="padding:6px 8px"><span class="status-pill sp-inprog">In Progress</span></td>
-          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">60%</td>
-          <td style="padding:6px 8px;max-width:220px">Updated things and now at 60%. On track.
-</td>
-          <td style="padding:6px 8px;color:var(--high);max-width:160px">No blockers.
-</td>
-        </tr><tr style="border-top:1px solid var(--border2)">
-          <td style="padding:6px 8px">Apr 23, 2026</td>
-          <td style="padding:6px 8px;color:var(--text3)">Apr 23, 2026</td>
-          <td style="padding:6px 8px">Grant Polychronis</td>
-          <td style="padding:6px 8px"><span class="status-pill sp-inprog">In Progress</span></td>
-          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">70%</td>
-          <td style="padding:6px 8px;max-width:220px">Another update.  now at 70%
-</td>
-          <td style="padding:6px 8px;color:var(--high);max-width:160px">still no blockers.
-</td>
-        </tr></tbody></table></td></tr><tr style="cursor:default" id="str-rece5XRNFd2qqVBRC">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Move prior images to long term location</strong></td>
-      <td>Grant Polychronis</td>
+          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">50%</td>
+          <td style="padding:6px 8px;max-width:220px">Completed review of current pipeline steps. Updating error handling section this week. On track for target date.</td>
+          <td style="padding:6px 8px;color:var(--high);max-width:160px"></td>
+        </tr></tbody></table></td></tr><tr style="cursor:default" id="str-2">
+      <td style="color:var(--text3)">Runbook Updates</td>
+      <td><strong>Review and update Teradata query runbook</strong></td>
+      <td>Andrew Britt</td>
       <td><span class="status-pill sp-backlog">Backlog</span></td>
       <td><span class="pri-badge medium">Medium</span></td>
       <td>—</td>
-      <td class="">—</td>
+      <td class="">May 8, 2026</td>
       <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+      <td><span class="health-dot health-gray" title="Health: gray"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recfEiFcwE1A4QRSY">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Update pipeline</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 26, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recogPVaudlj1WP4g">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Add scoring by question</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 26, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recokwxJ92isnHJol">
-      <td style="color:var(--text3)">RFID</td>
-      <td><strong>RFID - Create History Table</strong></td>
+    </tr><tr style="cursor:pointer" onclick="toggleSubtaskComments(&#39;3&#39;)" id="str-3">
+      <td style="color:var(--text3)">Runbook Updates</td>
+      <td><strong>Review and update ADLS access runbook</strong></td>
       <td>Aish Gaikwad</td>
-      <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 21, 2026</td>
-      <td class="">Apr 29, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recsWHKDQZ6Y6h4QY">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Update process to place images on Blob/ADLS</strong></td>
+      <td><span class="status-pill sp-blocked">Blocked</span></td>
+      <td><span class="pri-badge high">High</span></td>
+      <td>Apr 17, 2026</td>
+      <td class="overdue">May 1, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">10%</span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
+      <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-3">►</span> 1</td>
+    </tr><tr id="stc-3" style="display:none">
+        <td colspan="10" style="padding:0 0 0 32px;background:var(--surface2)">
+          <table style="width:100%;font-size:11px;border-collapse:collapse">
+            <thead><tr>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600;width:100px">Week ending</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600;width:90px">Submitted</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600;width:130px">By</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600;width:90px">Status</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600;width:50px">%</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600">Notes</th>
+              <th style="padding:6px 8px;text-align:left;color:var(--text3);font-weight:600">Blockers</th>
+            </tr></thead>
+            <tbody><tr style="border-top:1px solid var(--border2)">
+          <td style="padding:6px 8px">Apr 17, 2026</td>
+          <td style="padding:6px 8px;color:var(--text3)">Apr 16, 2026</td>
+          <td style="padding:6px 8px">Aish Gaikwad</td>
+          <td style="padding:6px 8px"><span class="status-pill sp-blocked">Blocked</span></td>
+          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">10%</td>
+          <td style="padding:6px 8px;max-width:220px">Started initial review but unable to proceed without updated access documentation from IT.</td>
+          <td style="padding:6px 8px;color:var(--high);max-width:160px">Waiting on IT to provide updated access permission documentation</td>
+        </tr></tbody></table></td></tr><tr style="cursor:default" id="str-4">
+      <td style="color:var(--text3)">Q2 Operations Dashboard</td>
+      <td><strong>Build station delay metrics calculated fields</strong></td>
       <td>Michael White</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>—</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recvkpOlvFKbJqIsf">
-      <td style="color:var(--text3)">CDA Updates</td>
-      <td><strong>CDA - Add new links to left nav</strong></td>
-      <td>Francisco Zuniga</td>
       <td><span class="status-pill sp-inprog">In Progress</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 14, 2026</td>
-      <td class="">Jun 29, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+      <td><span class="pri-badge high">High</span></td>
+      <td>Apr 17, 2026</td>
+      <td class="overdue">May 1, 2026</td>
+      <td><span style="font-family:&#39;DM Mono&#39;,monospace">60%</span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recwu2SwwiY8f6eYF">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Trend line Updates</strong></td>
+    </tr><tr style="cursor:default" id="str-5">
+      <td style="color:var(--text3)">Q2 Operations Dashboard</td>
+      <td><strong>Build red-gold-green heatmap for all 15 stations</strong></td>
       <td>Grant Polychronis</td>
       <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
+      <td><span class="pri-badge high">High</span></td>
       <td>—</td>
-      <td class="">—</td>
+      <td class="">May 8, 2026</td>
       <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
-      <td style="text-align:center;color:var(--accent);font-size:11px"></td>
-    </tr><tr style="cursor:default" id="str-recxW7BGbAxu929Wi">
-      <td style="color:var(--text3)">Cabin Survey Site</td>
-      <td><strong>Cabin Survey - Reformat site for a landing KPI page &amp; Details Page</strong></td>
-      <td>Grant Polychronis</td>
-      <td><span class="status-pill sp-backlog">Backlog</span></td>
-      <td><span class="pri-badge medium">Medium</span></td>
-      <td>Apr 26, 2026</td>
-      <td class="">—</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-yellow" title="Health: yellow"></span></td>
+      <td><span class="health-dot health-gray" title="Health: gray"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr></tbody></table></div>
 
   <div class="report-section">
     <div class="report-section-title">Workload by person</div><div class="person-bar-row">
       <div class="person-bar-name">Aish Gaikwad</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:9%"></div></div>
-      <div class="person-bar-count">2</div>
-      <div style="font-size:11px;color:var(--text3);width:160px">2 active</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:20%"></div></div>
+      <div class="person-bar-count">1</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">0 active · <span style="color:var(--high)">1 blocked</span></div>
     </div><div class="person-bar-row">
       <div class="person-bar-name">Andrew Britt</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:9%"></div></div>
-      <div class="person-bar-count">2</div>
-      <div style="font-size:11px;color:var(--text3);width:160px">2 active</div>
-    </div><div class="person-bar-row">
-      <div class="person-bar-name">Francisco Zuniga</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:9%"></div></div>
-      <div class="person-bar-count">2</div>
-      <div style="font-size:11px;color:var(--text3);width:160px">1 active</div>
-    </div><div class="person-bar-row">
-      <div class="person-bar-name">Grant Polychronis</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:64%"></div></div>
-      <div class="person-bar-count">14</div>
-      <div style="font-size:11px;color:var(--text3);width:160px">2 active · <span style="color:var(--high)">1 blocked</span></div>
-    </div><div class="person-bar-row">
-      <div class="person-bar-name">Michael White</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:5%"></div></div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:20%"></div></div>
       <div class="person-bar-count">1</div>
       <div style="font-size:11px;color:var(--text3);width:160px">0 active</div>
     </div><div class="person-bar-row">
-      <div class="person-bar-name">Prem Madira</div>
-      <div class="person-bar-track"><div class="person-bar-fill" style="width:5%"></div></div>
+      <div class="person-bar-name">Grant Polychronis</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:20%"></div></div>
       <div class="person-bar-count">1</div>
-      <div style="font-size:11px;color:var(--text3);width:160px">1 active</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">0 active</div>
+    </div><div class="person-bar-row">
+      <div class="person-bar-name">Michael White</div>
+      <div class="person-bar-track"><div class="person-bar-fill" style="width:40%"></div></div>
+      <div class="person-bar-count">2</div>
+      <div style="font-size:11px;color:var(--text3);width:160px">2 active</div>
     </div></div><div class="report-section">
       <div class="report-section-title" style="color:var(--high)">Blockers requiring attention</div><div class="blocker-row">
-        <div class="blocker-title">Writeback - Set up dashboard POC</div>
-        <div class="blocker-effort">Writeback POC · Assigned to Grant Polychronis</div>
-        
+        <div class="blocker-title">Review and update ADLS access runbook</div>
+        <div class="blocker-effort">Runbook Updates · Assigned to Aish Gaikwad</div>
+        <div class="blocker-text">Waiting on IT to provide updated access permission documentation</div>
       </div></div><div class="report-section">
     <div class="report-section-title">Recent status updates <span style="font-size:11px;font-weight:400;color:var(--text3)">(top 5 per sub-task · filtered by date range)</span></div><div style="margin-bottom:14px">
       <div style="font-size:12px;font-weight:600;padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px">
-        Runbook Update - Cabin Survey <span style="font-weight:400;color:var(--text3)">· Runbook Updates</span>
+        Review and update Databricks pipeline runbook <span style="font-weight:400;color:var(--text3)">· Runbook Updates</span>
       </div>
       <table class="report-table">
         <thead><tr><th>By</th><th>Week ending</th><th>Status</th><th>%</th><th>Notes</th><th>Blockers</th></tr></thead>
         <tbody><tr>
-        <td>Grant Polychronis</td>
-        <td>Apr 23, 2026</td>
+        <td>Michael White</td>
+        <td>Apr 17, 2026</td>
         <td><span class="status-pill sp-inprog">In Progress</span></td>
-        <td><span style="font-family:&#39;DM Mono&#39;,monospace">60%</span></td>
-        <td style="max-width:220px">Updated things and now at 60%. On track.
-</td>
-        <td style="max-width:160px;color:var(--high)">No blockers.
-</td>
-      </tr><tr>
-        <td>Grant Polychronis</td>
-        <td>Apr 23, 2026</td>
-        <td><span class="status-pill sp-inprog">In Progress</span></td>
-        <td><span style="font-family:&#39;DM Mono&#39;,monospace">70%</span></td>
-        <td style="max-width:220px">Another update.  now at 70%
-</td>
-        <td style="max-width:160px;color:var(--high)">still no blockers.
-</td>
+        <td><span style="font-family:&#39;DM Mono&#39;,monospace">50%</span></td>
+        <td style="max-width:220px">Completed review of current pipeline steps. Updating error handling section this week. On track for target date.</td>
+        <td style="max-width:160px;color:var(--high)"></td>
+      </tr></tbody></table></div><div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px">
+        Review and update ADLS access runbook <span style="font-weight:400;color:var(--text3)">· Runbook Updates</span>
+      </div>
+      <table class="report-table">
+        <thead><tr><th>By</th><th>Week ending</th><th>Status</th><th>%</th><th>Notes</th><th>Blockers</th></tr></thead>
+        <tbody><tr>
+        <td>Aish Gaikwad</td>
+        <td>Apr 17, 2026</td>
+        <td><span class="status-pill sp-blocked">Blocked</span></td>
+        <td><span style="font-family:&#39;DM Mono&#39;,monospace">10%</span></td>
+        <td style="max-width:220px">Started initial review but unable to proceed without updated access documentation from IT.</td>
+        <td style="max-width:160px;color:var(--high)">Waiting on IT to provide updated access permission documentation</td>
       </tr></tbody></table></div></div></div>
 </div>
 
@@ -1794,7 +1302,7 @@
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">Loaded 12 efforts, 25 sub-tasks</div>
+<div class="toast" id="toast">Could not connect to Airtable — showing sample data</div>
 
 <script>
 // ── CONFIG ──
@@ -1893,7 +1401,8 @@ async function loadData() {
       PercentComplete: x.fields['PercentComplete'] || 0,
       GoalDeliverable: x.fields['GoalDeliverable'] || '',
       NotifyOnChanges: !!x.fields['NotifyOnChanges'],
-      SuppressNotification: !!x.fields['SuppressNotification']
+      SuppressNotification: !!x.fields['SuppressNotification'],
+      Health: x.fields['SubtaskHealth'] || 'gray'
     }));
 
     updates = uRaw.map(x => ({
@@ -2265,7 +1774,7 @@ function renderSubtaskKanbanCard(s) {
     <div class="card-meta">
       <div class="avatar" title="${s.AssignedTo?.Title||''}">${initials(s.AssignedTo?.Title||'')}</div>
       <span class="pri-badge ${priClass(s.Priority)}">${s.Priority||'—'}</span>
-      ${healthDot(h)}
+      ${healthDot(h, s.Id)}
       <span class="due-label${over?' overdue':''}">${s.TargetEndDate ? fmtDate(s.TargetEndDate) : 'No due date'}</span>
     </div>
     ${pct > 0 ? `<div class="card-progress"><div class="card-progress-fill" style="width:${pct}%"></div></div>` : ''}
@@ -2274,30 +1783,46 @@ function renderSubtaskKanbanCard(s) {
 
 // ── HEALTH ──
 function subtaskHealth(s) {
-  const twoWeeksAgo = new Date(); twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-  const oneWeekAgo = new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-  if (s.Status === 'Completed') return 'green';
-  if (s.Status === 'Blocked') return 'red';
-  if (isOverdue(s.TargetEndDate)) return 'red';
-  const lastUpdate = updates.filter(u => u.SubtaskId === s.Id).sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate))[0];
-  if (!lastUpdate) return 'yellow'; // no updates ever
-  const lastDate = new Date(lastUpdate.WeekEnding);
-  if (lastDate < twoWeeksAgo) return 'red';
-  if (lastDate < oneWeekAgo) return 'yellow';
-  return 'green';
+  // Auto-red if overdue, regardless of manual setting
+  if (isOverdue(s.TargetEndDate) && s.Status !== 'Completed' && s.Status !== 'Cancelled') return 'red';
+  // Use manual health field, default to gray
+  return s.Health || 'gray';
 }
 
 function effortHealth(e) {
-  const sts = subtasks.filter(s => s.EffortId === e.Id);
-  if (sts.length === 0) return 'none';
+  const sts = subtasks.filter(s => s.EffortId === e.Id && s.Status !== 'Completed' && s.Status !== 'Cancelled');
+  if (sts.length === 0) return 'gray';
   const healths = sts.map(subtaskHealth);
   if (healths.includes('red')) return 'red';
   if (healths.includes('yellow')) return 'yellow';
-  return 'green';
+  if (healths.includes('green')) return 'green';
+  return 'gray';
 }
 
-function healthDot(h) {
+function healthDot(h, stId = null) {
+  if (stId) {
+    // Clickable dot on subtask cards
+    return `<span class="health-dot health-${h}" title="Health: ${h} (click to change)" 
+      onclick="cycleHealth('${stId}', event)" 
+      style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"
+    ></span>`;
+  }
   return `<span class="health-dot health-${h}" title="Health: ${h}"></span>`;
+}
+
+async function cycleHealth(stId, e) {
+  e.stopPropagation();
+  const st = subtasks.find(s => s.Id === stId);
+  if (!st) return;
+  const cycle = ['gray','green','yellow','red'];
+  const current = st.Health || 'gray';
+  const next = cycle[(cycle.indexOf(current) + 1) % cycle.length];
+  st.Health = next;
+  try {
+    await atUpdate('Sub-tasks', stId, { SubtaskHealth: next });
+  } catch(err) { console.error(err); }
+  renderKanban();
+  if (currentEffort) openEffortDetail(currentEffort.Id);
 }
 
 function renderEffortCard(e, compact = false) {
@@ -2554,40 +2079,102 @@ async function promoteIdea(id) {
   renderKanban();
 }
 
+let dragOverCard = null;
+
 function onDragStart(e, id, type) {
   dragItem = id; dragType = type;
   setTimeout(() => e.target.classList.add('dragging'), 0);
 }
+
 function onDragEnd(e) {
   e.target.classList.remove('dragging');
   document.querySelectorAll('.kb-col,.stk-col').forEach(c => c.classList.remove('drag-over'));
+  document.querySelectorAll('.drag-insert-above,.drag-insert-below').forEach(c => {
+    c.classList.remove('drag-insert-above','drag-insert-below');
+  });
+  dragOverCard = null;
 }
+
 function onDragOver(e) {
   e.preventDefault();
-  e.currentTarget.classList.add('drag-over');
-}
-function onDrop(e, type) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  const newStatus = e.currentTarget.dataset.status;
-  if (type === 'effort' && dragItem) {
-    const ef = efforts.find(x => x.Id === dragItem);
-    if (ef && ef.Status !== newStatus) {
-      ef.Status = newStatus;
-      atUpdate('Efforts', ef.Id, { Status: newStatus }).catch(()=>{});
-      showToast(`"${ef.Title}" moved to ${newStatus}`);
-      renderKanban();
-    }
-  } else if (type === 'subtask' && dragItem) {
-    const st = subtasks.find(x => x.Id === dragItem);
-    if (st && st.Status !== newStatus) {
-      st.Status = newStatus;
-      atUpdate('Sub-tasks', st.Id, { Status: newStatus }).catch(()=>{});
-      showToast(`Sub-task moved to ${newStatus}`);
-      if (currentEffort) openEffortDetail(currentEffort.Id);
-      else renderKanban();
+  const col = e.currentTarget;
+  col.classList.add('drag-over');
+
+  // Find the card being hovered over for intra-column sorting
+  const cards = [...col.querySelectorAll('.effort-card:not(.dragging),.st-card:not(.dragging)')];
+  let found = false;
+  cards.forEach(card => { card.classList.remove('drag-insert-above','drag-insert-below'); });
+
+  for (const card of cards) {
+    const rect = card.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    if (e.clientY < midY) {
+      card.classList.add('drag-insert-above');
+      dragOverCard = { id: card.dataset.id, position: 'before' };
+      found = true;
+      break;
     }
   }
+  if (!found && cards.length > 0) {
+    cards[cards.length - 1].classList.add('drag-insert-below');
+    dragOverCard = { id: cards[cards.length - 1].dataset.id, position: 'after' };
+  }
+}
+
+function onDrop(e, type) {
+  e.preventDefault();
+  const col = e.currentTarget;
+  col.classList.remove('drag-over');
+  document.querySelectorAll('.drag-insert-above,.drag-insert-below').forEach(c => {
+    c.classList.remove('drag-insert-above','drag-insert-below');
+  });
+
+  const newStatus = col.dataset.status;
+
+  if (type === 'effort' && dragItem) {
+    const ef = efforts.find(x => x.Id === dragItem);
+    if (!ef) return;
+    const statusChanged = ef.Status !== newStatus;
+    ef.Status = newStatus;
+    if (statusChanged) {
+      atUpdate('Efforts', ef.Id, { Status: newStatus }).catch(()=>{});
+      showToast(`"${ef.Title}" moved to ${newStatus}`);
+    }
+    // Reorder within column
+    if (dragOverCard) {
+      const targetIdx = efforts.findIndex(x => x.Id === dragOverCard.id);
+      const srcIdx = efforts.findIndex(x => x.Id === dragItem);
+      if (targetIdx > -1 && srcIdx > -1 && srcIdx !== targetIdx) {
+        const [moved] = efforts.splice(srcIdx, 1);
+        const newIdx = dragOverCard.position === 'before' ? targetIdx : targetIdx + 1;
+        efforts.splice(newIdx > srcIdx ? newIdx - 1 : newIdx, 0, moved);
+      }
+    }
+    renderKanban();
+
+  } else if (type === 'subtask' && dragItem) {
+    const st = subtasks.find(x => x.Id === dragItem);
+    if (!st) return;
+    const statusChanged = st.Status !== newStatus;
+    st.Status = newStatus;
+    if (statusChanged) {
+      atUpdate('Sub-tasks', st.Id, { Status: newStatus }).catch(()=>{});
+      showToast(`Sub-task moved to ${newStatus}`);
+    }
+    // Reorder within column
+    if (dragOverCard) {
+      const targetIdx = subtasks.findIndex(x => x.Id === dragOverCard.id);
+      const srcIdx = subtasks.findIndex(x => x.Id === dragItem);
+      if (targetIdx > -1 && srcIdx > -1 && srcIdx !== targetIdx) {
+        const [moved] = subtasks.splice(srcIdx, 1);
+        const newIdx = dragOverCard.position === 'before' ? targetIdx : targetIdx + 1;
+        subtasks.splice(newIdx > srcIdx ? newIdx - 1 : newIdx, 0, moved);
+      }
+    }
+    if (currentEffort) openEffortDetail(currentEffort.Id);
+    else renderKanban();
+  }
+  dragOverCard = null;
 }
 
 // ── EFFORT DETAIL ──
@@ -2646,7 +2233,7 @@ function openEffortDetail(id) {
   `;
 
   document.getElementById('det-actions').innerHTML = `
-    <button class="btn primary" onclick="saveEffortDetail()">Save changes</button>
+    <button class="btn primary" onclick="saveAndCloseEffortDetail()">Save &amp; Close</button>
     <button class="btn" onclick="closeEffortDetail()">Cancel</button>
   `;
 
@@ -2704,6 +2291,49 @@ function closeEffortDetail(e) {
   }
 }
 
+async function saveAndCloseEffortDetail() {
+  await saveEffortDetail();
+  document.getElementById('effort-overlay').classList.remove('open');
+}
+
+async function saveAndCloseStDetail() {
+  await saveStDetail();
+  document.getElementById('st-overlay').classList.remove('open');
+}
+
+function openCheckinFromSubtask(stId) {
+  const st = subtasks.find(s => s.Id === stId);
+  if (!st) return;
+  const effort = efforts.find(e => e.Id === st.EffortId);
+  // Close detail panel
+  document.getElementById('st-overlay').classList.remove('open');
+  // Switch to check-in tab
+  showScreen('checkin');
+  // Pre-select person if assignee matches a known team member
+  const personSel = document.getElementById('checkin-person');
+  if (st.AssignedTo?.Title) {
+    for (let i = 0; i < personSel.options.length; i++) {
+      if (personSel.options[i].value === st.AssignedTo.Title) {
+        personSel.selectedIndex = i;
+        break;
+      }
+    }
+  }
+  // Populate subtasks for that person
+  populateCheckinSubtasks();
+  // Pre-select the subtask
+  const stSel = document.getElementById('checkin-subtask');
+  for (let i = 0; i < stSel.options.length; i++) {
+    if (stSel.options[i].value === stId) {
+      stSel.selectedIndex = i;
+      break;
+    }
+  }
+  // Load history and pre-fill
+  onCheckinSubtaskChange();
+  showToast(`Check-in form ready for "${st.Title}"`);
+}
+
 function renderSubtaskCard(s) {
   const blocked = s.Status === 'Blocked';
   const over = isOverdue(s.TargetEndDate);
@@ -2719,7 +2349,7 @@ function renderSubtaskCard(s) {
     <div class="st-meta">
       <div class="st-avatar" title="${s.AssignedTo?.Title||''}">${initials(s.AssignedTo?.Title||'')}</div>
       <span class="pri-badge ${priClass(s.Priority)}" style="font-size:9px;padding:1px 5px">${s.Priority||'—'}</span>
-      ${healthDot(h)}
+      ${healthDot(h, s.Id)}
       <span class="st-due${over?' overdue':''}">${s.TargetEndDate ? fmtDate(s.TargetEndDate) : '—'}</span>
     </div>
     ${pct > 0 ? `<div class="st-progress"><div class="st-progress-fill" style="width:${pct}%"></div></div>` : ''}
@@ -2784,8 +2414,9 @@ function openStDetail(id, e) {
   `;
 
   document.getElementById('st-det-actions').innerHTML = `
-    <button class="btn primary" onclick="saveStDetail()">Save changes</button>
+    <button class="btn primary" onclick="saveAndCloseStDetail()">Save &amp; Close</button>
     <button class="btn" onclick="closeStDetail()">Cancel</button>
+    <button class="btn" style="margin-left:8px;background:var(--low);color:#fff;border-color:var(--low)" onclick="openCheckinFromSubtask('${currentSubtask.Id}')">+ Weekly update</button>
   `;
 
   let updatesHtml = '';
@@ -3035,17 +2666,19 @@ function sortIndicator(table, col) {
 function renderReport() {
   const filterEffortId = document.getElementById('report-effort-filter')?.value || '';
   const filterPerson = document.getElementById('report-person-filter')?.value || '';
-  const filterStatus = document.getElementById('report-status-filter')?.value || '';
+  const statusSelect = document.getElementById('report-status-filter');
+  const selectedStatuses = statusSelect ? Array.from(statusSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
+  const filterStatus = selectedStatuses.length === 1 ? selectedStatuses[0] : '';
   const filterDateFrom = document.getElementById('report-date-from')?.value || '';
   const filterDateTo = document.getElementById('report-date-to')?.value || '';
 
   let filteredEfforts = efforts.filter(e => !e.IsIntakeIdea);
   if (filterEffortId) filteredEfforts = filteredEfforts.filter(e => e.Id === filterEffortId);
-  if (filterStatus) filteredEfforts = filteredEfforts.filter(e => e.Status === filterStatus);
+  if (selectedStatuses.length > 0) filteredEfforts = filteredEfforts.filter(e => selectedStatuses.includes(e.Status));
 
   let allSubtasks = subtasks.filter(s => filteredEfforts.some(e => e.Id === s.EffortId));
   if (filterPerson) allSubtasks = allSubtasks.filter(s => s.AssignedTo?.Title === filterPerson);
-  if (filterStatus) allSubtasks = allSubtasks.filter(s => s.Status === filterStatus || filteredEfforts.some(e => e.Id === s.EffortId));
+  if (selectedStatuses.length > 0) allSubtasks = allSubtasks.filter(s => selectedStatuses.includes(s.Status));
 
   const activeEfforts = filterPerson
     ? filteredEfforts.filter(e => allSubtasks.some(s => s.EffortId === e.Id))
@@ -3114,7 +2747,7 @@ function renderReport() {
   html += `</tbody></table></div>`;
 
   // Apply status filter to subtasks
-  if (filterStatus) sortedSubtasks = sortedSubtasks.filter(s => s.Status === filterStatus);
+  if (selectedStatuses.length > 0) sortedSubtasks = sortedSubtasks.filter(s => selectedStatuses.includes(s.Status));
 
   html += `<div class="report-section">
     <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between">
@@ -3304,6 +2937,17 @@ function setReviewSort(sort) {
   renderReview();
 }
 
+function getStaleIndicator(stId) {
+  const lastUpdate = updates
+    .filter(u => u.SubtaskId === stId)
+    .sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate))[0];
+  if (!lastUpdate) return `<span style="font-size:10px;color:#9ca3af" title="No updates ever">🕐 Never</span>`;
+  const daysSince = Math.floor((new Date() - new Date(lastUpdate.WeekEnding)) / 86400000);
+  if (daysSince > 14) return `<span style="font-size:10px;color:#dc2626;font-weight:600" title="${daysSince} days since last update">🕐 ${daysSince}d ago</span>`;
+  if (daysSince > 7) return `<span style="font-size:10px;color:#d97706;font-weight:600" title="${daysSince} days since last update">🕐 ${daysSince}d ago</span>`;
+  return `<span style="font-size:10px;color:#16a34a" title="${daysSince} days since last update">🕐 ${daysSince}d ago</span>`;
+}
+
 function renderReview() {
   const fromVal = document.getElementById('review-from').value;
   const toVal = document.getElementById('review-to').value;
@@ -3360,8 +3004,9 @@ function renderReview() {
         const effort = activeEfforts.find(e => e.Id === st?.EffortId);
         const stUpdates = personUpdates.filter(u => u.SubtaskId === stId);
         html += `<div style="margin-bottom:12px">
-          <div style="font-size:12px;font-weight:600;color:var(--text);padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:6px">
+          <div style="font-size:12px;font-weight:600;color:var(--text);padding:6px 0 4px;border-bottom:1px solid var(--border);margin-bottom:6px;display:flex;align-items:center;gap:8px">
             ${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span>
+            <span style="margin-left:auto">${getStaleIndicator(stId)}</span>
           </div>`;
         stUpdates.forEach(u => { html += renderReviewEntry(u); });
         html += `</div>`;
@@ -3377,7 +3022,10 @@ function renderReview() {
       const stPeople = [...new Set(stUpdates.map(u => u.UpdateBy?.Title).filter(Boolean))];
       html += `<div class="report-section" style="margin-bottom:16px">
         <div class="report-section-title">
-          <span>${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span></span>
+          <span style="display:flex;align-items:center;gap:8px">
+            ${st?.Title||'—'} <span style="font-weight:400;color:var(--text3)">· ${effort?.Title||'—'}</span>
+            ${getStaleIndicator(stId)}
+          </span>
           <span style="font-size:11px;color:var(--text3);font-weight:400">${stUpdates.length} update${stUpdates.length!==1?'s':''}</span>
         </div>`;
       stPeople.forEach(person => {
