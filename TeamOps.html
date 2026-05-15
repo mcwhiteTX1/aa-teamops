@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_4.html -->
+<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_6.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -605,9 +605,9 @@
   <div class="toolbar">
     <div class="toolbar-title">Team board</div>
     <div class="view-toggle">
-      <button class="view-btn active" onclick="setKanbanView(&#39;subtask&#39;)">By sub-task</button>
+      <button class="view-btn" onclick="setKanbanView(&#39;subtask&#39;)">By sub-task</button>
       <button class="view-btn" onclick="setKanbanView(&#39;person&#39;)">By person</button>
-      <button class="view-btn" onclick="setKanbanView(&#39;effort&#39;)">By effort</button>
+      <button class="view-btn active" onclick="setKanbanView(&#39;effort&#39;)">By effort</button>
     </div>
     <select class="filter-select" id="filter-person" onchange="renderKanban()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
     <select class="filter-select" id="filter-pri" onchange="renderKanban()">
@@ -735,69 +735,39 @@
   <div id="kanban-content"><div class="kanban-board" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Backlog</span>
-        <span class="kb-col-count">2</span>
+        <span class="kb-col-count">0</span>
       </div>
-      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="2" ondragstart="onDragStart(event,&#39;2&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;2&#39;,event)">
-    <div class="card-title">Review and update Teradata query runbook</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
-    <div class="card-meta">
-      <div class="avatar" title="Andrew Britt">AB</div>
-      <span class="pri-badge medium">Medium</span>
-      <span class="health-dot health-gray" title="Health: gray (click to change)" onclick="cycleHealth(&#39;2&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
-      <span class="due-label">May 8, 2026</span>
-    </div>
-    
-  </div><div class="effort-card" draggable="true" data-id="5" ondragstart="onDragStart(event,&#39;5&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;5&#39;,event)">
-    <div class="card-title">Build red-gold-green heatmap for all 15 stations</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
-    <div class="card-meta">
-      <div class="avatar" title="Grant Polychronis">GP</div>
-      <span class="pri-badge high">High</span>
-      <span class="health-dot health-gray" title="Health: gray (click to change)" onclick="cycleHealth(&#39;5&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
-      <span class="due-label">May 8, 2026</span>
-    </div>
-    
-  </div></div></div><div class="kb-col-wrap">
+      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="empty-col">No items</div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">In Progress</span>
         <span class="kb-col-count">2</span>
       </div>
-      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="1" ondragstart="onDragStart(event,&#39;1&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;1&#39;,event)">
-    <div class="card-title">Review and update Databricks pipeline runbook</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
+      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="effort-card" draggable="true" data-id="1" ondragstart="onDragStart(event,&#39;1&#39;,&#39;effort&#39;)" ondragend="onDragEnd(event)" onclick="openEffortDetail(&#39;1&#39;)">
+    <div class="card-title">Runbook Updates</div>
     <div class="card-meta">
       <div class="avatar" title="Michael White">MW</div>
       <span class="pri-badge high">High</span>
-      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;1&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
-      <span class="due-label overdue">May 1, 2026</span>
+      <span class="health-dot health-red" title="Health: red"></span>
+      <span class="due-label">May 15, 2026</span>
     </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:50%"></div></div>
-  </div><div class="effort-card" draggable="true" data-id="4" ondragstart="onDragStart(event,&#39;4&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;4&#39;,event)">
-    <div class="card-title">Build station delay metrics calculated fields</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:25%"></div></div>
+    <div class="subtask-summary">3 sub-tasks · 0 done · <span style="color:var(--high)">1 blocked</span></div>
+  </div><div class="effort-card" draggable="true" data-id="2" ondragstart="onDragStart(event,&#39;2&#39;,&#39;effort&#39;)" ondragend="onDragEnd(event)" onclick="openEffortDetail(&#39;2&#39;)">
+    <div class="card-title">Q2 Operations Dashboard</div>
     <div class="card-meta">
       <div class="avatar" title="Michael White">MW</div>
       <span class="pri-badge high">High</span>
-      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;4&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
-      <span class="due-label overdue">May 1, 2026</span>
+      <span class="health-dot health-red" title="Health: red"></span>
+      <span class="due-label">May 29, 2026</span>
     </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:60%"></div></div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:40%"></div></div>
+    <div class="subtask-summary">2 sub-tasks · 0 done</div>
   </div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Blocked</span>
-        <span class="kb-col-count">1</span>
+        <span class="kb-col-count">0</span>
       </div>
-      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card blocked-card" draggable="true" data-id="3" ondragstart="onDragStart(event,&#39;3&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;3&#39;,event)">
-    <div class="card-title">Review and update ADLS access runbook</div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
-    <div class="card-meta">
-      <div class="avatar" title="Aish Gaikwad">AG</div>
-      <span class="pri-badge high">High</span>
-      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;3&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
-      <span class="due-label overdue">May 1, 2026</span>
-    </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:10%"></div></div>
-  </div></div></div></div></div>
+      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="empty-col">No items</div></div></div></div></div>
 </div>
 
 <!-- GANTT SCREEN -->
@@ -945,7 +915,7 @@
     <input class="filter-select" type="date" id="review-to" onchange="renderReview()" style="width:140px">
     <select class="filter-select" id="review-person-filter" onchange="renderReview()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
     <div class="view-toggle">
-      <button class="view-btn active" id="review-sort-person" onclick="setReviewSort(&#39;person&#39;)">Person → Sub-task</button>
+      <button class="view-btn" id="review-sort-person" onclick="setReviewSort(&#39;person&#39;)">Person → Sub-task</button>
       <button class="view-btn" id="review-sort-subtask" onclick="setReviewSort(&#39;subtask&#39;)">Sub-task → Person</button>
     </div>
     <button class="btn print-btn" onclick="window.print()">Print / PDF</button>
@@ -954,7 +924,7 @@
   <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
     <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Missing updates — current period</div>
     <div class="view-toggle">
-      <button class="view-btn active" id="missing-7" onclick="setMissingPeriod(7)">Last 7 days</button>
+      <button class="view-btn" id="missing-7" onclick="setMissingPeriod(7)">Last 7 days</button>
       <button class="view-btn" id="missing-14" onclick="setMissingPeriod(14)">Last 14 days</button>
     </div>
     <div id="missing-indicator" style="flex:1"></div>
@@ -968,16 +938,19 @@
     <div class="toolbar-title">Reports &amp; dashboard</div>
     <select class="filter-select" id="report-effort-filter" onchange="renderReport()"><option value="">All efforts</option><option value="1">Runbook Updates</option><option value="2">Q2 Operations Dashboard</option></select>
     <select class="filter-select" id="report-person-filter" onchange="renderReport()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
-    <select class="filter-select" id="report-status-filter" onchange="renderReport()" multiple="" style="height:32px;min-width:140px" title="Hold Ctrl/Cmd to select multiple">
-      <option value="">All statuses</option>
-      <option>In Progress</option>
-      <option>Backlog</option>
-      <option>Blocked</option>
-      <option>In Review</option>
-      <option>On Hold</option>
-      <option>Completed</option>
-      <option>Cancelled</option>
-    </select>
+    <div style="position:relative">
+      <button class="btn" id="report-status-btn" onclick="toggleReportStatusFilter(event)">Status ▾</button>
+      <div id="report-status-panel" style="display:none;position:absolute;top:36px;left:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;z-index:100;min-width:160px;box-shadow:var(--shadow-md)">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px">Filter by status</div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderReport()" data-rstat="In Progress"> In Progress</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderReport()" data-rstat="Backlog"> Backlog</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderReport()" data-rstat="Blocked"> Blocked</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderReport()" data-rstat="In Review"> In Review</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="" onchange="renderReport()" data-rstat="On Hold"> On Hold</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px;cursor:pointer"><input type="checkbox" onchange="renderReport()" data-rstat="Completed"> Completed</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer"><input type="checkbox" onchange="renderReport()" data-rstat="Cancelled"> Cancelled</label>
+      </div>
+    </div>
     <label style="font-size:12px;color:var(--text2);font-weight:500">Updates from</label>
     <input class="filter-select" type="date" id="report-date-from" onchange="renderReport()" style="width:130px">
     <label style="font-size:12px;color:var(--text2);font-weight:500">to</label>
@@ -1082,9 +1055,9 @@
       <td><span class="status-pill sp-backlog">Backlog</span></td>
       <td><span class="pri-badge medium">Medium</span></td>
       <td>—</td>
-      <td class="">May 8, 2026</td>
+      <td class="overdue">May 8, 2026</td>
       <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-gray" title="Health: gray"></span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr><tr style="cursor:pointer" onclick="toggleSubtaskComments(&#39;3&#39;)" id="str-3">
       <td style="color:var(--text3)">Runbook Updates</td>
@@ -1135,9 +1108,9 @@
       <td><span class="status-pill sp-backlog">Backlog</span></td>
       <td><span class="pri-badge high">High</span></td>
       <td>—</td>
-      <td class="">May 8, 2026</td>
+      <td class="overdue">May 8, 2026</td>
       <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
-      <td><span class="health-dot health-gray" title="Health: gray"></span></td>
+      <td><span class="health-dot health-red" title="Health: red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr></tbody></table></div>
 
@@ -1216,7 +1189,7 @@
       </div>
       <!-- New subtask inline form -->
       <div id="new-subtask-form" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px">
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
           <div>
             <label class="form-label">Sub-task title *</label>
             <input class="form-input" id="new-st-title" placeholder="What needs to be done?">
@@ -1224,6 +1197,13 @@
           <div>
             <label class="form-label">Assigned to</label>
             <select class="form-select" id="new-st-assignee"></select>
+          </div>
+          <div>
+            <label class="form-label">Status</label>
+            <select class="form-select" id="new-st-status">
+              <option>Backlog</option><option>In Progress</option><option>In Review</option>
+              <option>Blocked</option><option>On Hold</option><option>Completed</option><option>Cancelled</option>
+            </select>
           </div>
           <div>
             <label class="form-label">Priority</label>
@@ -1978,6 +1958,7 @@ function toggleNewSubtaskForm() {
     const sel = document.getElementById('new-st-assignee');
     sel.innerHTML = '<option value="">Unassigned</option>' + teamMembers.map(p => `<option value="${p}">${p}</option>`).join('');
     document.getElementById('new-st-title').value = '';
+    document.getElementById('new-st-status').selectedIndex = 0;
     document.getElementById('new-st-goal').value = '';
     document.getElementById('new-st-start').value = '';
     document.getElementById('new-st-end').value = '';
@@ -1992,7 +1973,7 @@ async function saveNewSubtask() {
   const fields = {
     Name: title,
     Effort: [currentEffort.Id],
-    Status: 'Backlog',
+    Status: document.getElementById('new-st-status').value,
     Priority: document.getElementById('new-st-priority').value,
     PercentComplete: 0,
     NotifyOnChanges: true,
@@ -2013,7 +1994,7 @@ async function saveNewSubtask() {
       Title: fields.Name,
       EffortId: currentEffort.Id,
       AssignedTo: { Title: assignee || '' },
-      Status: 'Backlog',
+      Status: fields.Status,
       Priority: fields.Priority,
       StartDate: fields.StartDate || null,
       TargetEndDate: fields.TargetEndDate || null,
@@ -2391,7 +2372,7 @@ function openStDetail(id, e) {
     <div class="detail-field">
       <label>Status</label>
       <select class="form-select" id="st-edit-status">
-        ${STATUSES.map(s=>`<option${s===currentSubtask.Status?' selected':''}>${s}</option>`).join('')}
+        ${['Backlog','In Progress','In Review','Blocked','On Hold','Completed','Cancelled'].map(s=>`<option${s===currentSubtask.Status?' selected':''}>${s}</option>`).join('')}
       </select>
     </div>
     <div class="detail-field">
@@ -2529,8 +2510,8 @@ async function saveStDetail() {
   } catch(err) { console.error(err); }
   showToast('Sub-task saved');
   document.getElementById('st-det-title').textContent = currentSubtask.Title;
-  if (currentEffort) openEffortDetail(currentEffort.Id);
   renderKanban();
+  renderReport();
 }
 
 function closeStDetail(e) {
@@ -2622,20 +2603,21 @@ function toggleSubtaskComments(stId) {
 }
 
 function exportSubtasksToExcel() {
-  // Get current filtered subtasks from the table
   const filterEffortId = document.getElementById('report-effort-filter')?.value || '';
   const filterPerson = document.getElementById('report-person-filter')?.value || '';
-  const filterStatus = document.getElementById('report-status-filter')?.value || '';
+  const statusBoxes = document.querySelectorAll('#report-status-panel input[type=checkbox]');
+  const selectedStatuses = [...statusBoxes].filter(cb => cb.checked).map(cb => cb.dataset.rstat);
+  const allStatusesChecked = selectedStatuses.length === statusBoxes.length;
   const filterDateFrom = document.getElementById('report-date-from')?.value || '';
   const filterDateTo = document.getElementById('report-date-to')?.value || '';
 
   let filteredEfforts = efforts.filter(e => !e.IsIntakeIdea);
   if (filterEffortId) filteredEfforts = filteredEfforts.filter(e => e.Id === filterEffortId);
-  if (filterStatus) filteredEfforts = filteredEfforts.filter(e => e.Status === filterStatus);
+  if (!allStatusesChecked && selectedStatuses.length > 0) filteredEfforts = filteredEfforts.filter(e => selectedStatuses.includes(e.Status));
 
   let exportSubs = subtasks.filter(s => filteredEfforts.some(e => e.Id === s.EffortId));
   if (filterPerson) exportSubs = exportSubs.filter(s => s.AssignedTo?.Title === filterPerson);
-  if (filterStatus) exportSubs = exportSubs.filter(s => s.Status === filterStatus);
+  if (!allStatusesChecked && selectedStatuses.length > 0) exportSubs = exportSubs.filter(s => selectedStatuses.includes(s.Status));
 
   // Build CSV
   const headers = ['Effort','Sub-task','Assigned to','Status','Priority','Start date','Target end','% Complete','Health'];
@@ -2706,6 +2688,16 @@ function exportSubtasksToExcel() {
   showToast('Exported to CSV — open in Excel');
 }
 
+function toggleReportStatusFilter(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('report-status-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', () => {
+  const p = document.getElementById('report-status-panel');
+  if (p) p.style.display = 'none';
+});
+
 function toggleReportSort(table, col) {
   if (table === 'effort') {
     if (reportEffortSort.col === col) reportEffortSort.dir *= -1;
@@ -2726,19 +2718,19 @@ function sortIndicator(table, col) {
 function renderReport() {
   const filterEffortId = document.getElementById('report-effort-filter')?.value || '';
   const filterPerson = document.getElementById('report-person-filter')?.value || '';
-  const statusSelect = document.getElementById('report-status-filter');
-  const selectedStatuses = statusSelect ? Array.from(statusSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
-  const filterStatus = selectedStatuses.length === 1 ? selectedStatuses[0] : '';
+  const statusBoxes = document.querySelectorAll('#report-status-panel input[type=checkbox]');
+  const selectedStatuses = [...statusBoxes].filter(cb => cb.checked).map(cb => cb.dataset.rstat);
+  const allStatusesChecked = selectedStatuses.length === statusBoxes.length;
   const filterDateFrom = document.getElementById('report-date-from')?.value || '';
   const filterDateTo = document.getElementById('report-date-to')?.value || '';
 
   let filteredEfforts = efforts.filter(e => !e.IsIntakeIdea);
   if (filterEffortId) filteredEfforts = filteredEfforts.filter(e => e.Id === filterEffortId);
-  if (selectedStatuses.length > 0) filteredEfforts = filteredEfforts.filter(e => selectedStatuses.includes(e.Status));
+  if (!allStatusesChecked && selectedStatuses.length > 0) filteredEfforts = filteredEfforts.filter(e => selectedStatuses.includes(e.Status));
 
   let allSubtasks = subtasks.filter(s => filteredEfforts.some(e => e.Id === s.EffortId));
   if (filterPerson) allSubtasks = allSubtasks.filter(s => s.AssignedTo?.Title === filterPerson);
-  if (selectedStatuses.length > 0) allSubtasks = allSubtasks.filter(s => selectedStatuses.includes(s.Status));
+  if (!allStatusesChecked && selectedStatuses.length > 0) allSubtasks = allSubtasks.filter(s => selectedStatuses.includes(s.Status));
 
   const activeEfforts = filterPerson
     ? filteredEfforts.filter(e => allSubtasks.some(s => s.EffortId === e.Id))
@@ -2807,7 +2799,7 @@ function renderReport() {
   html += `</tbody></table></div>`;
 
   // Apply status filter to subtasks
-  if (selectedStatuses.length > 0) sortedSubtasks = sortedSubtasks.filter(s => selectedStatuses.includes(s.Status));
+  if (!allStatusesChecked && selectedStatuses.length > 0) sortedSubtasks = sortedSubtasks.filter(s => selectedStatuses.includes(s.Status));
 
   html += `<div class="report-section">
     <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between">
