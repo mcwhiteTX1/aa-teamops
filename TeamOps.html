@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_14.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_15.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1832,8 +1832,13 @@ async function cycleHealth(stId, e) {
   try {
     await atUpdate('Sub-tasks', stId, { SubtaskHealth: next });
   } catch(err) { console.error(err); }
-  renderKanban();
-  if (currentEffort) openEffortDetail(currentEffort.Id);
+  // Only re-open effort detail if it's currently visible
+  const effortOverlayOpen = document.getElementById('effort-overlay')?.classList.contains('open');
+  if (effortOverlayOpen && currentEffort) {
+    openEffortDetail(currentEffort.Id);
+  } else {
+    renderKanban();
+  }
 }
 
 function renderEffortCard(e, compact = false) {
@@ -2496,8 +2501,10 @@ function openStDetail(id, e) {
 function setSubtaskHealthInPanel(h) {
   if (!currentSubtask) return;
   const healthColors = { Gray:'#9ca3af', Green:'#16a34a', Yellow:'#d97706', Red:'#dc2626' };
-  const healthLabels = { Gray:'Not set', Green:'On track', Yellow:'At risk', Red:'In trouble' };
   currentSubtask.Health = h;
+  // Also update in subtasks array immediately
+  const stInArray = subtasks.find(s => s.Id === currentSubtask.Id);
+  if (stInArray) stInArray.Health = h;
   // Update button styles
   ['Gray','Green','Yellow','Red'].forEach(opt => {
     const btn = document.getElementById(`health-btn-${opt}`);
