@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_8.html -->
+<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_9.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2512,34 +2512,59 @@ function setSubtaskHealthInPanel(h) {
 
 async function saveStDetail() {
   if (!currentSubtask) return;
-  currentSubtask.Title = document.getElementById('st-edit-title').value;
-  currentSubtask.AssignedTo = { Title: document.getElementById('st-edit-assignee').value };
-  currentSubtask.Status = document.getElementById('st-edit-status').value;
-  currentSubtask.Priority = document.getElementById('st-edit-priority').value;
-  currentSubtask.PercentComplete = parseInt(document.getElementById('st-edit-pct').value) || 0;
-  currentSubtask.StartDate = document.getElementById('st-edit-start').value;
-  currentSubtask.TargetEndDate = document.getElementById('st-edit-end').value;
-  currentSubtask.ActualEndDate = document.getElementById('st-edit-actual').value;
-  currentSubtask.GoalDeliverable = document.getElementById('st-edit-goal').value;
-  currentSubtask.NotifyOnChanges = document.getElementById('st-notif').checked;
+  const id = currentSubtask.Id;
+
+  // Read all values from form
+  const newStatus = document.getElementById('st-edit-status').value;
+  const newTitle = document.getElementById('st-edit-title').value;
+  const newAssignee = document.getElementById('st-edit-assignee').value;
+  const newPriority = document.getElementById('st-edit-priority').value;
+  const newPct = parseInt(document.getElementById('st-edit-pct').value) || 0;
+  const newStart = document.getElementById('st-edit-start').value || null;
+  const newEnd = document.getElementById('st-edit-end').value || null;
+  const newActual = document.getElementById('st-edit-actual').value || null;
+  const newGoal = document.getElementById('st-edit-goal').value;
+  const newNotify = document.getElementById('st-notif').checked;
+  const newHealth = currentSubtask.Health || 'gray';
+
+  // Update the object in the subtasks array directly by finding it
+  const stInArray = subtasks.find(s => s.Id === id);
+  if (stInArray) {
+    stInArray.Title = newTitle;
+    stInArray.AssignedTo = { Title: newAssignee };
+    stInArray.Status = newStatus;
+    stInArray.Priority = newPriority;
+    stInArray.PercentComplete = newPct;
+    stInArray.StartDate = newStart;
+    stInArray.TargetEndDate = newEnd;
+    stInArray.ActualEndDate = newActual;
+    stInArray.GoalDeliverable = newGoal;
+    stInArray.NotifyOnChanges = newNotify;
+    stInArray.Health = newHealth;
+  }
+
+  // Also update currentSubtask reference
+  currentSubtask.Status = newStatus;
+  currentSubtask.Title = newTitle;
+
   try {
     const stFields = {
-      Name: currentSubtask.Title,
-      Status: currentSubtask.Status,
-      Priority: currentSubtask.Priority,
-      PercentComplete: currentSubtask.PercentComplete,
-      StartDate: currentSubtask.StartDate || null,
-      TargetEndDate: currentSubtask.TargetEndDate || null,
-      ActualEndDate: currentSubtask.ActualEndDate || null,
-      GoalDeliverable: currentSubtask.GoalDeliverable,
-      NotifyOnChanges: currentSubtask.NotifyOnChanges
+      Name: newTitle,
+      Status: newStatus,
+      Priority: newPriority,
+      PercentComplete: newPct,
+      StartDate: newStart,
+      TargetEndDate: newEnd,
+      ActualEndDate: newActual,
+      GoalDeliverable: newGoal,
+      NotifyOnChanges: newNotify,
+      SubtaskHealth: newHealth
     };
-    if (currentSubtask.AssignedTo?.Title) stFields.AssignedTo = currentSubtask.AssignedTo.Title;
-    if (currentSubtask.Health) stFields.SubtaskHealth = currentSubtask.Health;
-    await atUpdate('Sub-tasks', currentSubtask.Id, stFields);
+    if (newAssignee) stFields.AssignedTo = newAssignee;
+    await atUpdate('Sub-tasks', id, stFields);
   } catch(err) { console.error(err); }
-  showToast('Sub-task saved' + (['Completed','Cancelled'].includes(currentSubtask.Status) ? ' — enable column in Columns ▾ to see it' : ''));
-  document.getElementById('st-det-title').textContent = currentSubtask.Title;
+
+  showToast('Sub-task saved' + (['Completed','Cancelled'].includes(newStatus) ? ' — enable Completed column in Columns ▾ to see it' : ''));
   renderKanban();
   renderReport();
 }
