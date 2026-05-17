@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_11.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_13.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2527,9 +2527,6 @@ async function saveStDetail() {
   const newNotify = document.getElementById('st-notif').checked;
   const newHealth = currentSubtask.Health || 'Gray';
 
-  console.log('Saving subtask:', id, 'new status:', newStatus);
-  console.log('subtasks array before save:', subtasks.find(s => s.Id === id)?.Status);
-
   // Update the object in the subtasks array directly by finding it
   const stInArray = subtasks.find(s => s.Id === id);
   if (stInArray) {
@@ -2544,9 +2541,6 @@ async function saveStDetail() {
     stInArray.GoalDeliverable = newGoal;
     stInArray.NotifyOnChanges = newNotify;
     stInArray.Health = newHealth;
-    console.log('Updated in array, new status:', stInArray.Status);
-  } else {
-    console.log('WARNING: subtask not found in array by ID:', id);
   }
 
   // Also update currentSubtask reference
@@ -2567,8 +2561,14 @@ async function saveStDetail() {
       SubtaskHealth: newHealth
     };
     if (newAssignee) stFields.AssignedTo = newAssignee;
-    await atUpdate('Sub-tasks', id, stFields);
-  } catch(err) { console.error(err); }
+    console.log('Sending to Airtable:', JSON.stringify(stFields));
+    const result = await atUpdate('Sub-tasks', id, stFields);
+    console.log('Airtable save successful:', result?.id);
+  } catch(err) {
+    console.error('Airtable save FAILED:', err);
+    showToast('⚠ Save failed — check console');
+    return; // Don't close if save failed
+  }
 
   showToast('Sub-task saved' + (['Completed','Cancelled'].includes(newStatus) ? ' — enable Completed column in Columns ▾ to see it' : ''));
   renderKanban();
