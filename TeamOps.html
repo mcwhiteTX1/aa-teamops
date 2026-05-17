@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_13.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_14.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2797,7 +2797,11 @@ function renderReport() {
     ? filteredEfforts.filter(e => allSubtasks.some(s => s.EffortId === e.Id))
     : filteredEfforts;
 
-  // Sort efforts
+  // Stats should count ALL subtasks under active efforts regardless of status filter
+  const allSubtasksUnfiltered = subtasks.filter(s => activeEfforts.some(e => e.Id === s.EffortId));
+  const allSubtasksByPerson = filterPerson ? allSubtasksUnfiltered.filter(s => s.AssignedTo?.Title === filterPerson) : allSubtasksUnfiltered;
+  const blockedSt = allSubtasksByPerson.filter(s => s.Status === 'Blocked');
+  const completedSt = allSubtasksByPerson.filter(s => s.Status === 'Completed');
   let sortedEfforts = [...activeEfforts];
   if (reportEffortSort.col === 'title') sortedEfforts.sort((a,b) => reportEffortSort.dir * a.Title.localeCompare(b.Title));
   else if (reportEffortSort.col === 'owner') sortedEfforts.sort((a,b) => reportEffortSort.dir * (a.Owner?.Title||'').localeCompare(b.Owner?.Title||''));
@@ -2812,8 +2816,6 @@ function renderReport() {
   else if (reportSubtaskSort.col === 'subtask') sortedSubtasks.sort((a,b) => reportSubtaskSort.dir * a.Title.localeCompare(b.Title));
   else if (reportSubtaskSort.col === 'assignee') sortedSubtasks.sort((a,b) => reportSubtaskSort.dir * (a.AssignedTo?.Title||'').localeCompare(b.AssignedTo?.Title||''));
 
-  const blockedSt = allSubtasks.filter(s => s.Status === 'Blocked');
-  const completedSt = allSubtasks.filter(s => s.Status === 'Completed');
   const people = [...new Set(allSubtasks.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
 
   const thSort = (table, col, label) =>
@@ -2822,7 +2824,7 @@ function renderReport() {
   let html = `
   <div class="report-grid">
     <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">${activeEfforts.length}</div></div>
-    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">${allSubtasks.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">${allSubtasksByPerson.length}</div></div>
     <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">${completedSt.length}</div></div>
     <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">${blockedSt.length}</div></div>
   </div>
