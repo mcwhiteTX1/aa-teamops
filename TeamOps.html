@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_6.html -->
+<!-- saved from url=(0047)file:///C:/Users/mcole/Downloads/TeamOps_7.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -605,9 +605,9 @@
   <div class="toolbar">
     <div class="toolbar-title">Team board</div>
     <div class="view-toggle">
-      <button class="view-btn" onclick="setKanbanView(&#39;subtask&#39;)">By sub-task</button>
+      <button class="view-btn active" onclick="setKanbanView(&#39;subtask&#39;)">By sub-task</button>
       <button class="view-btn" onclick="setKanbanView(&#39;person&#39;)">By person</button>
-      <button class="view-btn active" onclick="setKanbanView(&#39;effort&#39;)">By effort</button>
+      <button class="view-btn" onclick="setKanbanView(&#39;effort&#39;)">By effort</button>
     </div>
     <select class="filter-select" id="filter-person" onchange="renderKanban()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
     <select class="filter-select" id="filter-pri" onchange="renderKanban()">
@@ -735,39 +735,69 @@
   <div id="kanban-content"><div class="kanban-board" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Backlog</span>
-        <span class="kb-col-count">0</span>
+        <span class="kb-col-count">2</span>
       </div>
-      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="empty-col">No items</div></div></div><div class="kb-col-wrap">
+      <div class="kb-col" data-status="Backlog" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="2" ondragstart="onDragStart(event,&#39;2&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;2&#39;,event)">
+    <div class="card-title">Review and update Teradata query runbook</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
+    <div class="card-meta">
+      <div class="avatar" title="Andrew Britt">AB</div>
+      <span class="pri-badge medium">Medium</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;2&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 8, 2026</span>
+    </div>
+    
+  </div><div class="effort-card" draggable="true" data-id="5" ondragstart="onDragStart(event,&#39;5&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;5&#39;,event)">
+    <div class="card-title">Build red-gold-green heatmap for all 15 stations</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
+    <div class="card-meta">
+      <div class="avatar" title="Grant Polychronis">GP</div>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;5&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 8, 2026</span>
+    </div>
+    
+  </div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">In Progress</span>
         <span class="kb-col-count">2</span>
       </div>
-      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="effort-card" draggable="true" data-id="1" ondragstart="onDragStart(event,&#39;1&#39;,&#39;effort&#39;)" ondragend="onDragEnd(event)" onclick="openEffortDetail(&#39;1&#39;)">
-    <div class="card-title">Runbook Updates</div>
+      <div class="kb-col" data-status="In Progress" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card" draggable="true" data-id="1" ondragstart="onDragStart(event,&#39;1&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;1&#39;,event)">
+    <div class="card-title">Review and update Databricks pipeline runbook</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
     <div class="card-meta">
       <div class="avatar" title="Michael White">MW</div>
       <span class="pri-badge high">High</span>
-      <span class="health-dot health-red" title="Health: red"></span>
-      <span class="due-label">May 15, 2026</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;1&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
     </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:25%"></div></div>
-    <div class="subtask-summary">3 sub-tasks · 0 done · <span style="color:var(--high)">1 blocked</span></div>
-  </div><div class="effort-card" draggable="true" data-id="2" ondragstart="onDragStart(event,&#39;2&#39;,&#39;effort&#39;)" ondragend="onDragEnd(event)" onclick="openEffortDetail(&#39;2&#39;)">
-    <div class="card-title">Q2 Operations Dashboard</div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:50%"></div></div>
+  </div><div class="effort-card" draggable="true" data-id="4" ondragstart="onDragStart(event,&#39;4&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;4&#39;,event)">
+    <div class="card-title">Build station delay metrics calculated fields</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Q2 Operations Dashboard</div>
     <div class="card-meta">
       <div class="avatar" title="Michael White">MW</div>
       <span class="pri-badge high">High</span>
-      <span class="health-dot health-red" title="Health: red"></span>
-      <span class="due-label">May 29, 2026</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;4&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
     </div>
-    <div class="card-progress"><div class="card-progress-fill" style="width:40%"></div></div>
-    <div class="subtask-summary">2 sub-tasks · 0 done</div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:60%"></div></div>
   </div></div></div><div class="kb-col-wrap">
       <div class="kb-col-head">
         <span class="kb-col-name">Blocked</span>
-        <span class="kb-col-count">0</span>
+        <span class="kb-col-count">1</span>
       </div>
-      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;effort&#39;)"><div class="empty-col">No items</div></div></div></div></div>
+      <div class="kb-col" data-status="Blocked" ondragover="onDragOver(event)" ondrop="onDrop(event,&#39;subtask&#39;)"><div class="effort-card blocked-card" draggable="true" data-id="3" ondragstart="onDragStart(event,&#39;3&#39;,&#39;subtask&#39;)" ondragend="onDragEnd(event)" onclick="openStDetail(&#39;3&#39;,event)">
+    <div class="card-title">Review and update ADLS access runbook</div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:5px">Runbook Updates</div>
+    <div class="card-meta">
+      <div class="avatar" title="Aish Gaikwad">AG</div>
+      <span class="pri-badge high">High</span>
+      <span class="health-dot health-red" title="Health: red (click to change)" onclick="cycleHealth(&#39;3&#39;, event)" style="cursor:pointer;border:1px solid rgba(0,0,0,.15)"></span>
+      <span class="due-label overdue">May 1, 2026</span>
+    </div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:10%"></div></div>
+  </div></div></div></div></div>
 </div>
 
 <!-- GANTT SCREEN -->
@@ -915,7 +945,7 @@
     <input class="filter-select" type="date" id="review-to" onchange="renderReview()" style="width:140px">
     <select class="filter-select" id="review-person-filter" onchange="renderReview()"><option value="">All people</option><option>Aish Gaikwad</option><option>Andrew Britt</option><option>Francisco Zuniga</option><option>Grant Polychronis</option><option>Michael White</option><option>Prem Madira</option></select>
     <div class="view-toggle">
-      <button class="view-btn" id="review-sort-person" onclick="setReviewSort(&#39;person&#39;)">Person → Sub-task</button>
+      <button class="view-btn active" id="review-sort-person" onclick="setReviewSort(&#39;person&#39;)">Person → Sub-task</button>
       <button class="view-btn" id="review-sort-subtask" onclick="setReviewSort(&#39;subtask&#39;)">Sub-task → Person</button>
     </div>
     <button class="btn print-btn" onclick="window.print()">Print / PDF</button>
@@ -924,7 +954,7 @@
   <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
     <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)">Missing updates — current period</div>
     <div class="view-toggle">
-      <button class="view-btn" id="missing-7" onclick="setMissingPeriod(7)">Last 7 days</button>
+      <button class="view-btn active" id="missing-7" onclick="setMissingPeriod(7)">Last 7 days</button>
       <button class="view-btn" id="missing-14" onclick="setMissingPeriod(14)">Last 14 days</button>
     </div>
     <div id="missing-indicator" style="flex:1"></div>
@@ -2508,7 +2538,7 @@ async function saveStDetail() {
     if (currentSubtask.Health) stFields.SubtaskHealth = currentSubtask.Health;
     await atUpdate('Sub-tasks', currentSubtask.Id, stFields);
   } catch(err) { console.error(err); }
-  showToast('Sub-task saved');
+  showToast('Sub-task saved' + (['Completed','Cancelled'].includes(currentSubtask.Status) ? ' — enable column in Columns ▾ to see it' : ''));
   document.getElementById('st-det-title').textContent = currentSubtask.Title;
   renderKanban();
   renderReport();
