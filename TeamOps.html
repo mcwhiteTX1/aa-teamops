@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_17.html -->
+<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_18.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2297,9 +2297,7 @@ async function saveEffortDetail() {
     await atUpdate('Efforts', currentEffort.Id, eFields);
   } catch(e) { console.error(e); }
   showToast('Effort saved');
-  document.getElementById('det-title').textContent = currentEffort.Title;
-  renderKanban();
-  renderReport();
+  await loadData();
 }
 
 function closeEffortDetail(e) {
@@ -2316,7 +2314,6 @@ async function saveAndCloseEffortDetail() {
 async function saveAndCloseStDetail() {
   await saveStDetail();
   document.getElementById('st-overlay').classList.remove('open');
-  requestAnimationFrame(() => renderKanban());
 }
 
 function openCheckinFromSubtask(stId) {
@@ -2551,20 +2548,6 @@ async function saveStDetail() {
     stInArray.Health = newHealth;
   }
 
-  // Directly update any visible health dots for this subtask on the page
-  const healthCls = newHealth.toLowerCase();
-  document.querySelectorAll(`[data-id="${id}"] .health-dot, #str-${id} .health-dot`).forEach(dot => {
-    dot.className = `health-dot health-${healthCls}`;
-  });
-  // Also update effort card dots by re-rendering just the effort cards
-  const effortId = stInArray?.EffortId;
-  if (effortId) {
-    document.querySelectorAll(`[data-id="${effortId}"] .health-dot`).forEach(dot => {
-      const h = effortHealth(efforts.find(e => e.Id === effortId));
-      dot.className = `health-dot health-${h.toLowerCase()}`;
-    });
-  }
-
   // Also update currentSubtask reference
   currentSubtask.Status = newStatus;
   currentSubtask.Title = newTitle;
@@ -2591,11 +2574,7 @@ async function saveStDetail() {
   }
 
   showToast('Sub-task saved' + (['Completed','Cancelled'].includes(newStatus) ? ' — enable Completed column in Columns ▾ to see it' : ''));
-  // Force a fresh render after all state is updated
-  requestAnimationFrame(() => {
-    renderKanban();
-    renderReport();
-  });
+  await loadData();
 }
 
 function closeStDetail(e) {
