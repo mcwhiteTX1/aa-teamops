@@ -512,6 +512,16 @@
   .blocker-text { font-size: 11px; color: var(--high); margin-top: 3px; }
   .print-btn { margin-left: auto; }
 
+  /* ── SUBTASK GOAL/DELIVERABLE ── */
+  .subtask-goal {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 400;
+    margin-top: 3px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
   /* ── EMPTY STATE ── */
   .empty-col {
     text-align: center; padding: 20px 8px;
@@ -2657,6 +2667,22 @@ async function submitCheckin() {
 // ── REPORT ──
 let reportEffortSort = { col: null, dir: 1 };
 let reportSubtaskSort = { col: null, dir: 1 };
+let showGoals = false;
+
+function toggleGoals() {
+  showGoals = !showGoals;
+  const rows = document.querySelectorAll('.goal-row');
+  rows.forEach(r => { r.style.display = showGoals ? 'block' : 'none'; });
+  const btn = document.getElementById('toggle-goals-btn');
+  const icon = document.getElementById('toggle-goals-icon');
+  if (showGoals) {
+    btn.classList.add('active');
+    if (icon) icon.innerHTML = '▼';
+  } else {
+    btn.classList.remove('active');
+    if (icon) icon.innerHTML = '▶';
+  }
+}
 
 function toggleSubtaskComments(stId) {
   const row = document.getElementById(`stc-${stId}`);
@@ -2871,7 +2897,12 @@ function renderReport() {
   html += `<div class="report-section">
     <div class="report-section-title" style="display:flex;align-items:center;justify-content:space-between">
       <span>Sub-task detail</span>
-      <button class="btn" style="font-size:11px;padding:4px 12px" onclick="exportSubtasksToExcel()">&#8595; Export to Excel</button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn${showGoals?' active':''}" id="toggle-goals-btn" onclick="toggleGoals()" style="font-size:11px;padding:4px 12px">
+          <span id="toggle-goals-icon">${showGoals?'▼':'▶'}</span> Show goals
+        </button>
+        <button class="btn" style="font-size:11px;padding:4px 12px" onclick="exportSubtasksToExcel()">&#8595; Export to Excel</button>
+      </div>
     </div>
     <table class="report-table" id="subtask-detail-table">
       <thead><tr>
@@ -2889,9 +2920,11 @@ function renderReport() {
       .sort((a,b) => new Date(b.WeekEnding)-new Date(a.WeekEnding) || new Date(b.UpdateDate)-new Date(a.UpdateDate));
     const hasUpdates = stUpdates.length > 0;
     const onclickAttr = hasUpdates ? `onclick="toggleSubtaskComments('${s.Id}')"` : '';
+    const goalText = s.GoalDeliverable || '';
+    const goalLine = goalText ? `<div class="subtask-goal goal-row" style="display:${showGoals?'block':'none'}">${goalText}</div>` : '';
     html += `<tr style="cursor:${hasUpdates?'pointer':'default'}" ${onclickAttr} id="str-${s.Id}">
       <td style="color:var(--text3)">${effort?.Title||'—'}</td>
-      <td><strong>${s.Title}</strong></td>
+      <td><strong>${s.Title}</strong>${goalLine}</td>
       <td>${s.AssignedTo?.Title||'—'}</td>
       <td><span class="status-pill ${statusPillClass(s.Status)}">${s.Status}</span></td>
       <td><span class="pri-badge ${priClass(s.Priority)}">${s.Priority||'—'}</span></td>
