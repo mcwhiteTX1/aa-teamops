@@ -1712,10 +1712,12 @@ function renderSubtaskStatusView(container) {
 // ── SUBTASK BY PERSON VIEW ──
 function renderSubtaskPersonView(container) {
   const filtered = getFilteredSubtasks();
-  const people = [...new Set(filtered.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
+  const hidden = getHiddenStatuses();
+  const visibleSubtasks = filtered.filter(s => !hidden.includes(s.Status));
+  const people = [...new Set(visibleSubtasks.map(s => s.AssignedTo?.Title).filter(Boolean))].sort();
   let html = '';
   people.forEach(person => {
-    const pSubs = filtered.filter(s => s.AssignedTo?.Title === person);
+    const pSubs = visibleSubtasks.filter(s => s.AssignedTo?.Title === person);
     const active = pSubs.filter(s => s.Status === 'In Progress').length;
     const blocked = pSubs.filter(s => s.Status === 'Blocked').length;
     html += `<div class="person-section">
