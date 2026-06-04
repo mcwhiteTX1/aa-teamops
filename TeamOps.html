@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Operations</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  /* Google Fonts import removed to eliminate external network requests.
+     Using system font fallbacks that closely match DM Sans / DM Mono. */
 
   :root {
     --bg: #f4f3f0;
@@ -36,7 +37,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 13px;
@@ -100,7 +101,7 @@
   .btn {
     padding: 6px 14px; border-radius: var(--radius);
     border: 1px solid var(--border2); background: var(--surface);
-    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer; font-weight: 500; transition: all .15s;
     display: flex; align-items: center; gap: 5px;
   }
@@ -110,7 +111,7 @@
   .filter-select {
     padding: 6px 10px; border-radius: var(--radius);
     border: 1px solid var(--border); background: var(--surface);
-    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer; height: 32px;
   }
   .view-toggle {
@@ -143,7 +144,7 @@
   .kb-col-count {
     background: var(--surface2); border-radius: 10px;
     padding: 1px 7px; font-size: 11px; color: var(--text3);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
   }
   .kb-col {
     background: var(--surface2);
@@ -266,7 +267,7 @@
   .detail-field .form-input, .detail-field .form-select {
     width: 100%; padding: 6px 8px; border: 1px solid var(--border);
     border-radius: var(--radius); background: var(--surface);
-    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: border-color .15s;
   }
   .detail-field .form-input:focus, .detail-field .form-select:focus {
@@ -275,7 +276,7 @@
   .detail-field .form-textarea {
     width: 100%; padding: 6px 8px; border: 1px solid var(--border);
     border-radius: var(--radius); background: var(--surface);
-    color: var(--text); font-size: 12px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 60px; resize: vertical; transition: border-color .15s;
   }
   .detail-field .form-textarea:focus { outline: none; border-color: var(--accent); }
@@ -438,7 +439,7 @@
   .form-input, .form-select, .form-textarea {
     width: 100%; padding: 8px 10px; border: 1px solid var(--border);
     border-radius: var(--radius); background: var(--surface);
-    color: var(--text); font-size: 13px; font-family: 'DM Sans', sans-serif;
+    color: var(--text); font-size: 13px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: border-color .15s;
   }
   .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -466,7 +467,7 @@
     border-radius: var(--radius); padding: 14px 16px;
   }
   .stat-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
-  .stat-value { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
+  .stat-value { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; font-family: 'Consolas', 'Courier New', monospace; }
   .stat-value.blue { color: var(--accent); }
   .stat-value.green { color: var(--low); }
   .stat-value.red { color: var(--high); }
@@ -504,7 +505,7 @@
   .person-bar-name { font-size: 12px; font-weight: 500; width: 100px; flex-shrink: 0; }
   .person-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
   .person-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s; }
-  .person-bar-count { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; width: 30px; text-align: right; }
+  .person-bar-count { font-size: 11px; color: var(--text3); font-family: 'Consolas', 'Courier New', monospace; width: 30px; text-align: right; }
   .blocker-row { padding: 8px 0; border-bottom: 1px solid var(--border); }
   .blocker-row:last-child { border-bottom: none; }
   .blocker-title { font-size: 12px; font-weight: 500; }
@@ -582,7 +583,7 @@
     <div style="font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5">Enter your Airtable personal access token to connect TeamOps to your data. This is saved in your browser only and never shared.</div>
     <div style="margin-bottom:16px">
       <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);display:block;margin-bottom:6px">Airtable token</label>
-      <input id="token-input" type="password" placeholder="pat..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:&#39;DM Sans&#39;,sans-serif;background:var(--surface);color:var(--text);box-sizing:border-box">
+      <input id="token-input" type="password" placeholder="pat..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:&#39;Segoe UI&#39;,Tahoma,Geneva,Verdana,sans-serif;background:var(--surface);color:var(--text);box-sizing:border-box">
     </div>
     <div style="display:flex;gap:8px;align-items:center">
       <button class="btn primary" onclick="connectWithToken()">Connect</button>
@@ -1024,7 +1025,7 @@
           <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
             <div style="width:25%;height:100%;background:var(--low);border-radius:3px"></div>
           </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">25%</span>
+          <span style="font-size:11px;font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">25%</span>
         </div>
       </td>
       <td>3 · 0 done</td>
@@ -1040,7 +1041,7 @@
           <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
             <div style="width:40%;height:100%;background:var(--low);border-radius:3px"></div>
           </div>
-          <span style="font-size:11px;font-family:&#39;DM Mono&#39;,monospace">40%</span>
+          <span style="font-size:11px;font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">40%</span>
         </div>
       </td>
       <td>2 · 0 done</td>
@@ -1065,7 +1066,7 @@
       <td><span class="pri-badge high">High</span></td>
       <td>Apr 17, 2026</td>
       <td class="overdue">May 1, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">50%</span></td>
+      <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">50%</span></td>
       <td><span class="health-dot health-red" title="Health: Red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-1">►</span> 1</td>
     </tr><tr id="stc-1" style="display:none">
@@ -1085,7 +1086,7 @@
           <td style="padding:6px 8px;color:var(--text3)">Apr 16, 2026</td>
           <td style="padding:6px 8px">Michael White</td>
           <td style="padding:6px 8px"><span class="status-pill sp-inprog">In Progress</span></td>
-          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">50%</td>
+          <td style="padding:6px 8px;font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">50%</td>
           <td style="padding:6px 8px;max-width:220px">Completed review of current pipeline steps. Updating error handling section this week. On track for target date.</td>
           <td style="padding:6px 8px;color:var(--high);max-width:160px"></td>
         </tr></tbody></table></td></tr><tr style="cursor:default" id="str-2">
@@ -1096,7 +1097,7 @@
       <td><span class="pri-badge medium">Medium</span></td>
       <td>—</td>
       <td class="overdue">May 8, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">0%</span></td>
       <td><span class="health-dot health-red" title="Health: Red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr><tr style="cursor:pointer" onclick="toggleSubtaskComments(&#39;3&#39;)" id="str-3">
@@ -1107,7 +1108,7 @@
       <td><span class="pri-badge high">High</span></td>
       <td>Apr 17, 2026</td>
       <td class="overdue">May 1, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">10%</span></td>
+      <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">10%</span></td>
       <td><span class="health-dot health-red" title="Health: Red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"><span id="stc-icon-3">►</span> 1</td>
     </tr><tr id="stc-3" style="display:none">
@@ -1127,7 +1128,7 @@
           <td style="padding:6px 8px;color:var(--text3)">Apr 16, 2026</td>
           <td style="padding:6px 8px">Aish Gaikwad</td>
           <td style="padding:6px 8px"><span class="status-pill sp-blocked">Blocked</span></td>
-          <td style="padding:6px 8px;font-family:&#39;DM Mono&#39;,monospace">10%</td>
+          <td style="padding:6px 8px;font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">10%</td>
           <td style="padding:6px 8px;max-width:220px">Started initial review but unable to proceed without updated access documentation from IT.</td>
           <td style="padding:6px 8px;color:var(--high);max-width:160px">Waiting on IT to provide updated access permission documentation</td>
         </tr></tbody></table></td></tr><tr style="cursor:default" id="str-4">
@@ -1138,7 +1139,7 @@
       <td><span class="pri-badge high">High</span></td>
       <td>Apr 17, 2026</td>
       <td class="overdue">May 1, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">60%</span></td>
+      <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">60%</span></td>
       <td><span class="health-dot health-red" title="Health: Red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr><tr style="cursor:default" id="str-5">
@@ -1149,7 +1150,7 @@
       <td><span class="pri-badge high">High</span></td>
       <td>—</td>
       <td class="overdue">May 8, 2026</td>
-      <td><span style="font-family:&#39;DM Mono&#39;,monospace">0%</span></td>
+      <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">0%</span></td>
       <td><span class="health-dot health-red" title="Health: Red"></span></td>
       <td style="text-align:center;color:var(--accent);font-size:11px"></td>
     </tr></tbody></table></div>
@@ -1191,7 +1192,7 @@
         <td>Michael White</td>
         <td>Apr 17, 2026</td>
         <td><span class="status-pill sp-inprog">In Progress</span></td>
-        <td><span style="font-family:&#39;DM Mono&#39;,monospace">50%</span></td>
+        <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">50%</span></td>
         <td style="max-width:220px">Completed review of current pipeline steps. Updating error handling section this week. On track for target date.</td>
         <td style="max-width:160px;color:var(--high)"></td>
       </tr></tbody></table></div><div style="margin-bottom:14px">
@@ -1204,7 +1205,7 @@
         <td>Aish Gaikwad</td>
         <td>Apr 17, 2026</td>
         <td><span class="status-pill sp-blocked">Blocked</span></td>
-        <td><span style="font-family:&#39;DM Mono&#39;,monospace">10%</span></td>
+        <td><span style="font-family:&#39;Consolas&#39;,&#39;Courier New&#39;,monospace">10%</span></td>
         <td style="max-width:220px">Started initial review but unable to proceed without updated access documentation from IT.</td>
         <td style="max-width:160px;color:var(--high)">Waiting on IT to provide updated access permission documentation</td>
       </tr></tbody></table></div></div></div>
@@ -2272,7 +2273,7 @@ function openEffortDetail(id) {
   STATUSES.forEach(status => {
     const cards = sts.filter(s => s.Status === status);
     kanbanHtml += `<div>
-      <div class="stk-col-head">${status} <span style="color:var(--text3);font-family:'DM Mono',monospace">${cards.length}</span></div>
+      <div class="stk-col-head">${status} <span style="color:var(--text3);font-family:'Consolas','Courier New',monospace">${cards.length}</span></div>
       <div class="stk-col" data-status="${status}" ondragover="onDragOver(event)" ondrop="onDrop(event,'subtask')">`;
     if (cards.length === 0) kanbanHtml += `<div style="font-size:10px;color:var(--text3);text-align:center;padding:8px">—</div>`;
     cards.forEach(s => { kanbanHtml += renderSubtaskCard(s); });
@@ -2448,7 +2449,7 @@ function openStDetail(id, e) {
             background:${h===currentHealth?healthColors[h]+'22':'transparent'};
             cursor:pointer;font-size:12px;font-weight:${h===currentHealth?'600':'400'};
             color:${h===currentHealth?healthColors[h]:'var(--text2)'};
-            transition:all .15s;font-family:'DM Sans',sans-serif">
+            transition:all .15s;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif">
             <span style="width:10px;height:10px;border-radius:50%;background:${healthColors[h]};flex-shrink:0;display:inline-block"></span>
             ${healthLabels[h]}
           </button>`).join('')}
@@ -2882,7 +2883,7 @@ function renderReport() {
           <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;min-width:60px">
             <div style="width:${e.PercentComplete||0}%;height:100%;background:var(--low);border-radius:3px"></div>
           </div>
-          <span style="font-size:11px;font-family:'DM Mono',monospace">${e.PercentComplete||0}%</span>
+          <span style="font-size:11px;font-family:'Consolas','Courier New',monospace">${e.PercentComplete||0}%</span>
         </div>
       </td>
       <td>${sts.length} · ${sts.filter(s=>s.Status==='Completed').length} done</td>
@@ -2930,7 +2931,7 @@ function renderReport() {
       <td><span class="pri-badge ${priClass(s.Priority)}">${s.Priority||'—'}</span></td>
       <td>${fmtDate(s.StartDate)}</td>
       <td class="${isOverdue(s.TargetEndDate)?'overdue':''}">${fmtDate(s.TargetEndDate)}</td>
-      <td><span style="font-family:'DM Mono',monospace">${s.PercentComplete||0}%</span></td>
+      <td><span style="font-family:'Consolas','Courier New',monospace">${s.PercentComplete||0}%</span></td>
       <td>${healthDot(h)}</td>
       <td style="text-align:center;color:var(--accent);font-size:11px">${hasUpdates?`<span id="stc-icon-${s.Id}">&#9658;</span> ${stUpdates.length}`:''}</td>
     </tr>`;
@@ -2954,7 +2955,7 @@ function renderReport() {
           <td style="padding:6px 8px;color:var(--text3)">${fmtDate(u.UpdateDate)}</td>
           <td style="padding:6px 8px">${u.UpdateBy?.Title||'—'}</td>
           <td style="padding:6px 8px"><span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime}</span></td>
-          <td style="padding:6px 8px;font-family:'DM Mono',monospace">${u.PercentCompleteAtTime||0}%</td>
+          <td style="padding:6px 8px;font-family:'Consolas','Courier New',monospace">${u.PercentCompleteAtTime||0}%</td>
           <td style="padding:6px 8px;max-width:220px">${u.UpdateNotes||'—'}</td>
           <td style="padding:6px 8px;color:var(--high);max-width:160px">${u.Blockers||''}</td>
         </tr>`;
@@ -3020,7 +3021,7 @@ function renderReport() {
         <td>${u.UpdateBy?.Title||'—'}</td>
         <td>${fmtDate(u.WeekEnding)}</td>
         <td><span class="status-pill ${statusPillClass(u.StatusAtTime)}">${u.StatusAtTime}</span></td>
-        <td><span style="font-family:'DM Mono',monospace">${u.PercentCompleteAtTime||0}%</span></td>
+        <td><span style="font-family:'Consolas','Courier New',monospace">${u.PercentCompleteAtTime||0}%</span></td>
         <td style="max-width:220px">${u.UpdateNotes||'—'}</td>
         <td style="max-width:160px;color:var(--high)">${u.Blockers||''}</td>
       </tr>`;
@@ -3211,7 +3212,7 @@ function renderReviewEntry(u) {
       </div>
       <div>
         <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">% Complete</div>
-        <div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace">${u.PercentCompleteAtTime||0}%</div>
+        <div style="font-size:12px;font-weight:500;font-family:'Consolas','Courier New',monospace">${u.PercentCompleteAtTime||0}%</div>
       </div>
       <div>
         <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Notes</div>
