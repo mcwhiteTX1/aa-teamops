@@ -1399,7 +1399,7 @@ async function loadData() {
       Id: x.id,
       Title: x.fields['Effort'] || '',
       Description: x.fields['Description'] || '',
-      Status: x.fields['Status'] || 'Backlog',
+      Status: normalizeStatus(x.fields['Status']),
       Priority: x.fields['Priority'] || 'Medium',
       Owner: { Title: x.fields['Owner'] || '' },
       StartDate: x.fields['StartDate'] || null,
@@ -1414,7 +1414,7 @@ async function loadData() {
       Title: x.fields['Name'] || '',
       EffortId: (x.fields['Effort'] || [])[0] || null,
       AssignedTo: { Title: x.fields['AssignedTo'] || '' },
-      Status: x.fields['Status'] || 'Backlog',
+      Status: normalizeStatus(x.fields['Status']),
       Priority: x.fields['Priority'] || 'Medium',
       StartDate: x.fields['StartDate'] || null,
       TargetEndDate: x.fields['TargetEndDate'] || null,
@@ -1434,7 +1434,7 @@ async function loadData() {
       UpdateBy: { Title: x.fields['UpdateBy'] || '' },
       UpdateDate: x.fields['UpdateDate'] || null,
       WeekEnding: x.fields['WeekEnding'] || null,
-      StatusAtTime: x.fields['StatusAtTime'] || '',
+      StatusAtTime: normalizeStatus(x.fields['StatusAtTime']),
       PercentCompleteAtTime: x.fields['PercentCompleteAtTime'] || 0,
       UpdateNotes: x.fields['UpdateNotes'] || '',
       Blockers: x.fields['Blockers'] || '',
@@ -1490,6 +1490,12 @@ function fmtDate(d) {
   if (!d) return '—';
   try { return new Date(d).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}); }
   catch { return d; }
+}
+
+function normalizeStatus(s) {
+  if (!s) return 'Backlog';
+  if (s === 'Canceled') return 'Cancelled';
+  return s;
 }
 
 function isOverdue(d) {
