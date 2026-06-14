@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/mcole/Downloads/TeamOps_18.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en"><head><meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Operations</title>
@@ -1567,7 +1566,8 @@ function populateCheckinSubtasks() {
   let subs = subtasks.filter(s =>
     s.AssignedTo?.Title === person &&
     activeEfforts.some(e => e.Id === s.EffortId) &&
-    s.Status !== 'Completed'
+    s.Status !== 'Completed' &&
+    s.Status !== 'Cancelled'
   );
 
   if (subs.length === 0) {
@@ -1670,6 +1670,9 @@ function getFilteredSubtasks() {
   const pri = document.getElementById('filter-pri')?.value;
   if (person) list = list.filter(s => s.AssignedTo?.Title === person);
   if (pri) list = list.filter(s => s.Priority === pri);
+  // Exclude Cancelled unless the Cancelled column is explicitly checked
+  const hidden = getHiddenStatuses();
+  if (hidden.includes('Cancelled')) list = list.filter(s => s.Status !== 'Cancelled');
   return list;
 }
 
@@ -1874,7 +1877,7 @@ function renderEffortCard(e, compact = false) {
       <span class="due-label${over?' overdue':''}">${e.TargetEndDate ? fmtDate(e.TargetEndDate) : 'No due date'}</span>
     </div>
     ${pct > 0 ? `<div class="card-progress"><div class="card-progress-fill" style="width:${pct}%"></div></div>` : ''}
-    ${sts.length > 0 ? `<div class="subtask-summary">${sts.length} sub-task${sts.length>1?'s':''} · ${sts.filter(s=>s.Status==='Completed').length} done${sts.filter(s=>s.Status==='Blocked').length > 0 ? ` · <span style="color:var(--high)">${sts.filter(s=>s.Status==='Blocked').length} blocked</span>` : ''}</div>` : ''}
+    ${sts.filter(s=>s.Status!=='Cancelled').length > 0 ? `<div class="subtask-summary">${sts.filter(s=>s.Status!=='Cancelled').length} sub-task${sts.filter(s=>s.Status!=='Cancelled').length>1?'s':''} · ${sts.filter(s=>s.Status==='Completed').length} done${sts.filter(s=>s.Status==='Blocked').length > 0 ? ` · <span style="color:var(--high)">${sts.filter(s=>s.Status==='Blocked').length} blocked</span>` : ''}</div>` : ''}
   </div>`;
 }
 
@@ -2828,9 +2831,10 @@ function renderReport() {
     ? filteredEfforts.filter(e => allSubtasks.some(s => s.EffortId === e.Id))
     : filteredEfforts;
 
-  // Stats should count ALL subtasks under active efforts regardless of status filter
-  const allSubtasksUnfiltered = subtasks.filter(s => activeEfforts.some(e => e.Id === s.EffortId));
+  // Stats should count ALL subtasks under active efforts regardless of status filter (but exclude cancelled)
+  const allSubtasksUnfiltered = subtasks.filter(s => activeEfforts.some(e => e.Id === s.EffortId) && s.Status !== 'Cancelled');
   const allSubtasksByPerson = filterPerson ? allSubtasksUnfiltered.filter(s => s.AssignedTo?.Title === filterPerson) : allSubtasksUnfiltered;
+  const activeSt = allSubtasksByPerson.filter(s => !['Completed','Cancelled'].includes(s.Status));
   const blockedSt = allSubtasksByPerson.filter(s => s.Status === 'Blocked');
   const completedSt = allSubtasksByPerson.filter(s => s.Status === 'Completed');
   let sortedEfforts = [...activeEfforts];
@@ -2855,7 +2859,7 @@ function renderReport() {
   let html = `
   <div class="report-grid">
     <div class="stat-card"><div class="stat-label">Active efforts</div><div class="stat-value blue">${activeEfforts.length}</div></div>
-    <div class="stat-card"><div class="stat-label">Total sub-tasks</div><div class="stat-value">${allSubtasksByPerson.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Active sub-tasks</div><div class="stat-value">${activeSt.length} <span style="font-size:13px;font-weight:400;color:var(--text3)">of ${allSubtasksByPerson.length}</span></div></div>
     <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">${completedSt.length}</div></div>
     <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value red">${blockedSt.length}</div></div>
   </div>
@@ -2870,7 +2874,7 @@ function renderReport() {
       </tr></thead>
       <tbody>`;
   sortedEfforts.forEach(e => {
-    const sts = subtasks.filter(s => s.EffortId === e.Id);
+    const sts = subtasks.filter(s => s.EffortId === e.Id && s.Status !== 'Cancelled');
     const h = effortHealth(e);
     html += `<tr>
       <td><strong>${e.Title}</strong></td>
@@ -3423,6 +3427,15 @@ function renderGantt() {
           if (sDate >= fromDate && sDate <= toDate) {
             barLeft = (sDate - fromDate) / rangeMs * 100;
             barWidth = 3;
+          }
+        } else if (s.TargetEndDate) {
+          const eDate = parseLocalDate(s.TargetEndDate);
+          eDate.setDate(eDate.getDate() + 1);
+          const rangeMs = toDate - fromDate || 1;
+          const visEnd = Math.min(eDate.getTime(), toDate.getTime());
+          if (visEnd > fromDate.getTime()) {
+            barLeft = 0;
+            barWidth = Math.max(0.5, (visEnd - fromDate) / rangeMs * 100);
           }
         }
 
