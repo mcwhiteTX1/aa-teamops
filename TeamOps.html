@@ -1492,9 +1492,16 @@ function fmtDate(d) {
   catch { return d; }
 }
 
+let airtableCancelledSpelling = 'Cancelled';
+
 function normalizeStatus(s) {
   if (!s) return 'Backlog';
-  if (s === 'Canceled') return 'Cancelled';
+  if (s === 'Canceled') { airtableCancelledSpelling = 'Canceled'; return 'Cancelled'; }
+  return s;
+}
+
+function toAirtableStatus(s) {
+  if (s === 'Cancelled') return airtableCancelledSpelling;
   return s;
 }
 
@@ -1912,7 +1919,7 @@ async function saveNewEffort() {
   const fields = {
     Effort: title,
     Description: document.getElementById('ne-desc').value || '',
-    Status: document.getElementById('ne-status').value,
+    Status: toAirtableStatus(document.getElementById('ne-status').value),
     Priority: document.getElementById('ne-priority').value,
     PercentComplete: parseInt(document.getElementById('ne-pct').value) || 0,
     IsIntakeIdea: false,
@@ -1972,7 +1979,7 @@ async function saveNewSubtaskKanban() {
   const fields = {
     Name: title,
     Effort: [effortId],
-    Status: document.getElementById('nsk-status').value,
+    Status: toAirtableStatus(document.getElementById('nsk-status').value),
     Priority: document.getElementById('nsk-priority').value,
     PercentComplete: 0,
     NotifyOnChanges: true,
@@ -2030,7 +2037,7 @@ async function saveNewSubtask() {
   const fields = {
     Name: title,
     Effort: [currentEffort.Id],
-    Status: document.getElementById('new-st-status').value,
+    Status: toAirtableStatus(document.getElementById('new-st-status').value),
     Priority: document.getElementById('new-st-priority').value,
     PercentComplete: 0,
     NotifyOnChanges: true,
@@ -2176,7 +2183,7 @@ function onDrop(e, type) {
     const statusChanged = ef.Status !== newStatus;
     ef.Status = newStatus;
     if (statusChanged) {
-      atUpdate('Efforts', ef.Id, { Status: newStatus }).catch(()=>{});
+      atUpdate('Efforts', ef.Id, { Status: toAirtableStatus(newStatus) }).catch(()=>{});
       showToast(`"${ef.Title}" moved to ${newStatus}`);
     }
     // Reorder within column
@@ -2197,7 +2204,7 @@ function onDrop(e, type) {
     const statusChanged = st.Status !== newStatus;
     st.Status = newStatus;
     if (statusChanged) {
-      atUpdate('Sub-tasks', st.Id, { Status: newStatus }).catch(()=>{});
+      atUpdate('Sub-tasks', st.Id, { Status: toAirtableStatus(newStatus) }).catch(()=>{});
       showToast(`Sub-task moved to ${newStatus}`);
     }
     // Reorder within column
@@ -2307,7 +2314,7 @@ async function saveEffortDetail() {
   try {
     const eFields = {
       Effort: currentEffort.Title,
-      Status: currentEffort.Status,
+      Status: toAirtableStatus(currentEffort.Status),
       Priority: currentEffort.Priority,
       PercentComplete: currentEffort.PercentComplete,
       StartDate: currentEffort.StartDate || null,
@@ -2577,7 +2584,7 @@ async function saveStDetail() {
   try {
     const stFields = {
       Name: newTitle,
-      Status: newStatus,
+      Status: toAirtableStatus(newStatus),
       Priority: newPriority,
       PercentComplete: newPct,
       StartDate: newStart,
@@ -2591,7 +2598,8 @@ async function saveStDetail() {
     const result = await atUpdate('Sub-tasks', id, stFields);
   } catch(err) {
     console.error('Airtable save FAILED:', err);
-    showToast('⚠ Save failed — check console');
+    const msg = err.message || String(err);
+    showToast('Save failed: ' + (msg.length > 100 ? msg.substring(0, 100) + '...' : msg));
     return;
   }
 
@@ -2648,7 +2656,7 @@ async function submitCheckin() {
     Effort: effortId ? [effortId] : [],
     SubTask: [subtaskId],
     UpdateBy: document.getElementById('checkin-person')?.value || 'Michael White',
-    StatusAtTime: document.getElementById('checkin-status').value,
+    StatusAtTime: toAirtableStatus(document.getElementById('checkin-status').value),
     PercentCompleteAtTime: parseInt(document.getElementById('checkin-pct').value) || 0,
     WeekEnding: document.getElementById('checkin-week').value,
     UpdateNotes: notes,
@@ -2662,7 +2670,7 @@ async function submitCheckin() {
   if (st) {
     st.Status = data.StatusAtTime;
     st.PercentComplete = data.PercentCompleteAtTime;
-    try { await atUpdate('Sub-tasks', subtaskId, { Status: st.Status, PercentComplete: st.PercentComplete }); } catch(e) {}
+    try { await atUpdate('Sub-tasks', subtaskId, { Status: toAirtableStatus(st.Status), PercentComplete: st.PercentComplete }); } catch(e) {}
   }
   document.getElementById('checkin-success').style.display = 'block';
   document.getElementById('checkin-notes').value = '';
@@ -3284,7 +3292,7 @@ async function saveUpdateEdit(id) {
   const u = updates.find(x => x.Id === id);
   if (!u) return;
   const fields = {
-    StatusAtTime: document.getElementById(`ue-status-${id}`).value,
+    StatusAtTime: toAirtableStatus(document.getElementById(`ue-status-${id}`).value),
     PercentCompleteAtTime: parseInt(document.getElementById(`ue-pct-${id}`).value) || 0,
     WeekEnding: document.getElementById(`ue-week-${id}`).value || null,
     UpdateDate: document.getElementById(`ue-date-${id}`).value || null,
